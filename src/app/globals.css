@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://cdn.jsdelivr.net/gh/spoqa/spoqa-han-sans@2.1.1/css/SpoqaHanSansNeo.css');
 
 :root {
   --background: #ffffff;
@@ -17,5 +18,5 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  @apply font-sans;
 }
