@@ -34,7 +34,7 @@ const Button: React.FC<ButtonProps> = ({
       onClick={onClick}
       disabled={disabled}
       className={clsx(
-        'rounded-[6px] font-bold focus:ring',
+        'rounded-[6px] text-sm font-bold focus:ring sm:text-base',
         disabled ? styles.disabled : styles[variant],
         className
       )}
