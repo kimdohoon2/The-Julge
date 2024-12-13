@@ -22,9 +22,9 @@ const Button: React.FC<ButtonProps> = ({
 }) => {
   const styles = {
     primary:
-      'bg-[#EA3C12] text-gray-white border-none hover:shadow-lg hover:scale-105 transition-all duration-200',
+      'bg-orange text-gray-white border-none hover:shadow-lg hover:scale-105 transition-all duration-200',
     reverse:
-      'bg-white text-[#EA3C12] border border-[#EA3C12] hover:shadow-lg hover:scale-105 transition-all duration-200',
+      'bg-white text-orange border border-orange hover:shadow-lg hover:scale-105 transition-all duration-200',
     disabled: 'bg-gray-40 text-gray-white cursor-not-allowed hover:shadow-none hover:scale-100',
   };
 
