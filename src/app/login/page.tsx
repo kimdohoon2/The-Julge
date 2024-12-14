@@ -45,8 +45,8 @@ function LoginPage() {
     <div className="flex min-h-screen items-center justify-center bg-gray-white font-sans">
       {/* 모달 */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-black bg-opacity-50">
-          <div className="w-full max-w-[540px] rounded-lg bg-gray-white p-6 shadow-lg sm:mx-6 md:mx-8 lg:mx-10">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-black bg-opacity-60">
+          <div className="mx-6 w-full max-w-[540px] rounded-lg bg-gray-white p-6 shadow-lg sm:mx-6 md:mx-8 lg:mx-10">
             <h2 className="mb-24 mt-24 text-center text-lg" style={{ color: '#333236' }}>
               비밀번호가 일치하지 않습니다.
             </h2>
@@ -63,13 +63,13 @@ function LoginPage() {
         </div>
       )}
 
-      <div className="w-full max-w-md rounded-lg bg-gray-white p-8">
+      <div className="w-full max-w-md bg-gray-white p-4">
         <Image
           src="/images/logo.svg"
           alt="Logo"
           width={248}
           height={45}
-          className="mx-auto mb-8 cursor-pointer"
+          className="mx-auto mb-10 cursor-pointer"
           onClick={() => router.push('/posts')}
         />
 
@@ -77,7 +77,7 @@ function LoginPage() {
           <div className="flex flex-col gap-2">
             <label
               htmlFor="email"
-              className="decoration-skip-ink-none text-left font-sans text-base font-normal leading-[26px] text-gray-black underline-offset-auto"
+              className="text-left font-sans text-base font-normal leading-[26px] text-gray-black"
             >
               이메일
             </label>
@@ -92,7 +92,7 @@ function LoginPage() {
                 },
               })}
               onBlur={() => trigger('email')}
-              className={`w-full rounded-md border px-4 py-2 text-sm`}
+              className={`w-full rounded-md border px-5 py-4 text-sm`}
               placeholder="입력"
             />
             {errors.email && <p className="mt-1 text-sm text-red-40">{errors.email?.message}</p>}
@@ -101,7 +101,7 @@ function LoginPage() {
           <div className="flex flex-col gap-2">
             <label
               htmlFor="password"
-              className="decoration-skip-ink-none text-left font-sans text-base font-normal leading-[26px] text-gray-black first-letter:underline-offset-auto"
+              className="text-left font-sans text-base font-normal leading-[26px] text-gray-black"
             >
               비밀번호
             </label>
@@ -116,7 +116,7 @@ function LoginPage() {
                 },
               })}
               onBlur={() => trigger('password')}
-              className={`w-full rounded-md border px-4 py-2 text-sm`}
+              className={`w-full rounded-md border px-5 py-4 text-sm`}
               placeholder="입력"
             />
             {errors.password && (
@@ -126,7 +126,7 @@ function LoginPage() {
 
           <button
             type="submit"
-            className="mt-4 w-full rounded-md bg-red-40 py-2 font-semibold text-white hover:bg-red-600 focus:outline-none focus:ring focus:ring-red-300"
+            className="mt-2 w-full rounded-md bg-red-40 px-32 py-3 font-semibold text-gray-white"
           >
             로그인 하기
           </button>
@@ -135,8 +135,8 @@ function LoginPage() {
         <p className="mt-6 text-center font-sans" style={{ color: '#333236' }}>
           회원이 아니신가요?{' '}
           <span
-            onClick={() => router.push('/signup')} // 회원가입 페이지로 이동
-            className="cursor-pointer text-blue-500 underline"
+            onClick={() => router.push('/signup')}
+            className="cursor-pointer underline"
             style={{ color: '#5534da' }}
           >
             회원가입하기
