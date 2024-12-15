@@ -78,26 +78,31 @@ const DetailedFilter: React.FC = () => {
           </div>
 
           <div className="mb-4">
-            <h3 className="mb-2 text-sm font-bold">시작일</h3>
+            <h3 className="mb-2 text-base font-normal text-gray-black">시작일</h3>
             <input
               type="date"
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
-              className="w-full rounded-md border px-2 py-1 text-sm text-gray-700 focus:outline-none focus:ring"
+              className="h-14 w-full rounded-md border border-gray-30 px-2 py-1 text-gray-black placeholder-gray-40 focus:outline-none focus:ring"
             />
           </div>
 
-          <div className="mb-4">
-            <h3 className="mb-2 text-sm font-bold">금액</h3>
+          <div className="mb-4 text-base">
+            <h3 className="mb-2 font-normal text-gray-black">금액</h3>
             <div className="flex items-center gap-2">
-              <input
-                type="number"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-                className="w-full rounded-md border px-2 py-1 text-sm text-gray-black focus:outline-none focus:ring"
-                placeholder="입력"
-              />
-              <span className="text-sm">이상부터</span>
+              <div className="relative w-[45%]">
+                <input
+                  type="number"
+                  value={amount}
+                  onChange={(e) => setAmount(e.target.value)}
+                  className="no-spinner h-14 w-full rounded-md border border-gray-30 px-4 py-1 pr-10 text-gray-black placeholder-gray-40 focus:outline-none focus:ring"
+                  placeholder="입력"
+                />
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-black">
+                  원
+                </span>
+              </div>
+              <span className="text-gray-black">이상부터</span>
             </div>
           </div>
 
