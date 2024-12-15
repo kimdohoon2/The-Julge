@@ -3,6 +3,23 @@
 import React, { useState } from 'react';
 import { LOCATION_LIST } from '../constants/location';
 
+const inputClass =
+  'h-14 w-full rounded-md border border-gray-30 px-4 py-1 text-gray-black focus:outline-none focus:ring';
+
+const toggleLocation = (selectedLocations: string[], location: string): string[] => {
+  return selectedLocations.includes(location)
+    ? selectedLocations.filter((item) => item !== location)
+    : [...selectedLocations, location];
+};
+
+const calculateFilterCount = (
+  selectedLocations: string[],
+  startDate: string,
+  amount: string
+): number => {
+  return selectedLocations.length + (startDate ? 1 : 0) + (amount ? 1 : 0);
+};
+
 const DetailedFilter: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
@@ -15,7 +32,7 @@ const DetailedFilter: React.FC = () => {
     setAmount('');
   };
 
-  const filterCount = selectedLocations.length + (startDate ? 1 : 0) + (amount ? 1 : 0);
+  const filterCount = calculateFilterCount(selectedLocations, startDate, amount);
 
   return (
     <div className="relative w-full p-4">
@@ -27,7 +44,7 @@ const DetailedFilter: React.FC = () => {
       </button>
 
       {isOpen && (
-        <div className="mt-4 w-96 rounded-lg border border-gray-200 bg-white p-4 shadow-lg">
+        <div className="fixed left-0 top-0 z-50 h-full w-full bg-white p-6 sm:relative sm:left-auto sm:top-auto sm:mt-3 sm:h-auto sm:w-96 sm:rounded-lg sm:border sm:border-gray-20 sm:shadow-lg">
           <div className="mb-4 flex items-center justify-between text-gray-black">
             <h2 className="text-xl font-bold">상세 필터</h2>
             <button onClick={() => setIsOpen(false)} className="text-2xl">
@@ -41,14 +58,8 @@ const DetailedFilter: React.FC = () => {
               {LOCATION_LIST.map((location) => (
                 <button
                   key={location}
-                  onClick={() => {
-                    if (selectedLocations.includes(location)) {
-                      setSelectedLocations(selectedLocations.filter((item) => item !== location));
-                    } else {
-                      setSelectedLocations([...selectedLocations, location]);
-                    }
-                  }}
-                  className={'rounded-md px-2 py-1 text-left text-sm text-gray-black'}
+                  onClick={() => setSelectedLocations(toggleLocation(selectedLocations, location))}
+                  className="rounded-md px-2 py-1 text-left text-sm text-gray-black"
                 >
                   {location}
                 </button>
@@ -65,7 +76,7 @@ const DetailedFilter: React.FC = () => {
                     {location}
                     <button
                       onClick={() =>
-                        setSelectedLocations(selectedLocations.filter((item) => item !== location))
+                        setSelectedLocations(toggleLocation(selectedLocations, location))
                       }
                       className="text-orange ml-2 hover:text-red-700"
                     >
@@ -83,7 +94,7 @@ const DetailedFilter: React.FC = () => {
               type="date"
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
-              className="text-gray-blac h-14 w-full rounded-md border border-gray-30 px-2 py-1 focus:outline-none focus:ring"
+              className={inputClass}
             />
           </div>
 
@@ -95,7 +106,7 @@ const DetailedFilter: React.FC = () => {
                   type="number"
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
-                  className="no-spinner h-14 w-full rounded-md border border-gray-30 px-4 py-1 pr-10 text-gray-black placeholder-gray-40 focus:outline-none focus:ring"
+                  className={`${inputClass} no-spinner pr-10`}
                   placeholder="입력"
                 />
                 <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-black">
@@ -109,13 +120,13 @@ const DetailedFilter: React.FC = () => {
           <div className="text-orange flex justify-between text-base font-bold">
             <button
               onClick={resetFilters}
-              className="border-orange w-[25%] rounded-md border px-4 py-2"
+              className="border-orange w-[27%] rounded-md border px-4 py-2"
             >
               초기화
             </button>
             <button
               onClick={() => setIsOpen(false)}
-              className="bg-orange w-[72%] rounded-md px-4 py-2 text-white"
+              className="bg-orange w-[67%] rounded-md px-4 py-2 text-white"
             >
               적용하기
             </button>
