@@ -88,7 +88,7 @@ const DetailedFilter: React.FC = () => {
             )}
           </div>
 
-          <div className="mb-4">
+          <div className="mb-4 border-b border-t border-gray-10 pb-5 pt-5">
             <h3 className="mb-2 text-base font-normal text-gray-black">시작일</h3>
             <input
               type="date"
@@ -99,7 +99,7 @@ const DetailedFilter: React.FC = () => {
           </div>
 
           <div className="mb-4 text-base">
-            <h3 className="mb-2 font-normal text-gray-black">금액</h3>
+            <h3 className="mb-2 mt-2 font-normal text-gray-black">금액</h3>
             <div className="flex items-center gap-2">
               <div className="relative w-[45%]">
                 <input
