@@ -1,40 +1,13 @@
 'use client';
 
 import React, { useState } from 'react';
+import { LOCATION_LIST } from '../constants/location';
 
 const DetailedFilter: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
   const [startDate, setStartDate] = useState<string>('');
   const [amount, setAmount] = useState<string>('');
-
-  const locationList = [
-    '서울시 종로구',
-    '서울시 중구',
-    '서울시 용산구',
-    '서울시 성동구',
-    '서울시 광진구',
-    '서울시 동대문구',
-    '서울시 중랑구',
-    '서울시 성북구',
-    '서울시 강북구',
-    '서울시 도봉구',
-    '서울시 노원구',
-    '서울시 은평구',
-    '서울시 서대문구',
-    '서울시 마포구',
-    '서울시 양천구',
-    '서울시 강서구',
-    '서울시 구로구',
-    '서울시 금천구',
-    '서울시 영등포구',
-    '서울시 동작구',
-    '서울시 관악구',
-    '서울시 서초구',
-    '서울시 강남구',
-    '서울시 송파구',
-    '서울시 강동구',
-  ];
 
   const resetFilters = () => {
     setSelectedLocations([]);
@@ -65,7 +38,7 @@ const DetailedFilter: React.FC = () => {
           <div className="mb-4">
             <h3 className="mb-2 text-base">위치</h3>
             <div className="custom-scrollbar grid max-h-48 grid-cols-2 gap-2 overflow-auto rounded-md border p-3">
-              {locationList.map((location) => (
+              {LOCATION_LIST.map((location) => (
                 <button
                   key={location}
                   onClick={() => {
