@@ -83,7 +83,7 @@ const DetailedFilter: React.FC = () => {
               type="date"
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
-              className="h-14 w-full rounded-md border border-gray-30 px-2 py-1 text-gray-black placeholder-gray-40 focus:outline-none focus:ring"
+              className="text-gray-blac h-14 w-full rounded-md border border-gray-30 px-2 py-1 focus:outline-none focus:ring"
             />
           </div>
 

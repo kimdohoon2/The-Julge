@@ -54,6 +54,23 @@ export default {
           },
           '-moz-appearance': 'textfield',
         },
+        '.custom-scrollbar::-webkit-scrollbar': {
+          width: '6px',
+          height: '6px',
+        },
+        '.custom-scrollbar::-webkit-scrollbar-track': {
+          background: 'transparent',
+        },
+        '.custom-scrollbar::-webkit-scrollbar-thumb': {
+          background: '#7d7986',
+          'border-radius': '40px',
+        },
+        '.custom-scrollbar::-webkit-scrollbar-thumb:hover': {
+          background: '#9ca3af',
+        },
+        '.custom-scrollbar::-webkit-scrollbar-button': {
+          display: 'none',
+        },
       });
     }),
   ],
