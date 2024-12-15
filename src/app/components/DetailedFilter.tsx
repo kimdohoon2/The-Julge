@@ -67,7 +67,7 @@ const DetailedFilter: React.FC = () => {
             </div>
 
             {selectedLocations.length > 0 && (
-              <div className="mt-2 flex flex-wrap gap-2">
+              <div className="mb-6 mt-2 flex flex-wrap gap-2">
                 {selectedLocations.map((location) => (
                   <span
                     key={location}
@@ -88,7 +88,7 @@ const DetailedFilter: React.FC = () => {
             )}
           </div>
 
-          <div className="mb-4 border-b border-t border-gray-10 pb-5 pt-5">
+          <div className="mb-4 border-b-2 border-t-2 border-gray-10 pb-5 pt-5">
             <h3 className="mb-2 text-base font-normal text-gray-black">시작일</h3>
             <input
               type="date"
