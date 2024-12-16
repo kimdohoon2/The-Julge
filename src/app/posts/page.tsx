@@ -1,4 +1,5 @@
 import CardList from '../components/CardList';
+import DetailedFilter from '../components/DetailedFilter';
 import PostDropdown from '../components/PostDropdown';
 
 export default function Posts() {
@@ -7,6 +8,7 @@ export default function Posts() {
       <CardList />
       <div>
         <PostDropdown />
+        <DetailedFilter />
       </div>
     </div>
   );
