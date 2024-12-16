@@ -35,7 +35,7 @@ const DetailedFilter: React.FC = () => {
   const filterCount = calculateFilterCount(selectedLocations, startDate, amount);
 
   return (
-    <div className="relative w-full p-4">
+    <div className="relative w-full">
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="flex h-[30px] min-w-20 items-center justify-center rounded-md bg-red-30 px-4 py-2 font-bold text-white"
@@ -44,7 +44,7 @@ const DetailedFilter: React.FC = () => {
       </button>
 
       {isOpen && (
-        <div className="fixed left-0 top-0 z-50 h-full w-full bg-white p-6 sm:relative sm:left-auto sm:top-auto sm:mt-3 sm:h-auto sm:w-96 sm:rounded-lg sm:border sm:border-gray-20 sm:shadow-lg">
+        <div className="fixed left-0 top-0 z-50 h-full w-full bg-white p-6 sm:absolute sm:left-auto sm:right-[2px] sm:top-auto sm:mt-3 sm:h-auto sm:w-96 sm:rounded-lg sm:border sm:border-gray-20 sm:shadow-lg">
           <div className="mb-4 flex items-center justify-between text-gray-black">
             <h2 className="text-xl font-bold">상세 필터</h2>
             <button onClick={() => setIsOpen(false)} className="text-2xl">
@@ -71,14 +71,14 @@ const DetailedFilter: React.FC = () => {
                 {selectedLocations.map((location) => (
                   <span
                     key={location}
-                    className="text-orange flex items-center rounded-full bg-red-10 px-2 py-1 text-sm font-bold"
+                    className="flex items-center rounded-full bg-red-10 px-2 py-1 text-sm font-bold text-orange"
                   >
                     {location}
                     <button
                       onClick={() =>
                         setSelectedLocations(toggleLocation(selectedLocations, location))
                       }
-                      className="text-orange ml-2 hover:text-red-700"
+                      className="ml-2 text-orange hover:text-red-700"
                     >
                       ✕
                     </button>
@@ -117,16 +117,16 @@ const DetailedFilter: React.FC = () => {
             </div>
           </div>
 
-          <div className="text-orange flex justify-between text-base font-bold">
+          <div className="flex justify-between text-base font-bold text-orange">
             <button
               onClick={resetFilters}
-              className="border-orange w-[27%] rounded-md border px-4 py-2"
+              className="w-[27%] rounded-md border border-orange px-4 py-2"
             >
               초기화
             </button>
             <button
               onClick={() => setIsOpen(false)}
-              className="bg-orange w-[67%] rounded-md px-4 py-2 text-white"
+              className="w-[67%] rounded-md bg-orange px-4 py-2 text-white"
             >
               적용하기
             </button>
