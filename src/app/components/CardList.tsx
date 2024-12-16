@@ -5,7 +5,7 @@ import 'swiper/css';
 import 'swiper/css/free-mode';
 import { FreeMode } from 'swiper/modules';
 import Card from './Card';
-import CardMockData from './cardMockData';
+import CardMockData from './CardMockData';
 
 export default function CardList() {
   return (
