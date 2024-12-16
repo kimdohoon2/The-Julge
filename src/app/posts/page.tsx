@@ -1,10 +1,13 @@
 import CardList from '../components/CardList';
 import DetailedFilter from '../components/DetailedFilter';
+import Pagination from '../components/Pagination';
 import PostDropdown from '../components/PostDropdown';
 
 const container = 'px-4 pb-4 pt-10 sm:px-6 sm:pb-4 lg:px-44 lg:pb-44';
 
 export default function Posts() {
+  const totalItems = 132; // 제가 임시로 지정해둔 전체 아이템 수 입니다
+  const itemsPerPage = 6; // 제가 임시로 지정해둔 한 번에 보여줄 아이템 수 입니다
   return (
     <div>
       {/* 검색으로 변하는 페이지는 나중에 고려할게요
@@ -23,7 +26,8 @@ export default function Posts() {
           <DetailedFilter />
         </div>
       </div>
-      <footer className="h-[100px] bg-gray-10 text-center">임시푸터입니다~~~~~~~~~~~</footer>
+      <Pagination totalItems={totalItems} itemsPerPage={itemsPerPage} />
+      <footer className="mt-16 h-[100px] bg-gray-10 text-center">임시푸터입니다~~~~~~~~~~~</footer>
     </div>
   );
 }
