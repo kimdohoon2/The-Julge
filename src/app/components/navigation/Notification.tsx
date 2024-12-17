@@ -113,7 +113,7 @@ const Notification = ({ isModalOpen, toggleModal }: NotificationProps) => {
               <Image src="/header/ic-close.svg" alt="닫기" fill className="object-contain" />
             </button>
           </div>
-          <ul className="flex h-[93%] flex-col gap-2 overflow-auto sm:h-auto sm:max-h-96">
+          <ul className="custom-scrollbar flex h-[93%] flex-col gap-2 overflow-y-auto sm:h-auto sm:max-h-96">
             {notifications.map((notification) => (
               <li
                 key={notification.id}
