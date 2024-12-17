@@ -1,7 +1,7 @@
-import DetailedFilter from '../components/DetailedFilter';
-import Pagination from '../components/Pagination';
-import PostDropdown from '../components/PostDropdown';
-import TestList from '../components/TestList';
+import CustomNotices from '../components/notice/CustomNotices';
+import DetailedFilter from '../components/notice/DetailedFilter';
+import NoticeDropdown from '../components/notice/NoticeDropdown';
+import Pagination from '../components/notice/Pagination';
 
 const container = 'px-4 pb-4 pt-10 sm:px-6 sm:pb-4 lg:px-60 lg:pb-16';
 
@@ -16,13 +16,13 @@ export default function Posts() {
       <div className="mt-6 bg-red-10">
         <div className={`sm:pt-14 ${container}`}>
           <h2 className="mb-5 text-xl font-bold text-gray-black sm:text-[28px]">맞춤 공고</h2>
-          <TestList />
+          <CustomNotices />
         </div>
       </div>
       <div className={`mb-5 ${container} sm:flex sm:items-center sm:justify-between`}>
         <h2 className="text-xl font-bold text-gray-black sm:text-[28px]">전체 공고</h2>
         <div className="mt-4 flex items-center gap-3">
-          <PostDropdown />
+          <NoticeDropdown />
           <DetailedFilter />
         </div>
       </div>

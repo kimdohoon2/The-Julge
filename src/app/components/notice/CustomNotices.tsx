@@ -6,9 +6,9 @@ import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/autoplay';
 import { FreeMode, Autoplay } from 'swiper/modules';
-import Card from './Card';
+import Card from '../common/Card';
 import axios from 'axios';
-import formatTimeRange from '../utils/formatTimeRange';
+import formatTimeRange from '../../utils/formatTimeRange';
 
 interface ShopItem {
   name: string;
@@ -33,7 +33,7 @@ interface ApiResponse {
   items: { item: NoticeItem }[];
 }
 
-export default function TestList() {
+export default function CustomNotices() {
   const [notices, setNotices] = useState<NoticeItem[]>([]);
 
   useEffect(() => {
