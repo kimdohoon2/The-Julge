@@ -26,8 +26,7 @@ export default function Posts() {
           <DetailedFilter />
         </div>
       </div>
-      <Pagination totalItems={totalItems} itemsPerPage={itemsPerPage} />
-      <footer className="mt-16 h-[100px] bg-gray-10 text-center">임시푸터입니다~~~~~~~~~~~</footer>
+      <Pagination totalItems={totalItems} itemsPerPage={itemsPerPage} className="mb-16" />
     </div>
   );
 }

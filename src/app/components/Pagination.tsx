@@ -7,6 +7,7 @@ interface PaginationProps {
   itemsPerPage: number;
   currentPage?: number;
   pageRangeDisplayed?: number;
+  className?: string;
 }
 
 const Pagination: React.FC<PaginationProps> = ({
@@ -14,6 +15,7 @@ const Pagination: React.FC<PaginationProps> = ({
   itemsPerPage,
   currentPage = 1,
   pageRangeDisplayed = 7,
+  className = '',
 }) => {
   const totalPages = Math.ceil(totalItems / itemsPerPage);
   const [activePage, setActivePage] = useState<number>(currentPage);
@@ -29,7 +31,7 @@ const Pagination: React.FC<PaginationProps> = ({
     'flex h-5 w-5 items-center justify-center text-gray-black disabled:text-gray-40';
 
   return (
-    <div className="flex items-center justify-center gap-2 sm:gap-4">
+    <div className={`flex items-center justify-center gap-2 sm:gap-4 ${className}`}>
       <button
         disabled={activePage === 1}
         className={arrowButtonClass}
