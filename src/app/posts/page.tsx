@@ -3,7 +3,7 @@ import DetailedFilter from '../components/DetailedFilter';
 import Pagination from '../components/Pagination';
 import PostDropdown from '../components/PostDropdown';
 
-const container = 'px-4 pb-4 pt-10 sm:px-6 sm:pb-4 lg:px-44 lg:pb-44';
+const container = 'px-4 pb-4 pt-10 sm:px-6 sm:pb-4 lg:px-60 lg:pb-16';
 
 export default function Posts() {
   const totalItems = 132; // 제가 임시로 지정해둔 전체 아이템 수 입니다
