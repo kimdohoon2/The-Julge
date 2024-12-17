@@ -10,11 +10,9 @@ export default function Footer() {
       <div className="ml-5 mr-5 flex w-full justify-between gap-4 pt-7 sm:ml-8 sm:mr-8 sm:flex-row sm:items-center sm:gap-0 sm:p-0 lg:ml-56 lg:mr-56">
         <div className="flex w-7/12 flex-col gap-9 sm:flex-row sm:justify-between sm:gap-0">
           <div className="order-2 text-xs sm:order-1 sm:text-base">
-            <span>©codeit - 2023</span>
+            <span>©codeit - 2025</span>
           </div>
 
-          {/* 정책과 FAQ 페이지는 저희가 구현을 안 할 것으로 보이는데 일단 클릭하면 이동되게 하긴 했습니다.
-            그래서 클릭하면 404가 뜰거에요. */}
           <div className="order-1 flex gap-[30px] text-sm sm:order-2 sm:text-base">
             <Link href="/policy" className="hover:opacity-80">
               Privacy Policy
