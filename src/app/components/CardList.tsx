@@ -9,9 +9,17 @@ import CardMockData from './CardMockData';
 
 export default function CardList() {
   return (
-    <Swiper modules={[FreeMode]} spaceBetween={24} slidesPerView={'auto'} freeMode={true}>
+    <Swiper
+      modules={[FreeMode]}
+      spaceBetween={12}
+      slidesPerView={'auto'}
+      freeMode={true}
+      breakpoints={{
+        640: { spaceBetween: 14 },
+      }}
+    >
       {CardMockData.map((data, index) => (
-        <SwiperSlide key={index} className="max-w-[200px] sm:max-w-[300px] lg:max-w-[330px]">
+        <SwiperSlide key={index} className="max-w-[176px] sm:max-w-[312px]">
           <Card
             image={data.image}
             title={data.title}
