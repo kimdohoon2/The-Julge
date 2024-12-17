@@ -21,7 +21,7 @@ export default function DropDownBtn({
     <div className="relative w-full">
       <div className="relative w-full">
         <input
-          className="w-full rounded-md border border-gray-30 py-4 pl-5 text-base font-normal text-gray-black"
+          className="w-full cursor-pointer rounded-md border border-gray-30 py-4 pl-5 text-base font-normal text-gray-black"
           type="text"
           id={id}
           name="Category"
@@ -46,7 +46,7 @@ export default function DropDownBtn({
         </div>
       </div>
       <ul
-        className={`absolute top-16 z-20 w-full overflow-y-scroll rounded-md transition-all duration-300 ease-out custom-scrollbar ${
+        className={`custom-scrollbar absolute top-16 z-20 w-full overflow-y-scroll rounded-md transition-all duration-300 ease-out ${
           visible
             ? 'max-h-60 border border-gray-30 bg-gray-white'
             : 'max-h-0 border border-transparent bg-transparent'
