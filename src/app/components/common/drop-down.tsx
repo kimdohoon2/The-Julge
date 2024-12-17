@@ -27,7 +27,6 @@ export default function DropDownBtn({
           name="Category"
           placeholder="선택"
           value={selectedCategory || ''} // 선택된 카테고리 값
-          onChange={(e) => onSelectCategory(e.target.value)} // 선택된 값 변경 시 부모에 전달
           onClick={() => setVisible(!visible)}
           readOnly
         />
