@@ -13,10 +13,10 @@ export default function CardList() {
     <Swiper
       modules={[FreeMode, Autoplay]}
       spaceBetween={12}
-      slidesPerView={2}
+      slidesPerView="auto"
       freeMode={true}
       autoplay={{
-        delay: 3000,
+        delay: 5000,
         disableOnInteraction: false,
       }}
       breakpoints={{
