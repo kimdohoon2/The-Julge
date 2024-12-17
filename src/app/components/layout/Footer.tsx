@@ -2,48 +2,51 @@
 
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Footer() {
   return (
-    <footer className="flex h-32 bg-gray-10 text-gray-40 sm:h-[100px]">
-      <div className="ml-5 mr-5 flex w-full justify-between gap-4 pt-7 text-sm sm:ml-8 sm:mr-8 sm:flex-row sm:items-center sm:gap-0 sm:p-0 lg:ml-56 lg:mr-56">
+    <footer className="flex h-32 bg-gray-10 text-gray-50 sm:h-[100px]">
+      <div className="ml-5 mr-5 flex w-full justify-between gap-4 pt-7 sm:ml-8 sm:mr-8 sm:flex-row sm:items-center sm:gap-0 sm:p-0 lg:ml-56 lg:mr-56">
         <div className="flex w-7/12 flex-col gap-9 sm:flex-row sm:justify-between sm:gap-0">
-          <div className="order-2 sm:order-1">
+          <div className="order-2 text-xs sm:order-1 sm:text-base">
             <span>©codeit - 2023</span>
           </div>
 
-          <div className="order-1 flex gap-[30px] sm:order-2">
-            <a href="#" className="hover:text-gray-50">
+          {/* 정책과 FAQ 페이지는 저희가 구현을 안 할 것으로 보이는데 일단 클릭하면 이동되게 하긴 했습니다.
+            그래서 클릭하면 404가 뜰거에요. */}
+          <div className="order-1 flex gap-[30px] text-sm sm:order-2 sm:text-base">
+            <Link href="/policy" className="hover:opacity-80">
               Privacy Policy
-            </a>
-            <a href="#" className="hover:text-gray-50">
+            </Link>
+            <Link href="/FAQ" className="hover:opacity-80">
               FAQ
-            </a>
+            </Link>
           </div>
         </div>
 
         <div className="order-3 flex gap-4">
-          <a href="#">
+          <a href="https://mail.google.com" target="_blank" rel="noopener noreferrer">
             <Image
-              src="/icons/email.svg"
+              src="/SNS/email.svg"
               alt="Email"
               width={24}
               height={24}
               className="hover:opacity-80"
             />
           </a>
-          <a href="#">
+          <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
             <Image
-              src="/icons/facebook.svg"
+              src="/SNS/facebook.svg"
               alt="Facebook"
               width={24}
               height={24}
               className="hover:opacity-80"
             />
           </a>
-          <a href="#">
+          <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
             <Image
-              src="/icons/instagram.svg"
+              src="/SNS/instagram.svg"
               alt="Instagram"
               width={24}
               height={24}
