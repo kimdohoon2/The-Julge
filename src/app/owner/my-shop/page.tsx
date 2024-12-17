@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import Button from '@/app/components/common/Button';
 
 export default function MyShopPage() {
   return (
@@ -10,11 +9,12 @@ export default function MyShopPage() {
           <p className="text-sm font-normal text-gray-black md:text-base">
             내 가게를 소개하고 공고도 등록해 보세요.
           </p>
-          <Button className="flex h-[2.3125rem] w-full max-w-[6.75rem] items-center justify-center rounded-md bg-orange md:h-[2.9375rem] md:max-w-[21.625rem]">
-            <Link href="my-shop/register">
-              <span className="text-sm text-gray-white md:text-base">가게 등록하기</span>
-            </Link>
-          </Button>
+          <Link
+            className="flex h-[2.3125rem] w-full max-w-[6.75rem] items-center justify-center rounded-md bg-orange md:h-[2.9375rem] md:max-w-[21.625rem]"
+            href="my-shop/register"
+          >
+            <span className="text-sm text-gray-white md:text-base">가게 등록하기</span>
+          </Link>
         </div>
       </div>
     </section>
