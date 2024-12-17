@@ -1,9 +1,10 @@
+import AllNotices from '../components/notice/AllNotices';
 import CustomNotices from '../components/notice/CustomNotices';
 import DetailedFilter from '../components/notice/DetailedFilter';
 import NoticeDropdown from '../components/notice/NoticeDropdown';
 import Pagination from '../components/notice/Pagination';
 
-const container = 'px-4 pb-4 pt-10 sm:px-6 sm:pb-4 lg:px-60 lg:pb-16';
+const container = 'mx-auto px-4 sm:px-8 lg:px-0 pb-4 max-w-[964px] pt-10 sm:pb-4 lg:pb-14';
 
 export default function Posts() {
   const totalItems = 132; // 제가 임시로 지정해둔 전체 아이템 수 입니다
@@ -19,13 +20,19 @@ export default function Posts() {
           <CustomNotices />
         </div>
       </div>
-      <div className={`mb-5 ${container} sm:flex sm:items-center sm:justify-between`}>
-        <h2 className="text-xl font-bold text-gray-black sm:text-[28px]">전체 공고</h2>
-        <div className="mt-4 flex items-center gap-3">
-          <NoticeDropdown />
-          <DetailedFilter />
+
+      {/* 현재 전체 공고 레이아웃만 구현된 상태입니다. 페이지네이션, 드롭다운, 정렬 연동 아직 안 했습니다. */}
+      <div className={`${container} mb-8 flex flex-col lg:mb-0`}>
+        <div className={`mb-5 sm:flex sm:items-center sm:justify-between`}>
+          <h2 className="text-xl font-bold text-gray-black sm:text-[28px]">전체 공고</h2>
+          <div className="mt-12 flex items-center gap-3">
+            <NoticeDropdown />
+            <DetailedFilter />
+          </div>
         </div>
+        <AllNotices />
       </div>
+
       <Pagination totalItems={totalItems} itemsPerPage={itemsPerPage} className="mb-16" />
     </div>
   );
