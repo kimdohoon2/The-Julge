@@ -25,11 +25,14 @@ const Pagination: React.FC<PaginationProps> = ({
   const startPage = Math.floor((activePage - 1) / pageRangeDisplayed) * pageRangeDisplayed + 1;
   const endPage = Math.min(startPage + pageRangeDisplayed - 1, totalPages);
 
+  const arrowButtonClass =
+    'flex h-5 w-5 items-center justify-center text-gray-black disabled:text-gray-40';
+
   return (
     <div className="flex items-center justify-center gap-2 sm:gap-4">
       <button
         disabled={activePage === 1}
-        className="flex h-5 w-5 items-center justify-center text-gray-black disabled:text-gray-40"
+        className={arrowButtonClass}
         onClick={() => movePage(activePage - 1)}
       >
         &lt;
@@ -54,7 +57,7 @@ const Pagination: React.FC<PaginationProps> = ({
 
       <button
         disabled={activePage === totalPages}
-        className="flex h-5 w-5 items-center justify-center text-gray-black disabled:text-gray-40"
+        className={arrowButtonClass}
         onClick={() => movePage(activePage + 1)}
       >
         &gt;
