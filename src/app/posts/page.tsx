@@ -14,7 +14,27 @@ export default function Posts() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
   const [sortOption, setSortOption] = useState('마감임박순');
+
+  const [filterOptions, setFilterOptions] = useState<{
+    locations: string[];
+    startDate: string;
+    amount: string;
+  }>({
+    locations: [],
+    startDate: '',
+    amount: '',
+  });
+
   const itemsPerPage = 6;
+
+  const handleFilterChange = (filters: {
+    locations: string[];
+    startDate: string;
+    amount: string;
+  }) => {
+    setFilterOptions(filters);
+    setCurrentPage(1);
+  };
 
   return (
     <div>
@@ -32,7 +52,7 @@ export default function Posts() {
           <h2 className="text-xl font-bold text-gray-black sm:text-[28px]">전체 공고</h2>
           <div className="mt-12 flex items-center gap-3">
             <NoticeDropdown onChange={setSortOption} />
-            <DetailedFilter />
+            <DetailedFilter onFilterChange={handleFilterChange} />
           </div>
         </div>
         <AllNotices
@@ -40,6 +60,7 @@ export default function Posts() {
           itemsPerPage={itemsPerPage}
           setTotalItems={setTotalItems}
           sortOption={formatSortToApi(sortOption)}
+          filterOptions={filterOptions}
         />
       </div>
 

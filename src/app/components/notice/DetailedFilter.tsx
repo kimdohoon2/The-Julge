@@ -20,7 +20,9 @@ const calculateFilterCount = (
   return selectedLocations.length + (startDate ? 1 : 0) + (amount ? 1 : 0);
 };
 
-const DetailedFilter: React.FC = () => {
+const DetailedFilter: React.FC<{
+  onFilterChange: (filters: { locations: string[]; startDate: string; amount: string }) => void;
+}> = ({ onFilterChange }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
   const [startDate, setStartDate] = useState<string>('');
@@ -33,6 +35,15 @@ const DetailedFilter: React.FC = () => {
   };
 
   const filterCount = calculateFilterCount(selectedLocations, startDate, amount);
+
+  const handleApplyFilters = () => {
+    onFilterChange({
+      locations: selectedLocations,
+      startDate: startDate,
+      amount: amount,
+    });
+    setIsOpen(false);
+  };
 
   return (
     <div className="relative w-full">
@@ -125,7 +136,7 @@ const DetailedFilter: React.FC = () => {
               초기화
             </button>
             <button
-              onClick={() => setIsOpen(false)}
+              onClick={handleApplyFilters}
               className="w-[67%] rounded-md bg-orange px-4 py-2 text-white"
             >
               적용하기

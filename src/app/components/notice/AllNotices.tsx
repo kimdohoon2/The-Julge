@@ -29,6 +29,7 @@ interface AllNoticesProps {
   itemsPerPage: number;
   setTotalItems: (total: number) => void;
   sortOption: string;
+  filterOptions: { locations: string[]; startDate: string; amount: string };
 }
 
 export default function AllNotices({
@@ -36,17 +37,34 @@ export default function AllNotices({
   itemsPerPage,
   setTotalItems,
   sortOption,
+  filterOptions,
 }: AllNoticesProps) {
   const [notices, setNotices] = useState<NoticeItem[]>([]);
 
   useEffect(() => {
     const fetchNotices = async () => {
       try {
-        const response = await axios.get(
-          `https://bootcamp-api.codeit.kr/api/11-2/the-julge/notices?offset=${
-            (currentPage - 1) * itemsPerPage
-          }&limit=${itemsPerPage}&sort=${sortOption}`
-        );
+        let url = `https://bootcamp-api.codeit.kr/api/11-2/the-julge/notices?offset=${
+          (currentPage - 1) * itemsPerPage
+        }&limit=${itemsPerPage}&sort=${sortOption}`;
+
+        if (filterOptions.locations.length > 0) {
+          filterOptions.locations.forEach((location) => {
+            url += `&address=${encodeURIComponent(location)}`;
+          });
+        }
+
+        if (filterOptions.startDate) {
+          const date = new Date(filterOptions.startDate);
+          const formattedDate = date.toISOString();
+          url += `&startsAtGte=${formattedDate}`;
+        }
+
+        if (filterOptions.amount) {
+          url += `&hourlyPayGte=${filterOptions.amount}`;
+        }
+
+        const response = await axios.get(url);
         const formattedData = response.data.items.map((data: { item: NoticeItem }) => data.item);
         setNotices(formattedData);
         setTotalItems(response.data.count);
@@ -56,7 +74,7 @@ export default function AllNotices({
     };
 
     fetchNotices();
-  }, [currentPage, itemsPerPage, setTotalItems, sortOption]);
+  }, [currentPage, itemsPerPage, setTotalItems, sortOption, filterOptions]);
 
   return (
     <div className="grid grid-cols-2 gap-4 lg:grid-cols-3">
