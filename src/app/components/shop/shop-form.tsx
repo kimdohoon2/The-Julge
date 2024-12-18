@@ -5,14 +5,15 @@ import DropDownBtn from '../common/drop-down';
 import Button from '../common/Button';
 import { useState } from 'react';
 import { shopFromCategories, seoulLocation } from '@/app/constants/shop-form-constants';
+import { presignedImg, uploadToS3 } from '@/app/api/register-api';
 
 interface ShopFormData {
-  shopName: string;
-  selectedCategory: string;
-  addressCategory: string;
-  moreAddress: string;
-  wage: string;
-  image?: File | null;
+  name: string;
+  category: string;
+  address1: string;
+  address2: string;
+  originalHourlyPay: string;
+  imageUrl?: string;
   description: string;
 }
 
@@ -23,50 +24,50 @@ export default function ShopCommonForm({
 }: {
   mode?: 'create' | 'edit';
   initialData?: {
-    shopName?: string;
-    selectedCategory?: string;
-    addressCategory?: string;
-    moreAddress?: string;
-    wage?: string;
+    name?: string;
+    category?: string;
+    address1?: string;
+    address2?: string;
+    originalHourlyPay?: string;
     description?: string;
     previewUrl?: string;
   };
   onSubmit: (formData: ShopFormData) => void;
 }) {
   const [file, setFile] = useState<File | null>(null); // 파일 상태
-  const [shopName, setShopName] = useState(initialData?.shopName || '');
-  const [selectedCategory, setSelectedCategory] = useState(initialData?.selectedCategory || '');
-  const [addressCategory, setAddressCategory] = useState(initialData?.addressCategory || '');
-  const [moreAddress, setMoreAddress] = useState(initialData?.moreAddress || '');
-  const [wage, setWage] = useState(initialData?.wage || '');
+  const [name, setName] = useState(initialData?.name || '');
+  const [category, setCategory] = useState(initialData?.category || '');
+  const [address1, setAddress1] = useState(initialData?.address1 || '');
+  const [address2, setAddress2] = useState(initialData?.address2 || '');
+  const [originalHourlyPay, setOriginalHourlyPay] = useState(initialData?.originalHourlyPay || '');
   const [description, setDescription] = useState(initialData?.description || '');
   const [previewUrl, setPreviewUrl] = useState(initialData?.previewUrl || null);
   const isFormValid =
-    shopName.trim() !== '' &&
-    selectedCategory.trim() !== '' &&
-    addressCategory.trim() !== '' &&
-    wage.trim() !== '';
+    name.trim() !== '' &&
+    category.trim() !== '' &&
+    address1.trim() !== '' &&
+    originalHourlyPay.trim() !== '';
 
   const renderDropDown = (
     id: string,
     categories: string[],
-    selected: string,
+    category: string,
     onSelect: (value: string) => void
   ) => (
     <DropDownBtn
       id={id}
       categories={categories}
-      selectedCategory={selected}
+      selectedCategory={category}
       onSelectCategory={onSelect}
     />
   );
 
   const handleCategorySelect = (shopFromCategories: string) => {
-    setSelectedCategory(shopFromCategories);
+    setCategory(shopFromCategories);
   };
 
-  const handleAddressCategorySelect = (addressCategory: string) => {
-    setAddressCategory(addressCategory);
+  const handleAddressCategorySelect = (address1: string) => {
+    setAddress1(address1);
   };
 
   // 파일 선택 핸들러
@@ -90,33 +91,56 @@ export default function ShopCommonForm({
   const handleWageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const input = e.target.value.replace(/,/g, '');
     if (input === '' || /^\d*$/.test(input)) {
-      setWage(input ? Number(input).toLocaleString() : '');
+      setOriginalHourlyPay(input ? Number(input).toLocaleString() : '');
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (!isFormValid) {
       alert('모든 필드를 올바르게 입력해 주세요!');
       return;
     }
-    const formData = {
-      shopName,
-      selectedCategory,
-      addressCategory,
-      moreAddress,
-      wage,
-      image: file,
-      description,
-    };
-    // Alert로 제출된 데이터 확인
-    alert(`Form Data: ${JSON.stringify(formData, null, 2)}`);
-    onSubmit(formData);
+
+    if (!file) {
+      alert('이미지를 선택해주세요!');
+      return;
+    }
+
+    try {
+      // 1. Presigned URL 받기
+      const { presignedUrl } = await presignedImg(file.name);
+
+      // 2. 이미지 파일을 S3에 업로드
+      const imageUrl = await uploadToS3(presignedUrl, file);
+
+      // 3. 업로드된 이미지 URL을 포함하여 폼 데이터 준비
+      const formData = {
+        name,
+        category,
+        address1,
+        address2,
+        originalHourlyPay,
+        imageUrl, // 업로드된 이미지 URL
+        description,
+      };
+
+      // Alert로 제출된 데이터 확인
+      alert(`Form Data: ${JSON.stringify(formData, null, 2)}`);
+
+      // 폼 데이터 서버로 전송 (onSubmit 사용)
+      onSubmit(formData);
+    } catch (error) {
+      console.error('폼 제출 중 오류 발생:', error);
+      alert('이미지 업로드 또는 제출에 실패했습니다. 다시 시도해주세요.');
+    }
   };
+
   return (
     <section className="md:pb-15 w-full bg-gray-5 px-3 pb-20 pt-36 md:px-8 md:pt-32 xl:px-60">
       <div className="mb-6 flex w-full items-center justify-between">
-        <h3 className="md:text-custom-xl flex-1 text-lg font-bold">가게 정보</h3>
+        <h3 className="flex-1 text-lg font-bold md:text-custom-xl">가게 정보</h3>
         <div className="h-auto w-full max-w-3.5 md:max-w-4">
           <Link href="/shop">
             <Image
@@ -132,16 +156,16 @@ export default function ShopCommonForm({
       <form className="flex w-full flex-col gap-6" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-6 md:w-full md:flex-row md:gap-5">
           <div className="flex flex-col gap-2 md:w-1/2">
-            <label className="text-base font-normal text-gray-black" htmlFor="ShopName">
+            <label className="text-base font-normal text-gray-black" htmlFor="name">
               가게이름*
             </label>
             <input
               className="rounded-md border border-gray-30 py-4 pl-5 text-base font-normal text-gray-black"
-              value={shopName}
-              onChange={(e) => setShopName(e.target.value)}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               type="text"
-              id="ShopName"
-              name="ShopName"
+              id="name"
+              name="name"
               placeholder="입력"
             />
           </div>
@@ -149,7 +173,7 @@ export default function ShopCommonForm({
             <label className="text-base font-normal text-gray-black" htmlFor="Category">
               분류*
             </label>
-            {renderDropDown('Category', shopFromCategories, selectedCategory, handleCategorySelect)}
+            {renderDropDown('Category', shopFromCategories, category, handleCategorySelect)}
           </div>
         </div>
         <div className="flex flex-col gap-6 md:w-full md:flex-row md:gap-5">
@@ -157,7 +181,7 @@ export default function ShopCommonForm({
             <label className="text-base font-normal text-gray-black" htmlFor="Address">
               주소*
             </label>
-            {renderDropDown('Address', seoulLocation, addressCategory, handleAddressCategorySelect)}
+            {renderDropDown('Address', seoulLocation, address1, handleAddressCategorySelect)}
           </div>
           <div className="flex flex-col gap-2 md:w-1/2">
             <label className="text-base font-normal text-gray-black" htmlFor="MoreAddress">
@@ -165,8 +189,8 @@ export default function ShopCommonForm({
             </label>
             <input
               className="rounded-md border border-gray-30 py-4 pl-5 text-base font-normal text-gray-black"
-              value={moreAddress}
-              onChange={(e) => setMoreAddress(e.target.value)}
+              value={address2}
+              onChange={(e) => setAddress2(e.target.value)}
               type="text"
               id="MoreAddress"
               name="MoreAddress"
@@ -175,17 +199,17 @@ export default function ShopCommonForm({
           </div>
         </div>
         <div className="flex flex-col gap-2 md:w-[49%]">
-          <label className="text-base font-normal text-gray-black" htmlFor="Wage">
+          <label className="text-base font-normal text-gray-black" htmlFor="originalHourlyPay">
             기본 시급*
           </label>
           <div className="relative w-full">
             <input
               className="w-full rounded-md border border-gray-30 py-4 pl-5 text-base font-normal text-gray-black"
               type="text"
-              value={wage}
+              value={originalHourlyPay}
               onChange={handleWageChange}
-              id="Wage"
-              name="Wage"
+              id="originalHourlyPay"
+              name="originalHourlyPay"
               placeholder="입력"
             />
             <span className="absolute right-5 top-1/2 z-10 -translate-y-1/2">원</span>
