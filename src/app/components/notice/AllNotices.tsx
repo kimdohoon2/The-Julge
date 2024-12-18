@@ -1,9 +1,11 @@
+// src/app/components/notice/AllNotices.tsx
+
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import Card from '../common/Card';
 import formatTimeRange from '@/app/utils/formatTimeRange';
+import { fetchNotices } from '@/app/api/noticeApi';
 
 interface ShopItem {
   name: string;
@@ -42,38 +44,18 @@ export default function AllNotices({
   const [notices, setNotices] = useState<NoticeItem[]>([]);
 
   useEffect(() => {
-    const fetchNotices = async () => {
+    const getNotices = async () => {
       try {
-        let url = `https://bootcamp-api.codeit.kr/api/11-2/the-julge/notices?offset=${
-          (currentPage - 1) * itemsPerPage
-        }&limit=${itemsPerPage}&sort=${sortOption}`;
-
-        if (filterOptions.locations.length > 0) {
-          filterOptions.locations.forEach((location) => {
-            url += `&address=${encodeURIComponent(location)}`;
-          });
-        }
-
-        if (filterOptions.startDate) {
-          const date = new Date(filterOptions.startDate);
-          const formattedDate = date.toISOString();
-          url += `&startsAtGte=${formattedDate}`;
-        }
-
-        if (filterOptions.amount) {
-          url += `&hourlyPayGte=${filterOptions.amount}`;
-        }
-
-        const response = await axios.get(url);
-        const formattedData = response.data.items.map((data: { item: NoticeItem }) => data.item);
+        const response = await fetchNotices(currentPage, itemsPerPage, sortOption, filterOptions);
+        const formattedData = response.items.map((data) => data.item);
         setNotices(formattedData);
-        setTotalItems(response.data.count);
+        setTotalItems(response.count);
       } catch (error) {
         console.error('Error fetching notices:', error);
       }
     };
 
-    fetchNotices();
+    getNotices();
   }, [currentPage, itemsPerPage, setTotalItems, sortOption, filterOptions]);
 
   return (
