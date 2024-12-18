@@ -24,24 +24,33 @@ interface NoticeItem {
   };
 }
 
-export default function AllNotices() {
+interface AllNoticesProps {
+  currentPage: number;
+  itemsPerPage: number;
+  setTotalItems: (total: number) => void; // 부모에게 totalItems 값을 전달하는 함수
+}
+
+export default function AllNotices({ currentPage, itemsPerPage, setTotalItems }: AllNoticesProps) {
   const [notices, setNotices] = useState<NoticeItem[]>([]);
 
   useEffect(() => {
     const fetchNotices = async () => {
       try {
         const response = await axios.get(
-          'https://bootcamp-api.codeit.kr/api/11-2/the-julge/notices?offset=0&limit=10'
+          `https://bootcamp-api.codeit.kr/api/11-2/the-julge/notices?offset=${
+            (currentPage - 1) * itemsPerPage
+          }&limit=${itemsPerPage}`
         );
         const formattedData = response.data.items.map((data: { item: NoticeItem }) => data.item);
         setNotices(formattedData);
+        setTotalItems(response.data.count);
       } catch (error) {
         console.error('Error fetching notices:', error);
       }
     };
 
     fetchNotices();
-  }, []);
+  }, [currentPage, itemsPerPage, setTotalItems]);
 
   return (
     <div className="grid grid-cols-2 gap-4 lg:grid-cols-3">
