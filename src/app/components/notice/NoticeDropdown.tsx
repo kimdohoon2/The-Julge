@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 
-const PostDropdown: React.FC = () => {
+const NoticeDropdown: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState('마감임박순');
 
@@ -41,4 +41,4 @@ const PostDropdown: React.FC = () => {
   );
 };
 
-export default PostDropdown;
+export default NoticeDropdown;
