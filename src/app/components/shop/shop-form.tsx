@@ -42,10 +42,12 @@ export default function ShopCommonForm({
   const [originalHourlyPay, setOriginalHourlyPay] = useState(initialData?.originalHourlyPay || '');
   const [description, setDescription] = useState(initialData?.description || '');
   const [previewUrl, setPreviewUrl] = useState(initialData?.previewUrl || null);
+
   const isFormValid =
     name.trim() !== '' &&
     category.trim() !== '' &&
     address1.trim() !== '' &&
+    address2.trim() !== '' &&
     originalHourlyPay.trim() !== '';
 
   const renderDropDown = (
