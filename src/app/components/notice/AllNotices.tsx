@@ -27,10 +27,16 @@ interface NoticeItem {
 interface AllNoticesProps {
   currentPage: number;
   itemsPerPage: number;
-  setTotalItems: (total: number) => void; // 부모에게 totalItems 값을 전달하는 함수
+  setTotalItems: (total: number) => void;
+  sortOption: string;
 }
 
-export default function AllNotices({ currentPage, itemsPerPage, setTotalItems }: AllNoticesProps) {
+export default function AllNotices({
+  currentPage,
+  itemsPerPage,
+  setTotalItems,
+  sortOption,
+}: AllNoticesProps) {
   const [notices, setNotices] = useState<NoticeItem[]>([]);
 
   useEffect(() => {
@@ -39,7 +45,7 @@ export default function AllNotices({ currentPage, itemsPerPage, setTotalItems }:
         const response = await axios.get(
           `https://bootcamp-api.codeit.kr/api/11-2/the-julge/notices?offset=${
             (currentPage - 1) * itemsPerPage
-          }&limit=${itemsPerPage}`
+          }&limit=${itemsPerPage}&sort=${sortOption}`
         );
         const formattedData = response.data.items.map((data: { item: NoticeItem }) => data.item);
         setNotices(formattedData);
@@ -50,7 +56,7 @@ export default function AllNotices({ currentPage, itemsPerPage, setTotalItems }:
     };
 
     fetchNotices();
-  }, [currentPage, itemsPerPage, setTotalItems]);
+  }, [currentPage, itemsPerPage, setTotalItems, sortOption]);
 
   return (
     <div className="grid grid-cols-2 gap-4 lg:grid-cols-3">

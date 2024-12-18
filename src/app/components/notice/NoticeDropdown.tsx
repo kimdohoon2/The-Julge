@@ -2,11 +2,17 @@
 
 import React, { useState } from 'react';
 
-const NoticeDropdown: React.FC = () => {
+const NoticeDropdown: React.FC<{ onChange: (sortOption: string) => void }> = ({ onChange }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState('마감임박순');
 
   const menuItems = ['마감임박순', '시급많은순', '시간적은순', '가나다순'];
+
+  const handleSelectItem = (item: string) => {
+    setSelectedItem(item);
+    onChange(item);
+    setIsOpen(false);
+  };
 
   return (
     <div className="relative inline-block">
@@ -23,13 +29,8 @@ const NoticeDropdown: React.FC = () => {
           {menuItems.map((item, index) => (
             <li key={index}>
               <button
-                className={`block h-8 w-full text-center text-sm text-gray-black hover:bg-gray-100 ${
-                  index !== menuItems.length - 1 ? 'border-b border-gray-20' : ''
-                }`}
-                onClick={() => {
-                  setSelectedItem(item);
-                  setIsOpen(false);
-                }}
+                className={`block h-8 w-full text-center text-sm text-gray-black hover:bg-gray-100 ${index !== menuItems.length - 1 ? 'border-b border-gray-20' : ''}`}
+                onClick={() => handleSelectItem(item)}
               >
                 {item}
               </button>
