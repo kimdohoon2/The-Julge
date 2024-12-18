@@ -105,7 +105,7 @@ const Notification = ({ isModalOpen, toggleModal }: NotificationProps) => {
       <div className="absolute left-1/2 top-0 size-full max-w-5xl -translate-x-1/2 transform">
         <div
           ref={modalRef}
-          className="absolute inset-x-0 size-full bg-red-10 p-6 px-5 py-10 sm:left-auto sm:top-14 sm:mr-8 sm:h-auto sm:w-96 sm:rounded-[0.625rem] sm:border-gray-30 sm:shadow-[0_2px_8px_rgba(120,_116,_134,_0.25)] lg:mr-0"
+          className="absolute inset-x-0 size-full bg-red-10 p-6 px-5 py-10 sm:left-auto sm:top-14 sm:mr-8 sm:h-auto sm:w-96 sm:rounded-[0.625rem] sm:border-gray-30 sm:py-6 sm:shadow-[0_2px_8px_rgba(120,_116,_134,_0.25)] lg:mr-0"
         >
           <div className="mb-4 flex items-center justify-between">
             <h3 className="text-[1.25rem] font-bold">알림 {notifications.length}개</h3>
