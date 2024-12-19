@@ -4,6 +4,7 @@ import './styles/globals.css';
 import Footer from './components/layout/Footer';
 import Head from 'next/head';
 import { AuthProvider } from './context/authContext';
+import Header from './components/navigation/Header';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -25,6 +26,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  //헤더 없는 페이지
+  const hiddenPaths = ['/login', '/signup'];
+
   return (
     <html lang="ko">
       <Head>
@@ -32,6 +36,7 @@ export default function RootLayout({
       </Head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <AuthProvider>
+          <Header hiddenPaths={hiddenPaths} />
           {children}
           <Footer />
         </AuthProvider>
