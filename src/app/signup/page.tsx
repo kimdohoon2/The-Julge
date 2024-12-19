@@ -5,6 +5,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Modal from '../components/modal/modal';
+import Button from '../components/common/Button';
 
 // Form 데이터 타입 정의
 interface SignupFormInputs {
@@ -205,12 +206,9 @@ function SignupPage() {
           </div>
 
           {/* 가입하기 버튼 */}
-          <button
-            type="submit"
-            className="mt-2 w-full rounded-md bg-red-50 px-32 py-3 text-gray-white"
-          >
+          <Button type="submit" className="mt-2 px-32 py-3">
             가입하기
-          </button>
+          </Button>
         </form>
 
         <p className="mt-6 text-center" style={{ color: '#333236' }}>
