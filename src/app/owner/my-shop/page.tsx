@@ -1,8 +1,20 @@
 'use client';
 
 import AddPost from '@/app/components/my-shop/AddPost';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import useAuthStore from '@/app/stores/authStore';
 
 export default function MyShopPage() {
+  const router = useRouter();
+  const { type } = useAuthStore();
+
+  useEffect(() => {
+    if (type !== 'employer') {
+      router.push('/');
+    }
+  }, [type, router]);
+
   return (
     <>
       <div className="container">

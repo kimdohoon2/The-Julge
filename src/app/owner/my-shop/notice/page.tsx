@@ -1,10 +1,9 @@
 'use client';
 
 import useAuthStore from '@/app/stores/authStore';
-import { useEffect } from 'react';
 
 export default function NoticePage() {
-  const { login, signup, user, userId, logout, getMe } = useAuthStore();
+  const { login, signup, user, userId, type, logout, getMe } = useAuthStore();
 
   const handleLogin = async () => {
     console.log(await login({ email: 'qwerasdf@asdf.com', password: 'asdfasdf1' }));
@@ -27,7 +26,7 @@ export default function NoticePage() {
   };
 
   const handleGetMe = async () => {
-    await getMe();
+    console.log(await getMe());
   };
 
   const handleUser = () => {
@@ -39,12 +38,13 @@ export default function NoticePage() {
   };
 
   const handleShopId = () => {
-    console.log('');
+    if (user && user.shop) console.log(user.shop);
+    else console.log('shop 없음');
   };
 
-  useEffect(() => {
-    console.log(user, userId);
-  }, [user, userId]);
+  const handleType = () => {
+    console.log(type);
+  };
 
   return (
     <>
@@ -56,6 +56,7 @@ export default function NoticePage() {
         <button onClick={handleUser}>user</button>
         <button onClick={handleUserId}>userId</button>
         <button onClick={handleShopId}>shopId</button>
+        <button onClick={handleType}>type</button>
       </div>
     </>
   );
