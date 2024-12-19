@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { LOCATION_LIST } from '../constants/location';
+import { LOCATION_LIST } from '../../constants/location';
 
 const inputClass =
   'h-14 w-full rounded-md border border-gray-30 px-4 py-1 text-gray-black focus:outline-none focus:ring';
@@ -20,7 +20,9 @@ const calculateFilterCount = (
   return selectedLocations.length + (startDate ? 1 : 0) + (amount ? 1 : 0);
 };
 
-const DetailedFilter: React.FC = () => {
+const DetailedFilter: React.FC<{
+  onFilterChange: (filters: { locations: string[]; startDate: string; amount: string }) => void;
+}> = ({ onFilterChange }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
   const [startDate, setStartDate] = useState<string>('');
@@ -33,6 +35,15 @@ const DetailedFilter: React.FC = () => {
   };
 
   const filterCount = calculateFilterCount(selectedLocations, startDate, amount);
+
+  const handleApplyFilters = () => {
+    onFilterChange({
+      locations: selectedLocations,
+      startDate: startDate,
+      amount: amount,
+    });
+    setIsOpen(false);
+  };
 
   return (
     <div className="relative w-full">
@@ -54,7 +65,7 @@ const DetailedFilter: React.FC = () => {
 
           <div className="mb-4">
             <h3 className="mb-2 text-base">위치</h3>
-            <div className="custom-scrollbar grid max-h-48 grid-cols-2 gap-2 overflow-auto rounded-md border p-3">
+            <div className="grid max-h-48 grid-cols-2 gap-2 overflow-auto rounded-md border p-3 custom-scrollbar">
               {LOCATION_LIST.map((location) => (
                 <button
                   key={location}
@@ -106,7 +117,7 @@ const DetailedFilter: React.FC = () => {
                   type="number"
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
-                  className={`${inputClass} no-spinner pr-10`}
+                  className={`${inputClass} pr-10 no-spinner`}
                   placeholder="입력"
                 />
                 <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-black">
@@ -125,7 +136,7 @@ const DetailedFilter: React.FC = () => {
               초기화
             </button>
             <button
-              onClick={() => setIsOpen(false)}
+              onClick={handleApplyFilters}
               className="w-[67%] rounded-md bg-orange px-4 py-2 text-white"
             >
               적용하기

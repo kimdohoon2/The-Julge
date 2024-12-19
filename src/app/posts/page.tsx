@@ -1,32 +1,76 @@
-import CardList from '../components/CardList';
-import DetailedFilter from '../components/DetailedFilter';
-import Pagination from '../components/Pagination';
-import PostDropdown from '../components/PostDropdown';
+'use client';
 
-const container = 'px-4 pb-4 pt-10 sm:px-6 sm:pb-4 lg:px-60 lg:pb-16';
+import React, { useState } from 'react';
+import AllNotices from '../components/notice/AllNotices';
+import CustomNotices from '../components/notice/CustomNotices';
+import DetailedFilter from '../components/notice/DetailedFilter';
+import NoticeDropdown from '../components/notice/NoticeDropdown';
+import Pagination from '../components/notice/Pagination';
+import formatSortToApi from '../utils/formatSortToApi';
+
+const container = 'mx-auto px-4 sm:px-8 lg:px-0 pb-4 max-w-[964px] pt-10 sm:pb-4 lg:pb-14';
 
 export default function Posts() {
-  const totalItems = 132; // 제가 임시로 지정해둔 전체 아이템 수 입니다
-  const itemsPerPage = 6; // 제가 임시로 지정해둔 한 번에 보여줄 아이템 수 입니다
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalItems, setTotalItems] = useState(0);
+  const [sortOption, setSortOption] = useState('마감임박순');
+
+  const [filterOptions, setFilterOptions] = useState<{
+    locations: string[];
+    startDate: string;
+    amount: string;
+  }>({
+    locations: [],
+    startDate: '',
+    amount: '',
+  });
+
+  const itemsPerPage = 6;
+
+  const handleFilterChange = (filters: {
+    locations: string[];
+    startDate: string;
+    amount: string;
+  }) => {
+    setFilterOptions(filters);
+    setCurrentPage(1);
+  };
+
   return (
     <div>
-      {/* 검색으로 변하는 페이지는 나중에 고려할게요
-      맞춤은 지역으로 설정해야 하는데 이 부분은 사용자 프로필 등록 이후에 로직을 추가해보겠습니다. */}
       <header>임시헤더입니다~~~~~~</header>
+
       <div className="mt-6 bg-red-10">
         <div className={`sm:pt-14 ${container}`}>
           <h2 className="mb-5 text-xl font-bold text-gray-black sm:text-[28px]">맞춤 공고</h2>
-          <CardList />
+          <CustomNotices />
         </div>
       </div>
-      <div className={`mb-5 ${container} sm:flex sm:items-center sm:justify-between`}>
-        <h2 className="text-xl font-bold text-gray-black sm:text-[28px]">전체 공고</h2>
-        <div className="mt-4 flex items-center gap-3">
-          <PostDropdown />
-          <DetailedFilter />
+
+      <div className={`${container} mb-8 flex flex-col lg:mb-0`}>
+        <div className={`mb-5 sm:flex sm:items-center sm:justify-between`}>
+          <h2 className="text-xl font-bold text-gray-black sm:text-[28px]">전체 공고</h2>
+          <div className="mt-12 flex items-center gap-3">
+            <NoticeDropdown onChange={setSortOption} />
+            <DetailedFilter onFilterChange={handleFilterChange} />
+          </div>
         </div>
+        <AllNotices
+          currentPage={currentPage}
+          itemsPerPage={itemsPerPage}
+          setTotalItems={setTotalItems}
+          sortOption={formatSortToApi(sortOption)}
+          filterOptions={filterOptions}
+        />
       </div>
-      <Pagination totalItems={totalItems} itemsPerPage={itemsPerPage} className="mb-16" />
+
+      <Pagination
+        totalItems={totalItems}
+        itemsPerPage={itemsPerPage}
+        currentPage={currentPage}
+        onPageChange={setCurrentPage}
+        className="mb-16"
+      />
     </div>
   );
 }
