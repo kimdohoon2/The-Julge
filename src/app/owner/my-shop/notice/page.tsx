@@ -1,15 +1,16 @@
 'use client';
 
-import { useAuth } from '@/app/context/authContext';
+import useAuthStore from '@/app/stores/authStore';
 import { useEffect } from 'react';
 
 export default function NoticePage() {
-  const { login, signup, user, userId, logout, getMe } = useAuth();
+  const { login, signup, user, userId, logout, getMe } = useAuthStore();
 
   const handleLogin = async () => {
     console.log(await login({ email: 'qwerasdf@asdf.com', password: 'asdfasdf1' }));
   };
 
+  // 테스트 시 signup email, password 변경 필요
   const handleSignup = async () => {
     console.log(
       await signup({

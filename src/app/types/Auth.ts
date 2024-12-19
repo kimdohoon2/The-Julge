@@ -32,7 +32,7 @@ export interface AuthResponse {
   links: [];
 }
 
-export interface AuthContextType {
+export interface AuthStore {
   user: User | null;
   userId: string | null;
   getMe: () => void;
