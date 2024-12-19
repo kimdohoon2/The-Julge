@@ -5,6 +5,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Modal from '../components/modal/modal';
+import Button from '../components/common/Button';
 
 // Form 데이터 타입 정의
 interface LoginFormInputs {
@@ -84,7 +85,7 @@ function LoginPage() {
               className={`w-full rounded-md border px-5 py-4 text-sm`}
               placeholder="입력"
             />
-            {errors.email && <p className="mt-1 text-sm text-red-40">{errors.email?.message}</p>}
+            {errors.email && <p className="mt-1 text-sm text-red-50">{errors.email?.message}</p>}
           </div>
 
           <div className="flex flex-col gap-2">
@@ -109,16 +110,13 @@ function LoginPage() {
               placeholder="입력"
             />
             {errors.password && (
-              <p className="mt-1 text-sm text-red-40">{errors.password?.message}</p>
+              <p className="mt-1 text-sm text-red-50">{errors.password?.message}</p>
             )}
           </div>
 
-          <button
-            type="submit"
-            className="mt-2 w-full rounded-md bg-red-40 px-32 py-3 font-semibold text-gray-white"
-          >
+          <Button type="submit" className="mt-2 px-32 py-3">
             로그인 하기
-          </button>
+          </Button>
         </form>
 
         <p className="mt-6 text-center font-sans" style={{ color: '#333236' }}>
