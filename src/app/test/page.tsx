@@ -8,7 +8,7 @@ export default function Test() {
     category: string;
     address1: string;
     address2: string;
-    originalHourlyPay: string;
+    originalHourlyPay: number;
     imageUrl?: string;
     description: string;
   }) => {
