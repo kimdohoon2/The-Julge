@@ -9,9 +9,10 @@ const useAuthStore = create<AuthStore>()(
       user: null,
       userId: null,
       type: null,
+      token: null,
 
       getMe: async () => {
-        const token = localStorage.getItem('token');
+        const token = get().token;
         const userId = get().userId;
 
         if (!token || !userId) {
@@ -47,7 +48,7 @@ const useAuthStore = create<AuthStore>()(
           },
         });
 
-        localStorage.setItem('token', response.data.item.token);
+        set({ token: response.data.item.token });
         set({ userId: response.data.item.user.item.id });
 
         await get().getMe();
@@ -56,10 +57,10 @@ const useAuthStore = create<AuthStore>()(
       },
 
       logout: () => {
-        localStorage.removeItem('token');
         set({ user: null });
         set({ userId: null });
         set({ type: null });
+        set({ token: null });
       },
     }),
     {

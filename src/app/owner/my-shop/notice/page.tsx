@@ -3,7 +3,7 @@
 import useAuthStore from '@/app/stores/authStore';
 
 export default function NoticePage() {
-  const { login, signup, user, userId, type, logout, getMe } = useAuthStore();
+  const { login, signup, logout, getMe, user, userId, type, token } = useAuthStore();
 
   const handleLogin = async () => {
     console.log(await login({ email: 'qwerasdf@asdf.com', password: 'asdfasdf1' }));
@@ -46,6 +46,10 @@ export default function NoticePage() {
     console.log(type);
   };
 
+  const handleToken = () => {
+    console.log(token);
+  };
+
   return (
     <>
       <div className="flex flex-col">
@@ -57,6 +61,7 @@ export default function NoticePage() {
         <button onClick={handleUserId}>userId</button>
         <button onClick={handleShopId}>shopId</button>
         <button onClick={handleType}>type</button>
+        <button onClick={handleToken}>token</button>
       </div>
     </>
   );
