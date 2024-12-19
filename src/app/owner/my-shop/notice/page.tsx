@@ -7,13 +7,13 @@ export default function NoticePage() {
   const { login, signup, user, userId, logout, getMe } = useAuth();
 
   const handleLogin = async () => {
-    console.log(await login({ email: 'qwer1@asdf.com', password: 'asdfasdf1' }));
+    console.log(await login({ email: 'qwerasdf@asdf.com', password: 'asdfasdf1' }));
   };
 
   const handleSignup = async () => {
     console.log(
       await signup({
-        email: 'qwer1@asdf.com',
+        email: 'qwerasdf@asdf.com',
         password: 'asdfasdf1',
         type: 'employer',
       })
