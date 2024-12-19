@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss';
+import plugin from 'tailwindcss/plugin';
 
 export default {
   content: [
@@ -39,8 +40,41 @@ export default {
           10: '#D4F7D4',
         },
         kakao: '#FEE500',
+        orange: '#EA3C12',
+      },
+      fontSize: {
+        'custom-xl': '1.75rem', //28px
       },
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(function ({ addUtilities }) {
+      addUtilities({
+        '.no-spinner': {
+          '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
+            '-webkit-appearance': 'none',
+            margin: '0',
+          },
+          '-moz-appearance': 'textfield',
+        },
+        '.custom-scrollbar::-webkit-scrollbar': {
+          width: '6px',
+          height: '6px',
+        },
+        '.custom-scrollbar::-webkit-scrollbar-track': {
+          background: 'transparent',
+        },
+        '.custom-scrollbar::-webkit-scrollbar-thumb': {
+          background: '#7d7986',
+          'border-radius': '40px',
+        },
+        '.custom-scrollbar::-webkit-scrollbar-thumb:hover': {
+          background: '#9ca3af',
+        },
+        '.custom-scrollbar::-webkit-scrollbar-button': {
+          display: 'none',
+        },
+      });
+    }),
+  ],
 } satisfies Config;
