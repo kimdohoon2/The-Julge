@@ -12,7 +12,7 @@ interface ShopFormData {
   category: string;
   address1: string;
   address2: string;
-  originalHourlyPay: string;
+  originalHourlyPay: number;
   imageUrl?: string;
   description: string;
 }
@@ -28,7 +28,7 @@ export default function ShopCommonForm({
     category?: string;
     address1?: string;
     address2?: string;
-    originalHourlyPay?: string;
+    originalHourlyPay?: number;
     description?: string;
     previewUrl?: string;
   };
@@ -39,7 +39,9 @@ export default function ShopCommonForm({
   const [category, setCategory] = useState(initialData?.category || '');
   const [address1, setAddress1] = useState(initialData?.address1 || '');
   const [address2, setAddress2] = useState(initialData?.address2 || '');
-  const [originalHourlyPay, setOriginalHourlyPay] = useState(initialData?.originalHourlyPay || '');
+  const [originalHourlyPay, setOriginalHourlyPay] = useState<number>(
+    initialData?.originalHourlyPay || 0
+  );
   const [description, setDescription] = useState(initialData?.description || '');
   const [previewUrl, setPreviewUrl] = useState(initialData?.previewUrl || null);
 
@@ -48,7 +50,7 @@ export default function ShopCommonForm({
     category.trim() !== '' &&
     address1.trim() !== '' &&
     address2.trim() !== '' &&
-    originalHourlyPay.trim() !== '';
+    originalHourlyPay > 0;
 
   const renderDropDown = (
     id: string,
@@ -91,9 +93,10 @@ export default function ShopCommonForm({
   };
 
   const handleWageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const input = e.target.value.replace(/,/g, '');
+    const input = e.target.value.replace(/,/g, ''); // 숫자만 남기기
     if (input === '' || /^\d*$/.test(input)) {
-      setOriginalHourlyPay(input ? Number(input).toLocaleString() : '');
+      const numericValue = input ? parseInt(input, 10) : 0; // 입력값을 숫자로 변환
+      setOriginalHourlyPay(numericValue); // 숫자로 상태 설정
     }
   };
 
@@ -112,10 +115,15 @@ export default function ShopCommonForm({
 
     try {
       // 1. Presigned URL 받기
-      const { presignedUrl } = await presignedImg(file.name);
+      const presignedUrl: string = await presignedImg(file.name);
+      console.log(presignedUrl);
 
       // 2. 이미지 파일을 S3에 업로드
-      const imageUrl = await uploadToS3(presignedUrl, file);
+      const uploadedUrl = await uploadToS3(presignedUrl, file);
+      console.log(uploadedUrl);
+
+      const imageUrl = uploadedUrl.split('?')[0]; // Presigned URL에서 쿼리 제거
+      console.log('Final Image URL:', imageUrl);
 
       // 3. 업로드된 이미지 URL을 포함하여 폼 데이터 준비
       const formData = {
@@ -208,7 +216,7 @@ export default function ShopCommonForm({
             <input
               className="w-full rounded-md border border-gray-30 py-4 pl-5 text-base font-normal text-gray-black"
               type="text"
-              value={originalHourlyPay}
+              value={originalHourlyPay.toLocaleString()}
               onChange={handleWageChange}
               id="originalHourlyPay"
               name="originalHourlyPay"
