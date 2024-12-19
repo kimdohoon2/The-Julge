@@ -23,7 +23,8 @@ body {
 
 @layer utilities {
   .container {
-    width: 75%;
+    max-width: 964px;
+    width: 90%;
     margin: 0 auto;
   }
 

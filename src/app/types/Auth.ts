@@ -5,6 +5,7 @@ export interface Auth {
 }
 
 export interface Shop {
+  id: string;
   name: string;
   category: string;
   address1: string;
@@ -18,12 +19,12 @@ export interface User {
   id: string;
   email: string;
   type: 'employer' | 'employee';
-  name?: string;
-  phone?: string;
-  address?: string;
-  bio?: string;
-  shop?: {
-    item: Shop | null;
+  name: string;
+  phone: string;
+  address: string;
+  bio: string;
+  shop: null | {
+    item: Shop;
   };
 }
 
