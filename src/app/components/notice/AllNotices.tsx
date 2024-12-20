@@ -1,5 +1,3 @@
-// src/app/components/notice/AllNotices.tsx
-
 'use client';
 
 import React, { useState, useEffect } from 'react';
@@ -8,6 +6,7 @@ import formatTimeRange from '@/app/utils/formatTimeRange';
 import { fetchNotices } from '@/app/api/noticeApi';
 
 interface ShopItem {
+  id: string;
   name: string;
   address1: string;
   imageUrl: string;
@@ -24,6 +23,7 @@ interface NoticeItem {
   shop: {
     item: ShopItem;
   };
+  shopId: string;
 }
 
 interface AllNoticesProps {
@@ -46,10 +46,14 @@ export default function AllNotices({
   useEffect(() => {
     const getNotices = async () => {
       try {
-        const response = await fetchNotices(currentPage, itemsPerPage, sortOption, filterOptions);
-        const formattedData = response.items.map((data) => data.item);
-        setNotices(formattedData);
-        setTotalItems(response.count);
+        const { items, count } = await fetchNotices(
+          currentPage,
+          itemsPerPage,
+          sortOption,
+          filterOptions
+        );
+        setNotices(items);
+        setTotalItems(count);
       } catch (error) {
         console.error('Error fetching notices:', error);
       }
@@ -77,6 +81,8 @@ export default function AllNotices({
               location={notice.shop.item.address1}
               price={`${notice.hourlyPay.toLocaleString()}원`}
               discount={`기존 시급보다 ${increaseRate}%`}
+              noticeId={notice.id}
+              shopId={notice.shopId}
             />
           </div>
         );

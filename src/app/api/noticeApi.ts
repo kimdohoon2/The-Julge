@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 interface ShopItem {
+  id: string;
   name: string;
   address1: string;
   imageUrl: string;
@@ -17,6 +18,7 @@ interface NoticeItem {
   shop: {
     item: ShopItem;
   };
+  shopId: string;
 }
 
 interface ApiResponse {
@@ -29,7 +31,7 @@ export const fetchNotices = async (
   itemsPerPage: number,
   sortOption: string,
   filterOptions: { locations: string[]; startDate: string; amount: string }
-): Promise<ApiResponse> => {
+): Promise<{ items: NoticeItem[]; count: number }> => {
   try {
     let url = `https://bootcamp-api.codeit.kr/api/11-2/the-julge/notices?offset=${
       (currentPage - 1) * itemsPerPage
@@ -52,7 +54,12 @@ export const fetchNotices = async (
     }
 
     const response = await axios.get<ApiResponse>(url);
-    return response.data;
+
+    const formattedData = response.data.items.map((data) => ({
+      ...data.item,
+      shopId: data.item.shop.item.id,
+    }));
+    return { items: formattedData, count: response.data.count };
   } catch (error) {
     console.error('Error fetching notices:', error);
     throw new Error('Failed to fetch notices');

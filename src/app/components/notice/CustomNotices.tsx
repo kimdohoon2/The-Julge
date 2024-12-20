@@ -11,6 +11,7 @@ import axios from 'axios';
 import formatTimeRange from '../../utils/formatTimeRange';
 
 interface ShopItem {
+  id: string;
   name: string;
   address1: string;
   imageUrl: string;
@@ -37,19 +38,22 @@ export default function CustomNotices() {
   const [notices, setNotices] = useState<NoticeItem[]>([]);
 
   useEffect(() => {
-    const fetchNotices = async () => {
+    const fetchCustomNotices = async () => {
       try {
         const response = await axios.get<ApiResponse>(
           'https://bootcamp-api.codeit.kr/api/11-2/the-julge/notices?offset=0&limit=10'
         );
-        const formattedData = response.data.items.map((data) => data.item);
+        const formattedData = response.data.items.map((data) => ({
+          ...data.item,
+          shopId: data.item.shop.item.id,
+        }));
         setNotices(formattedData);
       } catch (error) {
-        console.error('Error fetching notices:', error);
+        console.error('Error fetching custom notices:', error);
       }
     };
 
-    fetchNotices();
+    fetchCustomNotices();
   }, []);
 
   return (
@@ -83,6 +87,8 @@ export default function CustomNotices() {
               location={notice.shop.item.address1}
               price={`${notice.hourlyPay.toLocaleString()}원`}
               discount={`기존 시급보다 ${increaseRate}%`}
+              noticeId={notice.id}
+              shopId={notice.shop.item.id}
             />
           </SwiperSlide>
         );
