@@ -2,8 +2,8 @@
 import { registerShop } from '@/app/api/register-api';
 import ShopCommonForm from '@/app/components/shop/shop-form';
 
-export default function Test() {
-  const handleCreateSubmit = async (formData: {
+export default function ShopRegisterPage() {
+  const handleRegisterSubmit = async (formData: {
     name: string;
     category: string;
     address1: string;
@@ -25,5 +25,5 @@ export default function Test() {
     }
   };
 
-  return <ShopCommonForm mode="create" onSubmit={handleCreateSubmit} />;
+  return <ShopCommonForm mode="create" onSubmit={handleRegisterSubmit} />;
 }
