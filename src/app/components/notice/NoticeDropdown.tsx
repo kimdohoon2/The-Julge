@@ -29,7 +29,9 @@ const NoticeDropdown: React.FC<{ onChange: (sortOption: string) => void }> = ({ 
           {menuItems.map((item, index) => (
             <li key={index}>
               <button
-                className={`block h-8 w-full text-center text-sm text-gray-black hover:bg-gray-100 ${index !== menuItems.length - 1 ? 'border-b border-gray-20' : ''}`}
+                className={`block h-8 w-full text-center text-sm text-gray-black hover:bg-gray-100 ${
+                  index !== menuItems.length - 1 ? 'border-b border-gray-20' : ''
+                }`}
                 onClick={() => handleSelectItem(item)}
               >
                 {item}

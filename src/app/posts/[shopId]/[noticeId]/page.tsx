@@ -52,8 +52,9 @@ export default function NoticeDetailPage() {
 
   return (
     <div>
+      <header>임시헤더입니다~~~~~~</header>
       {/* 대충 요소 나열 */}
-      <div className="relative h-60 w-full max-w-sm">
+      <div className="relative mt-6 h-60 w-full max-w-sm">
         {/* 대충 임시 간격 */}
         <Image
           src={notice.shop.item.imageUrl}
