@@ -2,14 +2,14 @@
 
 import AddPost from '@/app/components/my-shop/AddPost';
 import useAuthStore from '@/app/stores/authStore';
-import { getMyShop, getShopNotices, postShopNotice } from '@/app/api/api';
+import { getMyShop, getShopNotices } from '@/app/api/api';
 import { useEffect, useCallback, useState } from 'react';
 import { Shop, Notice } from '@/app/types/Shop';
-import MyShop from '@/app/components/my-shop/myShop';
-import ShopNotice from '@/app/components/my-shop/shopNotice';
+import MyShop from '@/app/components/my-shop/MyShop';
+import ShopNotice from '@/app/components/my-shop/NoticeCard';
 
 export default function MyShopPage() {
-  const { user, type, token } = useAuthStore();
+  const { user, type } = useAuthStore();
   const shopId = user?.shop?.item.id;
   const [shop, setShop] = useState<Shop | null>(null);
   const [notice, setNotice] = useState<Notice[] | null>(null);
@@ -22,17 +22,7 @@ export default function MyShopPage() {
   const fetchNotice = useCallback(async () => {
     const response = await getShopNotices(shopId as string);
     setNotice(response.items);
-    console.log(response.items);
   }, [shopId]);
-
-  const postNotice = async () => {
-    await postShopNotice(token as string, shopId as string, {
-      hourlyPay: 15000,
-      startsAt: '2024-12-23T09:00:00.000Z',
-      workhour: 8,
-      description: '테스트 공고',
-    });
-  };
 
   useEffect(() => {
     if (!shopId) return;
@@ -43,10 +33,9 @@ export default function MyShopPage() {
 
   return (
     <div className="container">
-      <button onClick={postNotice}>가게 등록</button>
       {type === 'employer' && (
         <div>
-          <section className="mt-16">
+          <section className="mt-10 sm:mt-16">
             <h3 className="h3">내 가게</h3>
             {!shop && (
               <AddPost
@@ -57,8 +46,8 @@ export default function MyShopPage() {
             )}
             {shop && <MyShop shop={shop} />}
           </section>
-          <section className="my-32">
-            <h3 className="h3">등록한 공고</h3>
+          <section className="sm:my-30 my-20">
+            <h3 className="h3">내가 등록한 공고</h3>
             {!notice && (
               <AddPost
                 content="공고를 등록해 보세요."
@@ -67,10 +56,10 @@ export default function MyShopPage() {
               />
             )}
             {notice && shop && (
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-2 gap-4 xl:grid-cols-3">
                 {notice.map((not) => (
                   <div key={not.item.id}>
-                    <ShopNotice not={not} shop={shop} notice={notice} />
+                    <ShopNotice not={not} shop={shop} notice={notice} closed={not.item.closed} />
                   </div>
                 ))}
               </div>
@@ -78,7 +67,7 @@ export default function MyShopPage() {
           </section>
         </div>
       )}
-      <div className="my-20 flex items-center justify-center">
+      <div className="my-5 flex items-center justify-center sm:my-20">
         {type === 'employee' && <div>접근 권한이 없습니다.</div>}
         {!user && <div>로그인이 필요합니다.</div>}
       </div>
