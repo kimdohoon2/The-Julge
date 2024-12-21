@@ -15,10 +15,16 @@ export default function NoticeCard({
   notice: Notice[];
   closed: boolean;
 }) {
-  const textColorBlack = closed ? 'text-gray-30' : 'text-black';
-  const textColorGray = closed ? 'text-gray-30' : 'text-gray-50';
-  const badgeBgColor = closed ? 'sm:bg-gray-30' : 'sm:bg-orange';
-  const badgeTextColor = closed ? 'text-gray-30 sm:text-white' : 'text-orange sm:text-white';
+  const color = {
+    text: {
+      black: closed ? 'text-gray-30' : 'text-black',
+      gray: closed ? 'text-gray-30' : 'text-gray-50',
+    },
+    badge: {
+      bg: closed ? 'sm:bg-gray-30' : 'sm:bg-orange',
+      text: closed ? 'text-gray-30 sm:text-white' : 'text-orange sm:text-white',
+    },
+  };
 
   return (
     <div className="h-[22rem] rounded-xl border p-4">
@@ -34,12 +40,12 @@ export default function NoticeCard({
       </div>
       <div className="mt-5 flex h-[42%] flex-col justify-between">
         <div className="flex flex-col gap-2">
-          <h5 className={`text-base font-medium ${textColorBlack} sm:text-xl`}>
+          <h5 className={`text-base font-medium ${color.text.black} sm:text-xl`}>
             {not.item.description}
           </h5>
           <Information
             fontSize="text-xs sm:text-sm"
-            textColor={textColorGray}
+            textColor={color.text.gray}
             name="시간"
             value={`${converDate(not.item.startsAt)} ${formatTimeRange(not.item.startsAt, not.item.workhour)}`}
             imageSrc={closed ? '/my-shop/closeClock.svg' : '/my-shop/clock.svg'}
@@ -47,7 +53,7 @@ export default function NoticeCard({
           <div className="ml-[-1.8px] sm:m-0">
             <Information
               fontSize="text-xs sm:text-sm"
-              textColor={textColorGray}
+              textColor={color.text.gray}
               name="위치"
               value={shop?.address1}
               imageSrc={closed ? '/my-shop/closeLocation.svg' : '/my-shop/location.svg'}
@@ -55,14 +61,14 @@ export default function NoticeCard({
           </div>
         </div>
         <div className="flex flex-col justify-between pt-[0.6rem] sm:flex-row sm:items-center">
-          <span className={`text-lg font-semibold ${textColorBlack} sm:text-2xl`}>
+          <span className={`text-lg font-semibold ${color.text.black} sm:text-2xl`}>
             {`${not.item.hourlyPay.toLocaleString()}원`}
           </span>
           <HigherAverageBadge
             notice={notice}
             not={not}
-            bgColor={badgeBgColor}
-            textColor={badgeTextColor}
+            bgColor={color.badge.bg}
+            textColor={color.badge.text}
           />
         </div>
       </div>
