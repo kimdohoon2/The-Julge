@@ -1,3 +1,5 @@
+'use client';
+
 import formatTimeRange from '@/app/utils/formatTimeRange';
 import axios from 'axios';
 import Image from 'next/image';
@@ -84,11 +86,15 @@ export default function DetailNotice() {
             <p className="text-2xl font-bold text-gray-black sm:text-[28px]">
               {notice.hourlyPay.toLocaleString()}원
             </p>
-            <span
-              className={`flex h-6 w-32 items-center justify-center rounded-[20px] text-xs sm:h-9 sm:w-40 sm:text-sm sm:font-bold ${getDiscountClass(increaseRate)}`}
-            >
-              기존 시급보다 {increaseRate}% 🡅
-            </span>
+            {parseFloat(increaseRate) > 0 && (
+              <span
+                className={`flex h-6 w-32 items-center justify-center rounded-[20px] text-xs sm:h-9 sm:w-40 sm:text-sm sm:font-bold ${getDiscountClass(
+                  increaseRate
+                )}`}
+              >
+                기존 시급보다 {increaseRate}% 🡅
+              </span>
+            )}
           </div>
           <div className="mt-2 flex items-center gap-1 text-sm text-gray-50 sm:text-base">
             <Image
@@ -118,7 +124,6 @@ export default function DetailNotice() {
           >
             신청하기
           </Button>
-          {/* 버튼 디자인과 모달, 작동은 후에 추가하겠습니다. */}
         </div>
       </div>
       <div className="mt-5 w-full rounded-xl bg-gray-10 p-5 text-sm text-gray-black sm:p-8 sm:text-base">
