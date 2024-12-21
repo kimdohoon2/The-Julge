@@ -1,16 +1,20 @@
 import Image from 'next/image';
+import { Notice } from '@/app/types/Shop';
+import { hourPayComparisom } from '@/app/utils/hourPayComparison';
 
 export default function HigherAverageBadge({
-  isHigherThanAverage,
-  percentageDifference,
+  notice,
+  not,
   bgColor,
   textColor,
 }: {
-  isHigherThanAverage: boolean;
-  percentageDifference: number;
+  notice: Notice[];
+  not: Notice;
   bgColor: string;
   textColor: string;
 }) {
+  const { isHigherThanAverage, percentageDifference } = hourPayComparisom(notice, not);
+
   return (
     <>
       {isHigherThanAverage && (

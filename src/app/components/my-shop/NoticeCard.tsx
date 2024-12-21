@@ -1,7 +1,6 @@
 import { Notice, Shop } from '@/app/types/Shop';
 import converDate from '@/app/utils/converDate';
 import formatTimeRange from '@/app/utils/formatTimeRange';
-import { hourPayComparisom } from '@/app/utils/hourPayComparison';
 import HigherAverageBadge from '@/app/components/my-shop/HigherAverageBadge';
 import Information from './Information';
 
@@ -16,8 +15,6 @@ export default function NoticeCard({
   notice: Notice[];
   closed: boolean;
 }) {
-  const { isHigherThanAverage, percentageDifference } = hourPayComparisom(notice, not);
-
   const textColorBlack = closed ? 'text-gray-30' : 'text-black';
   const textColorGray = closed ? 'text-gray-30' : 'text-gray-50';
   const badgeBgColor = closed ? 'sm:bg-gray-30' : 'sm:bg-orange';
@@ -62,8 +59,8 @@ export default function NoticeCard({
             {`${not.item.hourlyPay.toLocaleString()}원`}
           </span>
           <HigherAverageBadge
-            isHigherThanAverage={isHigherThanAverage}
-            percentageDifference={percentageDifference}
+            notice={notice}
+            not={not}
             bgColor={badgeBgColor}
             textColor={badgeTextColor}
           />
