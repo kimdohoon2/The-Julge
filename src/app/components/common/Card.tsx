@@ -14,6 +14,7 @@ interface CardProps {
   discount: string;
   noticeId: string;
   shopId: string;
+  onClick: () => void;
 }
 
 const Card: React.FC<CardProps> = ({
@@ -26,6 +27,7 @@ const Card: React.FC<CardProps> = ({
   discount,
   noticeId,
   shopId,
+  onClick,
 }) => {
   const discountValue = parseInt(discount.match(/\d+/)?.[0] || '0', 10);
   const discountClass =
@@ -36,7 +38,7 @@ const Card: React.FC<CardProps> = ({
         : 'text-red-40 sm:bg-red-20 sm:text-white';
 
   return (
-    <Link href={`/posts/${shopId}/${noticeId}`}>
+    <Link href={`/posts/${shopId}/${noticeId}`} onClick={onClick}>
       <div className="w-44 rounded-xl border border-gray-20 bg-white p-4 sm:w-[312px]">
         <div className="relative h-20 w-full sm:h-40">
           <Image

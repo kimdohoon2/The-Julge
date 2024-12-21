@@ -27,7 +27,7 @@ interface NoticeDetail {
   };
 }
 
-export default function DetailNotices() {
+export default function DetailNotice() {
   const [notice, setNotice] = useState<NoticeDetail | null>(null);
 
   const params = useParams();

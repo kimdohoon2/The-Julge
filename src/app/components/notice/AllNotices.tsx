@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Card from '../common/Card';
 import formatTimeRange from '@/app/utils/formatTimeRange';
 import { fetchNotices } from '@/app/api/noticeApi';
+import { useRecentNoticesStore } from '@/app/stores/useRecentNoticesStore';
 
 interface ShopItem {
   id: string;
@@ -42,6 +43,7 @@ export default function AllNotices({
   filterOptions,
 }: AllNoticesProps) {
   const [notices, setNotices] = useState<NoticeItem[]>([]);
+  const addNotice = useRecentNoticesStore((state) => state.addNotice);
 
   useEffect(() => {
     const getNotices = async () => {
@@ -83,6 +85,7 @@ export default function AllNotices({
               discount={`기존 시급보다 ${increaseRate}%`}
               noticeId={notice.id}
               shopId={notice.shopId}
+              onClick={() => addNotice(notice)}
             />
           </div>
         );

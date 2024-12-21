@@ -9,6 +9,7 @@ import { FreeMode, Autoplay } from 'swiper/modules';
 import Card from '../common/Card';
 import axios from 'axios';
 import formatTimeRange from '../../utils/formatTimeRange';
+import { useRecentNoticesStore } from '@/app/stores/useRecentNoticesStore';
 
 interface ShopItem {
   id: string;
@@ -28,6 +29,7 @@ interface NoticeItem {
   shop: {
     item: ShopItem;
   };
+  shopId: string;
 }
 
 interface ApiResponse {
@@ -36,6 +38,7 @@ interface ApiResponse {
 
 export default function CustomNotices() {
   const [notices, setNotices] = useState<NoticeItem[]>([]);
+  const addNotice = useRecentNoticesStore((state) => state.addNotice);
 
   useEffect(() => {
     const fetchCustomNotices = async () => {
@@ -89,6 +92,7 @@ export default function CustomNotices() {
               discount={`기존 시급보다 ${increaseRate}%`}
               noticeId={notice.id}
               shopId={notice.shop.item.id}
+              onClick={() => addNotice(notice)}
             />
           </SwiperSlide>
         );
