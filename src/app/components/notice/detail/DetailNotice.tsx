@@ -68,8 +68,8 @@ export default function DetailNotices() {
           {notice.shop.item.name}
         </h1>
       </div>
-      <div className="h-[480px] w-[350px] rounded-xl border border-gray-20 p-5 sm:h-[720px] sm:w-[680px] lg:flex lg:h-[356px] lg:w-[963px]">
-        <div className="relative h-44 w-[311px] sm:h-[360px] sm:w-[632px] lg:h-[308px] lg:w-[540px]">
+      <div className="h-auto w-full rounded-xl border border-gray-20 bg-white p-5 lg:flex lg:h-[356px] lg:w-[963px] lg:p-7">
+        <div className="relative h-44 w-full sm:h-[360px] lg:h-[308px] lg:w-[540px]">
           <Image
             src={notice.shop.item.imageUrl}
             alt={notice.shop.item.name}
@@ -78,7 +78,7 @@ export default function DetailNotices() {
             className="rounded-xl object-cover"
           />
         </div>
-        <div className="lg:w-[346px]">
+        <div className="relative mt-3 flex flex-col gap-1 sm:gap-2 lg:ml-7 lg:w-[346px]">
           <h2 className="text-sm font-bold text-orange sm:text-base">시급</h2>
           <div className="flex items-center gap-2">
             <p className="text-2xl font-bold text-gray-black sm:text-[28px]">
@@ -90,7 +90,7 @@ export default function DetailNotices() {
               기존 시급보다 {increaseRate}% 🡅
             </span>
           </div>
-          <div className="flex items-center gap-1 text-sm text-gray-50 sm:text-base">
+          <div className="mt-2 flex items-center gap-1 text-sm text-gray-50 sm:text-base">
             <Image
               src="/images/clock-icon.svg"
               alt="시계"
@@ -111,12 +111,20 @@ export default function DetailNotices() {
             />
             <p>{notice.shop.item.address1}</p>
           </div>
-          <p className="text-sm text-gray-black sm:text-base">{notice.description}</p>
-          <Button className="h-[38px] w-full sm:h-[48px]">신청하기</Button>
+          <p className="mt-2 text-sm text-gray-black sm:text-base">{notice.description}</p>
+          <Button
+            className="mt-7 h-[38px] w-full sm:h-[48px] lg:absolute lg:bottom-0 lg:mt-0"
+            onClick={() => alert('신청버튼을 클릭하셨습니다.')}
+          >
+            신청하기
+          </Button>
+          {/* 버튼 디자인과 모달, 작동은 후에 추가하겠습니다. */}
         </div>
       </div>
-
-      <p>{notice.shop.item.description}</p>
+      <div className="mt-5 w-full rounded-xl bg-gray-10 p-5 text-sm text-gray-black sm:p-8 sm:text-base">
+        <span className="font-bold">공고설명</span>
+        <p className="mt-2">{notice.shop.item.description}</p>
+      </div>
     </div>
   );
 }
