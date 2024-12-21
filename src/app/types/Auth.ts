@@ -1,18 +1,9 @@
+import { Shop } from './Shop';
+
 export interface Auth {
   email: string;
   password: string;
   type?: 'employer' | 'employee';
-}
-
-export interface Shop {
-  id: string;
-  name: string;
-  category: string;
-  address1: string;
-  address2: string;
-  description: string;
-  imageUrl: string;
-  originalHourlyPay: number;
 }
 
 export interface User {

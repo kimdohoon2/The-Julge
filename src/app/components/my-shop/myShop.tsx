@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Button from '@/app/components/common/Button';
-import { Shop } from '@/app/types/Auth';
+import { Shop } from '@/app/types/Shop';
 
 export default function MyShop({ shop }: { shop: Shop }) {
   return (
