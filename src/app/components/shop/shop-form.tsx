@@ -152,7 +152,7 @@ export default function ShopCommonForm({
       <div className="mb-6 flex w-full items-center justify-between">
         <h3 className="flex-1 text-lg font-bold md:text-custom-xl">가게 정보</h3>
         <div className="h-auto w-full max-w-3.5 md:max-w-4">
-          <Link href="/shop">
+          <Link href={mode === 'create' ? '/owner/my-shop/' : '/owner/my-shop/announcement'}>
             <Image
               className="object-contain"
               src="/shop-icons/close-icon.png"
