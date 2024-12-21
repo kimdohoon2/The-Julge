@@ -60,6 +60,8 @@ export default function DetailNotice() {
     100
   ).toFixed(0);
 
+  const contentStyle = 'flex items-center gap-1 text-sm text-gray-50 sm:text-base';
+
   return (
     <div>
       <div className="mb-4">
@@ -96,7 +98,7 @@ export default function DetailNotice() {
               </span>
             )}
           </div>
-          <div className="mt-2 flex items-center gap-1 text-sm text-gray-50 sm:text-base">
+          <div className={`${contentStyle} mt-2`}>
             <Image
               src="/images/clock-icon.svg"
               alt="시계"
@@ -107,7 +109,7 @@ export default function DetailNotice() {
             <p>{notice.startsAt.split('T')[0]}</p>
             <p>{formatTimeRange(notice.startsAt, notice.workhour)}</p>
           </div>
-          <div className="flex items-center gap-1 text-sm text-gray-50 sm:text-base">
+          <div className={contentStyle}>
             <Image
               src="/images/location.svg"
               alt="위치"
