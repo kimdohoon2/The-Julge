@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Image from 'next/image';
 import getDiscountClass from '@/app/utils/getDiscountClass';
+import formatTimeRange from '@/app/utils/formatTimeRange';
+import Button from '@/app/components/common/Button';
 
 interface ShopItem {
   name: string;
@@ -79,22 +81,41 @@ export default function NoticeDetailPage() {
             className="rounded-xl object-cover"
           />
         </div>
-        <div>
+        <div className="lg:w-[346px]">
           <h2 className="text-sm font-bold text-orange sm:text-base">시급</h2>
           <div className="flex items-center gap-2">
             <p className="text-2xl font-bold text-gray-black sm:text-[28px]">
               {notice.hourlyPay.toLocaleString()}원
             </p>
-            <span className={`ml-2 text-sm font-bold ${getDiscountClass(increaseRate)}`}>
-              ({increaseRate}% 증가)
+            <span
+              className={`flex h-6 w-32 items-center justify-center rounded-[20px] text-xs sm:h-9 sm:w-40 sm:text-sm sm:font-bold ${getDiscountClass(increaseRate)}`}
+            >
+              기존 시급보다 {increaseRate}% 🡅
             </span>
           </div>
-          <div>
+          <div className="flex items-center gap-1 text-sm text-gray-50 sm:text-base">
+            <Image
+              src="/images/clock-icon.svg"
+              alt="시계"
+              width={16}
+              height={16}
+              className="object-contain sm:h-5 sm:w-5"
+            />
             <p>{notice.startsAt.split('T')[0]}</p>
-            <p>{notice.workhour}시간</p>
+            <p>{formatTimeRange(notice.startsAt, notice.workhour)}</p>
           </div>
-          <p>{notice.shop.item.address1}</p>
-          <p>{notice.description}</p>
+          <div className="flex items-center gap-1 text-sm text-gray-50 sm:text-base">
+            <Image
+              src="/images/location.svg"
+              alt="위치"
+              width={16}
+              height={16}
+              className="object-contain sm:h-5 sm:w-5"
+            />
+            <p>{notice.shop.item.address1}</p>
+          </div>
+          <p className="text-sm text-gray-black sm:text-base">{notice.description}</p>
+          <Button className="h-[38px] w-full sm:h-[48px]">신청하기</Button>
         </div>
       </div>
 
