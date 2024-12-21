@@ -11,7 +11,7 @@ interface CardProps {
   hours: string;
   location: string;
   price: string;
-  discount: string;
+  discount?: string;
   noticeId: string;
   shopId: string;
   onClick: () => void;
@@ -29,7 +29,7 @@ const Card: React.FC<CardProps> = ({
   shopId,
   onClick,
 }) => {
-  const discountValue = parseInt(discount.match(/\d+/)?.[0] || '0', 10);
+  const discountValue = discount ? parseInt(discount.match(/\d+/)?.[0] || '0', 10) : 0;
   const discountClass =
     discountValue >= 50
       ? 'text-red-40 sm:bg-red-40 sm:text-white'
@@ -79,12 +79,14 @@ const Card: React.FC<CardProps> = ({
 
           <div className="mt-3 flex flex-wrap items-center sm:mt-2 sm:gap-3">
             <span className="text-lg font-bold text-gray-black sm:text-2xl">{price}</span>
-            <span
-              className={`flex items-center justify-center text-center text-xs sm:h-9 sm:w-40 sm:rounded-3xl sm:text-sm ${discountClass}`}
-              aria-label={`할인율: ${discount}`}
-            >
-              {discount} 🡅
-            </span>
+            {discount && (
+              <span
+                className={`flex items-center justify-center text-center text-xs sm:h-9 sm:w-40 sm:rounded-3xl sm:text-sm ${discountClass}`}
+                aria-label={`할인율: ${discount}`}
+              >
+                {discount} 🡅
+              </span>
+            )}
           </div>
         </div>
       </div>

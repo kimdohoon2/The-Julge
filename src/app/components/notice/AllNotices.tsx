@@ -82,7 +82,7 @@ export default function AllNotices({
               hours={formatTimeRange(notice.startsAt, notice.workhour)}
               location={notice.shop.item.address1}
               price={`${notice.hourlyPay.toLocaleString()}원`}
-              discount={`기존 시급보다 ${increaseRate}%`}
+              discount={parseFloat(increaseRate) > 0 ? `기존 시급보다 ${increaseRate}%` : undefined}
               noticeId={notice.id}
               shopId={notice.shopId}
               onClick={() => addNotice(notice)}
