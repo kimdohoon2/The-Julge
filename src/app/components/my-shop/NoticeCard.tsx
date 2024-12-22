@@ -42,9 +42,7 @@ export default function NoticeCard({
         </div>
         <div className="mt-5 flex h-[42%] flex-col justify-between">
           <div className="flex flex-col gap-2">
-            <h5 className={`text-base font-medium ${color.text.black} sm:text-xl`}>
-              {not.item.description}
-            </h5>
+            <h5 className={`text-base font-medium ${color.text.black} sm:text-xl`}>{shop.name}</h5>
             <Information
               fontSize="text-xs sm:text-sm"
               textColor={color.text.gray}

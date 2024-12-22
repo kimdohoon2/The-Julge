@@ -56,4 +56,14 @@ const getShopNotices = async (shopId: string, offset: number = 1, limit: number 
   return response.data;
 };
 
-export { instance, getMyShop, getShopNotices, postShopNotice };
+/* 공고 상세 정보를 가져오는 API */
+/** @param shopId 가게 ID */
+/** @param noticeId 공고 ID */
+/** @returns 공고 상세 정보 */
+
+const getNoticeDetail = async (shopId: string, noticeId: string) => {
+  const response = await instance.get(`/shops/${shopId}/notices/${noticeId}`);
+  return response.data;
+};
+
+export { instance, getMyShop, getShopNotices, postShopNotice, getNoticeDetail };
