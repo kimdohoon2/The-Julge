@@ -5,6 +5,7 @@ import { getNoticeDetail } from '@/app/api/api';
 import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { NoticeDetail } from '@/app/types/Shop';
+import MyNotice from '@/app/components/my-shop/MyNotice';
 
 export default function NoticePage() {
   const { id } = useParams<{ id: string }>();
@@ -22,11 +23,17 @@ export default function NoticePage() {
     fetchNoticeDetail();
   }, [fetchNoticeDetail]);
 
+  if (!content) {
+    return <div>로딩중...</div>;
+  }
+
   return (
     <>
       <div className="container">
         <section className="mt-10 sm:mt-16">
-          <h4>{content?.shop.item.name}</h4>
+          <span className="label">{content.shop.item.category}</span>
+          <h3 className="h3">{content.shop.item.name}</h3>
+          <MyNotice notice={content} />
         </section>
         <section className="sm:my-30 my-20"></section>
       </div>

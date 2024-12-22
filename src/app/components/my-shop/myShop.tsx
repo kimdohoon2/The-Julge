@@ -18,7 +18,7 @@ export default function MyShop({ shop }: { shop: Shop }) {
             className="object-cover"
           />
         </div>
-        <div className="flex flex-col gap-8 pt-4 md:h-[100%] md:justify-between">
+        <div className="flex w-[38%] flex-col gap-8 pt-4 md:h-[100%] md:justify-between">
           <div className="flex flex-col gap-1 sm:gap-2">
             <span className="label">{shop.category}</span>
             <h4 className="text-2xl font-semibold text-black sm:text-[1.75rem]">{shop.name}</h4>
