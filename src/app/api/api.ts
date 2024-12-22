@@ -7,15 +7,6 @@ const instance = axios.create({
   },
 });
 
-/* 내 가게 정보를 가져오는 API */
-/** @param shopId 가게 ID */
-/** @returns 가게 정보 */
-
-const getMyShop = async (shopId: string) => {
-  const response = await instance.get(`/shops/${shopId}`);
-  return response.data;
-};
-
 /* 가게의 공고를 등록하는 API */
 /** @param token 토큰 */
 /** @param shopId 가게 ID */
@@ -37,6 +28,30 @@ const postShopNotice = async (
       Authorization: `Bearer ${token}`,
     },
   });
+  return response.data;
+};
+
+/* 공고에 신청하는 API */
+/** @param token 토큰 */
+/** @param shopId 가게 ID */
+/** @param noticeId 공고 ID */
+/** @returns 신청 결과 */
+
+const postNoticeApplication = async (token: string, shopId: string, noticeId: string) => {
+  const response = await instance.post(`/shops/${shopId}/notices/${noticeId}/applications`, '', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+};
+
+/* 내 가게 정보를 가져오는 API */
+/** @param shopId 가게 ID */
+/** @returns 가게 정보 */
+
+const getMyShop = async (shopId: string) => {
+  const response = await instance.get(`/shops/${shopId}`);
   return response.data;
 };
 
@@ -66,4 +81,33 @@ const getNoticeDetail = async (shopId: string, noticeId: string) => {
   return response.data;
 };
 
-export { instance, getMyShop, getShopNotices, postShopNotice, getNoticeDetail };
+/* 공고에 신청한 사용자 목록을 가져오는 API */
+/** @param shopId 가게 ID */
+/** @param noticeId 공고 ID */
+/** @param offset 페이지 번호 */
+/** @param limit 페이지 당 신청자 수 */
+
+const getNoticeApplications = async (
+  shopId: string,
+  noticeId: string,
+  offset: number = 1,
+  limit: number = 5
+) => {
+  const response = await instance.get(`/shops/${shopId}/notices/${noticeId}/applications`, {
+    params: {
+      offset,
+      limit,
+    },
+  });
+  return response.data;
+};
+
+export {
+  instance,
+  postShopNotice,
+  postNoticeApplication,
+  getMyShop,
+  getShopNotices,
+  getNoticeDetail,
+  getNoticeApplications,
+};

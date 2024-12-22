@@ -8,11 +8,16 @@ import { Shop, Notice } from '@/app/types/Shop';
 import MyShop from '@/app/components/my-shop/MyShop';
 import NoticeCard from '@/app/components/my-shop/NoticeCard';
 
+interface NoticeItem {
+  item: Notice;
+  links: [];
+}
+
 export default function MyShopPage() {
   const { user, type } = useAuthStore();
   const shopId = user?.shop?.item.id;
   const [shop, setShop] = useState<Shop | null>(null);
-  const [notice, setNotice] = useState<Notice[] | null>(null);
+  const [notice, setNotice] = useState<NoticeItem[] | null>(null);
 
   const fetchShop = useCallback(async () => {
     const response = await getMyShop(shopId as string);
@@ -22,6 +27,7 @@ export default function MyShopPage() {
   const fetchNotice = useCallback(async () => {
     const response = await getShopNotices(shopId as string);
     setNotice(response.items);
+    console.log(response.items);
   }, [shopId]);
 
   useEffect(() => {

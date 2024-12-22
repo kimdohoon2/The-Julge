@@ -6,15 +6,20 @@ import Information from './Information';
 import Link from 'next/link';
 import calculateAverageHourlyPay from '@/app/utils/calculateAverageHourlyPay';
 
+interface NoticeItem {
+  item: Notice;
+  links: [];
+}
+
 export default function NoticeCard({
   not,
   shop,
   notice,
   closed,
 }: {
-  not: Notice;
+  not: NoticeItem;
   shop: Shop;
-  notice: Notice[];
+  notice: NoticeItem[];
   closed: boolean;
 }) {
   const color = {
