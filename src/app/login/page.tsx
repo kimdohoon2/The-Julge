@@ -51,14 +51,13 @@ function LoginPage() {
       </Modal>
 
       <div className="relative flex w-full max-w-md flex-col bg-gray-white p-4">
-        <div className="relative mx-auto h-[45px] w-[208px] sm:w-[248px]">
+        <div className="relative mx-auto mb-10 h-[45px] w-[208px] sm:w-[248px]">
           <Image
             src="/images/logo.svg"
             alt="Logo"
             fill
             priority
-            sizes="(max-width: 248px) 208px, (max-width: 1200px) 400px, 800px"
-            className="mx-auto mb-10 cursor-pointer"
+            className="mx-auto cursor-pointer"
             onClick={() => router.push('/posts')}
           />
         </div>
