@@ -85,7 +85,7 @@ function LoginPage() {
               className={`w-full rounded-md border px-5 py-4 text-sm`}
               placeholder="입력"
             />
-            {errors.email && <p className="mt-1 text-sm text-red-50">{errors.email?.message}</p>}
+            {errors.email && <p className="mt-1 text-sm text-orange">{errors.email?.message}</p>}
           </div>
 
           <div className="flex flex-col gap-2">
@@ -110,7 +110,7 @@ function LoginPage() {
               placeholder="입력"
             />
             {errors.password && (
-              <p className="mt-1 text-sm text-red-50">{errors.password?.message}</p>
+              <p className="mt-1 text-sm text-orange">{errors.password?.message}</p>
             )}
           </div>
 

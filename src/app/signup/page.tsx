@@ -43,17 +43,27 @@ function SignupPage() {
       setModalMessage('이미 사용중인 이메일입니다');
       setShowModal(true);
     } else {
-      alert('가입이 완료되었습니다');
-      router.push('/login');
+      setModalMessage('가입이 완료되었습니다.');
+      setShowModal(true);
+
+      // 화면 전환 로직을 모달의 확인 버튼과 연결
+      setModalAction(() => () => {
+        setShowModal(false); // 모달 닫기
+        router.push('/login'); // 로그인 페이지로 이동
+      });
     }
   };
+
+  const [modalAction, setModalAction] = useState<() => void>(() => () => {
+    setShowModal(false); // 기본 동작: 모달 닫기
+  });
 
   const userTypeValue = watch('userType'); // 현재 선택된 회원 유형 감지
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-white">
       {/* 모달 컴포넌트 */}
-      <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
+      <Modal isOpen={showModal} onClose={() => modalAction()}>
         {modalMessage}
       </Modal>
 
@@ -91,11 +101,11 @@ function SignupPage() {
               })}
               onBlur={() => trigger('email')}
               className={`w-full rounded-md border px-5 py-4 text-sm ${
-                errors.email ? 'border-red-50' : ''
+                errors.email ? 'border-orange' : ''
               }`}
               placeholder="입력"
             />
-            {errors.email && <p className="mt-1 text-sm text-red-50">{errors.email?.message}</p>}
+            {errors.email && <p className="mt-1 text-sm text-orange">{errors.email?.message}</p>}
           </div>
 
           {/* 비밀번호 입력 */}
@@ -118,12 +128,12 @@ function SignupPage() {
               })}
               onBlur={() => trigger('password')}
               className={`w-full rounded-md border px-5 py-4 text-sm ${
-                errors.password ? 'border-red-50' : ''
+                errors.password ? 'border-orange' : ''
               }`}
               placeholder="입력"
             />
             {errors.password && (
-              <p className="mt-1 text-sm text-red-50">{errors.password?.message}</p>
+              <p className="mt-1 text-sm text-orange">{errors.password?.message}</p>
             )}
           </div>
 
@@ -144,12 +154,12 @@ function SignupPage() {
               })}
               onBlur={() => trigger('confirmPassword')}
               className={`w-full rounded-md border px-5 py-4 text-sm ${
-                errors.confirmPassword ? 'border-red-50' : ''
+                errors.confirmPassword ? 'border-orange' : ''
               }`}
               placeholder="입력"
             />
             {errors.confirmPassword && (
-              <p className="mt-1 text-sm text-red-50">{errors.confirmPassword?.message}</p>
+              <p className="mt-1 text-sm text-orange">{errors.confirmPassword?.message}</p>
             )}
           </div>
 
@@ -165,13 +175,13 @@ function SignupPage() {
               <button
                 type="button"
                 className={`flex w-full items-center justify-center gap-2 rounded-full border px-4 py-2 text-sm text-black ${
-                  userTypeValue === '일반회원' ? 'border-red-50' : 'border-gray-30'
+                  userTypeValue === '일반회원' ? 'border-orange' : 'border-gray-30'
                 }`}
                 onClick={() => setValue('userType', '일반회원')}
               >
                 <span
                   className={`flex h-4 w-4 items-center justify-center rounded-full border ${
-                    userTypeValue === '일반회원' ? 'border-red-50 bg-red-50' : 'border-gray-30'
+                    userTypeValue === '일반회원' ? 'border-orange bg-orange' : 'border-gray-30'
                   }`}
                 >
                   {userTypeValue === '일반회원' && (
@@ -184,13 +194,13 @@ function SignupPage() {
               <button
                 type="button"
                 className={`flex w-full items-center justify-center gap-2 rounded-full border px-4 py-2 text-sm text-black ${
-                  userTypeValue === '사업자회원' ? 'border-red-50' : 'border-gray-30'
+                  userTypeValue === '사업자회원' ? 'border-orange' : 'border-gray-30'
                 }`}
                 onClick={() => setValue('userType', '사업자회원')}
               >
                 <span
                   className={`flex h-4 w-4 items-center justify-center rounded-full border ${
-                    userTypeValue === '사업자회원' ? 'border-red-50 bg-red-50' : 'border-gray-30'
+                    userTypeValue === '사업자회원' ? 'border-orange bg-orange' : 'border-gray-30'
                   }`}
                 >
                   {userTypeValue === '사업자회원' && (
@@ -201,7 +211,7 @@ function SignupPage() {
               </button>
             </div>
             {errors.userType && (
-              <p className="mt-1 text-sm text-red-50">{errors.userType?.message}</p>
+              <p className="mt-1 text-sm text-orange">{errors.userType?.message}</p>
             )}
           </div>
 
