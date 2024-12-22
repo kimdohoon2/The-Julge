@@ -51,7 +51,12 @@ export default function Posts() {
         <div className={`mb-5 sm:flex sm:items-center sm:justify-between`}>
           <h2 className="text-xl font-bold text-gray-black sm:text-[28px]">전체 공고</h2>
           <div className="mt-12 flex items-center gap-3">
-            <NoticeDropdown onChange={setSortOption} />
+            <NoticeDropdown
+              onChange={(selectedSort) => {
+                setSortOption(selectedSort);
+                setCurrentPage(1);
+              }}
+            />
             <DetailedFilter onFilterChange={handleFilterChange} />
           </div>
         </div>

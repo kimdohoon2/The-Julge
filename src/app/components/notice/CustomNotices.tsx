@@ -9,8 +9,10 @@ import { FreeMode, Autoplay } from 'swiper/modules';
 import Card from '../common/Card';
 import axios from 'axios';
 import formatTimeRange from '../../utils/formatTimeRange';
+import { useRecentNoticesStore } from '@/app/stores/useRecentNoticesStore';
 
 interface ShopItem {
+  id: string;
   name: string;
   address1: string;
   imageUrl: string;
@@ -27,6 +29,7 @@ interface NoticeItem {
   shop: {
     item: ShopItem;
   };
+  shopId: string;
 }
 
 interface ApiResponse {
@@ -35,21 +38,25 @@ interface ApiResponse {
 
 export default function CustomNotices() {
   const [notices, setNotices] = useState<NoticeItem[]>([]);
+  const addNotice = useRecentNoticesStore((state) => state.addNotice);
 
   useEffect(() => {
-    const fetchNotices = async () => {
+    const fetchCustomNotices = async () => {
       try {
         const response = await axios.get<ApiResponse>(
           'https://bootcamp-api.codeit.kr/api/11-2/the-julge/notices?offset=0&limit=10'
-        );
-        const formattedData = response.data.items.map((data) => data.item);
+        ); // 맞춤공고는 현재 데이터를 10개 받아오는데 설정한 "지역"을 기준으로 불러오게 로직을 변경할 예정입니다.
+        const formattedData = response.data.items.map((data) => ({
+          ...data.item,
+          shopId: data.item.shop.item.id,
+        }));
         setNotices(formattedData);
       } catch (error) {
-        console.error('Error fetching notices:', error);
+        console.error('Error fetching custom notices:', error);
       }
     };
 
-    fetchNotices();
+    fetchCustomNotices();
   }, []);
 
   return (
@@ -82,7 +89,10 @@ export default function CustomNotices() {
               hours={formatTimeRange(notice.startsAt, notice.workhour)}
               location={notice.shop.item.address1}
               price={`${notice.hourlyPay.toLocaleString()}원`}
-              discount={`기존 시급보다 ${increaseRate}%`}
+              discount={parseFloat(increaseRate) > 0 ? `기존 시급보다 ${increaseRate}%` : undefined}
+              noticeId={notice.id}
+              shopId={notice.shop.item.id}
+              onClick={() => addNotice(notice)}
             />
           </SwiperSlide>
         );
