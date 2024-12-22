@@ -20,8 +20,8 @@ export default function MyShop({ shop }: { shop: Shop }) {
         </div>
         <div className="flex flex-col gap-8 pt-4 md:h-[100%] md:justify-between">
           <div className="flex flex-col gap-1 sm:gap-2">
-            <span className="text-sm font-semibold text-orange sm:text-lg">{shop.category}</span>
-            <h4 className="text-2xl font-semibold text-black sm:text-[28px]">{shop.name}</h4>
+            <span className="label">{shop.category}</span>
+            <h4 className="text-2xl font-semibold text-black sm:text-[1.75rem]">{shop.name}</h4>
             <div className="my-2">
               <Information
                 fontSize="text-sm sm:text-base"
@@ -31,21 +31,17 @@ export default function MyShop({ shop }: { shop: Shop }) {
                 imageSrc="/my-shop/location.svg"
               />
             </div>
-            <p className="max-h-[380px] w-[100%] text-sm text-black sm:text-base">
+            <p className="max-h-[23.75rem] w-[100%] text-sm text-black sm:text-base">
               {shop.description}
             </p>
           </div>
           <div className="flex gap-2">
-            <Link href="/owner/my-shop/register">
-              <Button className="h-12 w-[50%] md:w-[10.5rem]" variant="reverse">
-                편집하기
-              </Button>
-            </Link>
-            <Link href="/owner/my-shop/notice/register">
-              <Button className="h-12 w-[50%] md:w-[10.5rem]" variant="primary">
-                공고 등록하기
-              </Button>
-            </Link>
+            <Button className="h-12 w-[50%] md:w-[10.5rem]" variant="reverse">
+              <Link href="/owner/my-shop/register">편집하기</Link>
+            </Button>
+            <Button className="h-12 w-[50%] md:w-[10.5rem]" variant="primary">
+              <Link href="/owner/my-shop/notice/register">공고 등록하기</Link>
+            </Button>
           </div>
         </div>
       </div>

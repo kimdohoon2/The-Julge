@@ -19,3 +19,24 @@ export interface Notice {
     closed: boolean;
   };
 }
+
+export interface currentUserApplication {
+  item: {
+    id: string;
+    status: 'pending' | 'accepted' | 'rejected' | 'canceled';
+  };
+}
+
+export interface NoticeDetail {
+  id: string;
+  hourlyPay: number;
+  startsAt: string;
+  workhour: number;
+  description: string;
+  closed: boolean;
+  shop: {
+    item: Shop;
+    href: string;
+  };
+  currentUserApplication: currentUserApplication;
+}
