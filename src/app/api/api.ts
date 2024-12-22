@@ -118,7 +118,7 @@ const putNoticeApplication = async (
 ) => {
   const response = await instance.put(
     `/shops/${shopId}/notices/${noticeId}/applications/${applicationId}`,
-    { status },
+    { status: status },
     {
       headers: {
         Authorization: `Bearer ${token}`,

@@ -37,7 +37,6 @@ export default function NoticePage() {
   const fetchNoticeApplications = useCallback(async () => {
     const response = await getNoticeApplications(shopId as string, id, page, LIMIT);
     setApplications(response);
-    console.log(response);
   }, [shopId, id, page]);
 
   const handlePageChange = (page: number) => {
