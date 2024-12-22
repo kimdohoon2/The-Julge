@@ -24,15 +24,10 @@ export default function HigherAverageBadge({
           기존 시급의 {percentageDifference.toFixed(0)}%
         </span>
         <div className="relative hidden h-5 w-4 sm:block">
-          <Image fill src="/my-shop/arrow-up.svg" alt="상승" sizes="(max-width: 640px) 16px 20px" />
+          <Image fill src="/my-shop/arrow-up.svg" alt="상승" sizes="(max-width: 640px) 16px" />
         </div>
         <div className="relative block h-5 w-4 sm:hidden">
-          <Image
-            fill
-            src="/my-shop/m-arrow-up.svg"
-            alt="상승"
-            sizes="(max-width: 640px) 16px 20px"
-          />
+          <Image fill src="/my-shop/m-arrow-up.svg" alt="상승" sizes="(max-width: 640px) 16px" />
         </div>
       </div>
     </>

@@ -12,7 +12,7 @@ export default function MyShop({ shop }: { shop: Shop }) {
             fill
             src={shop.imageUrl}
             alt="매장 이미지"
-            sizes="(max-width: 640px) 540px 308px"
+            sizes="(max-width: 640px) 58% 100%"
             unoptimized={true}
             className="object-cover"
           />
