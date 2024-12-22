@@ -41,6 +41,7 @@ export default function NoticeCard({
             </div>
           </div>
         )}
+        {/* 리스폰스에 공고 이미지가 없습니다. */}
         <div className="flex h-[10rem] items-center justify-center rounded-xl bg-gray-20">
           <span>리스폰스에 이미지 없음</span>
         </div>

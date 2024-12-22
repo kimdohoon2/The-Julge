@@ -39,6 +39,20 @@ body {
     color: #ea3c12;
   }
 
+  .th {
+    font-weight: 400;
+    font-size: 0.875rem;
+    padding-top: 0.875rem;
+    padding-bottom: 0.875rem;
+    color: #111322;
+  }
+
+  .td {
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+    color: #111322;
+  }
+
   @media (max-width: 640px) {
     .h3 {
       font-size: 1.25rem;
