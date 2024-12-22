@@ -37,45 +37,47 @@ export default function MyShopPage() {
     fetchNotice();
   }, [fetchShop, fetchNotice, shopId]);
 
+  if (!user) {
+    return <div className="my-10 text-center">로그인이 필요합니다.</div>;
+  }
+
+  if (type === 'employee') {
+    return <div className="my-10 text-center">접근 권한이 없습니다.</div>;
+  }
+
   return (
     <div className="container">
-      {type === 'employer' && (
-        <div>
-          <section className="mt-10 sm:mt-16">
-            <h3 className="h3">내 가게</h3>
-            {!shop && (
-              <AddPost
-                content="가게를 등록해 보세요."
-                buttonLink="/owner/my-shop/register"
-                buttonText="가게 등록하기"
-              />
-            )}
-            {shop && <MyShop shop={shop} />}
-          </section>
-          <section className="sm:my-30 my-20">
-            <h3 className="h3">내가 등록한 공고</h3>
-            {!notice && (
-              <AddPost
-                content="공고를 등록해 보세요."
-                buttonLink="/owner/my-shop/notice/register"
-                buttonText="공고 등록하기"
-              />
-            )}
-            {notice && shop && (
-              <div className="grid grid-cols-2 gap-4 xl:grid-cols-3">
-                {notice.map((not) => (
-                  <div key={not.item.id}>
-                    <NoticeCard not={not} shop={shop} notice={notice} closed={not.item.closed} />
-                  </div>
-                ))}
-              </div>
-            )}
-          </section>
-        </div>
-      )}
-      <div className="my-5 flex items-center justify-center sm:my-20">
-        {type === 'employee' && <div>접근 권한이 없습니다.</div>}
-        {!user && <div>로그인이 필요합니다.</div>}
+      <div>
+        <section className="mt-10 sm:mt-16">
+          <h3 className="h3">내 가게</h3>
+          {!shop && (
+            <AddPost
+              content="가게를 등록해 보세요."
+              buttonLink="/owner/my-shop/register"
+              buttonText="가게 등록하기"
+            />
+          )}
+          {shop && <MyShop shop={shop} />}
+        </section>
+        <section className="sm:my-30 my-20">
+          <h3 className="h3">내가 등록한 공고</h3>
+          {!notice && (
+            <AddPost
+              content="공고를 등록해 보세요."
+              buttonLink="/owner/my-shop/notice/register"
+              buttonText="공고 등록하기"
+            />
+          )}
+          {notice && shop && (
+            <div className="grid grid-cols-2 gap-4 xl:grid-cols-3">
+              {notice.map((not) => (
+                <div key={not.item.id}>
+                  <NoticeCard not={not} shop={shop} notice={notice} closed={not.item.closed} />
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
       </div>
     </div>
   );

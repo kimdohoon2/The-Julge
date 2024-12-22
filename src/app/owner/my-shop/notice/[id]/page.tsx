@@ -8,6 +8,7 @@ import { NoticeApplication, NoticeDetail } from '@/app/types/Shop';
 import MyNotice from '@/app/components/my-shop/detail/MyNotice';
 import PageNav from '@/app/components/my-shop/detail/PageNav';
 import ApplicationTable from '@/app/components/my-shop/detail/ApplicationTable';
+import AddPost from '@/app/components/my-shop/AddPost';
 
 const LIMIT = 5;
 
@@ -22,7 +23,7 @@ interface NoticeApplicationItem {
 
 export default function NoticePage() {
   const { id } = useParams<{ id: string }>();
-  const { user } = useAuthStore();
+  const { user, token } = useAuthStore();
   const shopId = user?.shop?.item.id;
   const [content, setContent] = useState<NoticeDetail | null>(null);
   const [applications, setApplications] = useState<NoticeApplicationItem | null>(null);
@@ -48,6 +49,10 @@ export default function NoticePage() {
     fetchNoticeApplications();
   }, [fetchNoticeDetail, fetchNoticeApplications]);
 
+  if (!shopId || !token) {
+    return <div className="my-10 text-center">로그인이 필요합니다.</div>;
+  }
+
   if (!content) {
     return <div className="my-10 text-center">로딩 중...</div>;
   }
@@ -64,7 +69,12 @@ export default function NoticePage() {
           <h3 className="h3">신청자 목록</h3>
           {applications && (
             <div className="mt-8 w-full rounded-lg border">
-              <ApplicationTable applications={applications} />
+              <ApplicationTable
+                applications={applications}
+                token={token}
+                shopId={shopId}
+                noticeId={id}
+              />
               <PageNav
                 page={page}
                 limit={LIMIT}
@@ -72,6 +82,13 @@ export default function NoticePage() {
                 onChange={handlePageChange}
               />
             </div>
+          )}
+          {!applications && (
+            <AddPost
+              content="신청자가 없습니다."
+              buttonLink="/owner/my-shop"
+              buttonText="내 가게로 이동"
+            />
           )}
         </section>
       </div>

@@ -12,8 +12,14 @@ interface NoticeApplicationItem {
 
 export default function ApplicationTable({
   applications,
+  token,
+  shopId,
+  noticeId,
 }: {
   applications: NoticeApplicationItem;
+  token: string;
+  shopId: string;
+  noticeId: string;
 }) {
   return (
     <>
@@ -33,7 +39,14 @@ export default function ApplicationTable({
               <td className="td">{application.item.user.item.bio || '잘 부탁드립니다.'}</td>
               <td className="td">{application.item.user.item.phone || '010-****-****'}</td>
               <td className="td pr-7">
-                <StatusIcon status={application.item.status} type="employer" />
+                <StatusIcon
+                  status={application.item.status}
+                  type="employer"
+                  token={token}
+                  shopId={shopId}
+                  noticeId={noticeId}
+                  applicationId={application.item.id}
+                />
               </td>
             </tr>
           ))}

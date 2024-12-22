@@ -1,12 +1,32 @@
 import ApprovalButton from '@/app/components/my-shop/detail/ApprovalButton';
+import { putNoticeApplication } from '@/app/api/api';
 
 export default function StatusIcon({
   status,
   type,
+  token,
+  shopId,
+  noticeId,
+  applicationId,
 }: {
   status: 'pending' | 'accepted' | 'rejected' | 'canceled';
   type: 'employer' | 'employee';
+  token?: string;
+  shopId?: string;
+  noticeId?: string;
+  applicationId?: string;
 }) {
+  const updateApplicationStatus = async (status: 'accepted' | 'rejected') => {
+    const response = await putNoticeApplication(
+      token as string,
+      shopId as string,
+      noticeId as string,
+      applicationId as string,
+      status
+    );
+    console.log(response);
+  };
+
   const handleStatus = () => {
     switch (status) {
       case 'pending':
@@ -14,8 +34,14 @@ export default function StatusIcon({
           return {
             content: (
               <div className="flex gap-3">
-                <ApprovalButton approve={true} />
-                <ApprovalButton approve={false} />
+                <ApprovalButton
+                  approve={true}
+                  onClick={() => updateApplicationStatus('accepted')}
+                />
+                <ApprovalButton
+                  approve={false}
+                  onClick={() => updateApplicationStatus('rejected')}
+                />
               </div>
             ),
             style: '',

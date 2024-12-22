@@ -102,6 +102,32 @@ const getNoticeApplications = async (
   return response.data;
 };
 
+/* 공고 신청을 처리하는 API */
+/** @param token 토큰 */
+/** @param shopId 가게 ID */
+/** @param noticeId 공고 ID */
+/** @param applicationId 신청 ID */
+/** @param status 처리 결과 */
+
+const putNoticeApplication = async (
+  token: string,
+  shopId: string,
+  noticeId: string,
+  applicationId: string,
+  status: 'accepted' | 'rejected' | 'canceled'
+) => {
+  const response = await instance.put(
+    `/shops/${shopId}/notices/${noticeId}/applications/${applicationId}`,
+    { status },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return response.data;
+};
+
 export {
   instance,
   postShopNotice,
@@ -110,4 +136,5 @@ export {
   getShopNotices,
   getNoticeDetail,
   getNoticeApplications,
+  putNoticeApplication,
 };
