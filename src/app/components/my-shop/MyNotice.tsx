@@ -5,6 +5,7 @@ import Information from './Information';
 import Link from 'next/link';
 import converDate from '@/app/utils/converDate';
 import formatTimeRange from '@/app/utils/formatTimeRange';
+import HigherAverageBadge from './HigherAverageBadge';
 
 export default function MyNotice({ notice }: { notice: NoticeDetail }) {
   const date = `${converDate(notice.startsAt)} ${formatTimeRange(notice.startsAt, notice.workhour)}`;
@@ -25,9 +26,16 @@ export default function MyNotice({ notice }: { notice: NoticeDetail }) {
         <div className="flex w-[38%] flex-col gap-8 pt-4 md:h-[100%] md:justify-between">
           <div className="flex flex-col gap-1 sm:gap-2">
             <span className="label">{notice.shop.item.category}</span>
-            <h4 className="text-2xl font-semibold text-black sm:text-[1.75rem]">
-              {`${notice.hourlyPay.toLocaleString()}원`}
-            </h4>
+            <div className="flex items-center gap-3">
+              <h4 className="text-2xl font-semibold text-black sm:text-[1.75rem]">
+                {`${notice.hourlyPay.toLocaleString()}원`}
+              </h4>
+              <HigherAverageBadge
+                originalHourlyPay={notice.shop.item.originalHourlyPay}
+                hourlyPay={notice.hourlyPay}
+                closed={notice.closed}
+              />
+            </div>
             <div className="my-2 flex flex-col gap-2">
               <Information
                 fontSize="text-sm sm:text-base"

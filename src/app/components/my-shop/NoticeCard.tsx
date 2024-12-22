@@ -4,6 +4,7 @@ import formatTimeRange from '@/app/utils/formatTimeRange';
 import HigherAverageBadge from '@/app/components/my-shop/HigherAverageBadge';
 import Information from './Information';
 import Link from 'next/link';
+import calculateAverageHourlyPay from '@/app/utils/calculateAverageHourlyPay';
 
 export default function NoticeCard({
   not,
@@ -21,11 +22,9 @@ export default function NoticeCard({
       black: closed ? 'text-gray-30' : 'text-black',
       gray: closed ? 'text-gray-30' : 'text-gray-50',
     },
-    badge: {
-      bg: closed ? 'sm:bg-gray-30' : 'sm:bg-orange',
-      text: closed ? 'text-gray-30 sm:text-white' : 'text-orange sm:text-white',
-    },
   };
+
+  const averageHourlyPay = calculateAverageHourlyPay(notice);
 
   return (
     <Link href={`/owner/my-shop/notice/${not.item.id}`}>
@@ -65,10 +64,9 @@ export default function NoticeCard({
               {`${not.item.hourlyPay.toLocaleString()}원`}
             </span>
             <HigherAverageBadge
-              notice={notice}
-              not={not}
-              bgColor={color.badge.bg}
-              textColor={color.badge.text}
+              originalHourlyPay={averageHourlyPay}
+              hourlyPay={not.item.hourlyPay}
+              closed={closed}
             />
           </div>
         </div>
