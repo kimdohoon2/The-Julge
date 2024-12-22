@@ -2,21 +2,27 @@ import ApprovalButton from '@/app/components/my-shop/detail/ApprovalButton';
 
 export default function StatusIcon({
   status,
+  type,
 }: {
   status: 'pending' | 'accepted' | 'rejected' | 'canceled';
+  type: 'employer' | 'employee';
 }) {
   const handleStatus = () => {
     switch (status) {
       case 'pending':
-        return {
-          content: (
-            <div className="flex gap-3">
-              <ApprovalButton approve={true} />
-              <ApprovalButton approve={false} />
-            </div>
-          ),
-          style: '',
-        };
+        if (type === 'employer') {
+          return {
+            content: (
+              <div className="flex gap-3">
+                <ApprovalButton approve={true} />
+                <ApprovalButton approve={false} />
+              </div>
+            ),
+            style: '',
+          };
+        } else {
+          return { content: '대기중', style: 'text-green-20 bg-green-10' };
+        }
       case 'accepted':
         return { content: '승인 완료', style: 'text-blue-20 bg-blue-10' };
       case 'rejected':
