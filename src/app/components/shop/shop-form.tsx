@@ -137,7 +137,7 @@ export default function ShopCommonForm({
       };
 
       // Alert로 제출된 데이터 확인
-      alert(`Form Data: ${JSON.stringify(formData, null, 2)}`);
+      // alert(`Form Data: ${JSON.stringify(formData, null, 2)}`);
 
       // 폼 데이터 서버로 전송 (onSubmit 사용)
       onSubmit(formData);
