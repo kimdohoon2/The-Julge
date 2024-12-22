@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Button from '@/app/components/common/Button';
 import { Shop } from '@/app/types/Shop';
 import Information from './Information';
+import Link from 'next/link';
 
 export default function MyShop({ shop }: { shop: Shop }) {
   return (
@@ -35,12 +36,16 @@ export default function MyShop({ shop }: { shop: Shop }) {
             </p>
           </div>
           <div className="flex gap-2">
-            <Button className="h-12 w-[50%] md:w-[10.5rem]" variant="reverse">
-              편집하기
-            </Button>
-            <Button className="h-12 w-[50%] md:w-[10.5rem]" variant="primary">
-              공고 등록하기
-            </Button>
+            <Link href="/owner/my-shop/register">
+              <Button className="h-12 w-[50%] md:w-[10.5rem]" variant="reverse">
+                편집하기
+              </Button>
+            </Link>
+            <Link href="/owner/my-shop/notice/register">
+              <Button className="h-12 w-[50%] md:w-[10.5rem]" variant="primary">
+                공고 등록하기
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

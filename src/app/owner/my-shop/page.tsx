@@ -6,7 +6,7 @@ import { getMyShop, getShopNotices } from '@/app/api/api';
 import { useEffect, useCallback, useState } from 'react';
 import { Shop, Notice } from '@/app/types/Shop';
 import MyShop from '@/app/components/my-shop/MyShop';
-import ShopNotice from '@/app/components/my-shop/NoticeCard';
+import NoticeCard from '@/app/components/my-shop/NoticeCard';
 
 export default function MyShopPage() {
   const { user, type } = useAuthStore();
@@ -59,7 +59,7 @@ export default function MyShopPage() {
               <div className="grid grid-cols-2 gap-4 xl:grid-cols-3">
                 {notice.map((not) => (
                   <div key={not.item.id}>
-                    <ShopNotice not={not} shop={shop} notice={notice} closed={not.item.closed} />
+                    <NoticeCard not={not} shop={shop} notice={notice} closed={not.item.closed} />
                   </div>
                 ))}
               </div>
