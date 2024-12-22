@@ -5,7 +5,7 @@ import { getNoticeDetail } from '@/app/api/api';
 import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { NoticeDetail } from '@/app/types/Shop';
-import MyNotice from '@/app/components/my-shop/MyNotice';
+import MyNotice from '@/app/components/my-shop/detail/MyNotice';
 
 export default function NoticePage() {
   const { id } = useParams<{ id: string }>();

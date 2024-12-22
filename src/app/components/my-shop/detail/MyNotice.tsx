@@ -1,11 +1,11 @@
 import Image from 'next/image';
 import Button from '@/app/components/common/Button';
 import { NoticeDetail } from '@/app/types/Shop';
-import Information from './Information';
+import Information from '../Information';
 import Link from 'next/link';
 import converDate from '@/app/utils/converDate';
 import formatTimeRange from '@/app/utils/formatTimeRange';
-import HigherAverageBadge from './HigherAverageBadge';
+import HigherAverageBadge from '../HigherAverageBadge';
 
 export default function MyNotice({ notice }: { notice: NoticeDetail }) {
   const date = `${converDate(notice.startsAt)} ${formatTimeRange(notice.startsAt, notice.workhour)}`;
