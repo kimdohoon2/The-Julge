@@ -2,7 +2,7 @@ name: Deploy
 
 on:
   push:
-    branches: [develop]
+    branches: [main]
 
 jobs:
   build:
@@ -21,10 +21,10 @@ jobs:
           API_TOKEN_GITHUB: ${{ secrets.MYTOKEN }}
         with:
           source-directory: 'output'
-          destination-github-username: [kimdohoon2]
-          destination-repository-name: [The-Julge]
+          destination-github-username: 'kimdohoon2'
+          destination-repository-name: 'The-Julge'
           user-email: ${{ secrets.EMAIL }}
           commit-message: ${{ github.event.commits[0].message }}
-          target-branch: develop
+          target-branch: main
       - name: Test get variable exported by push-to-another-repository
         run: echo $DESTINATION_CLONED_DIRECTORY
