@@ -50,12 +50,17 @@ export default function NoticeRegisterPage() {
                 className="input"
                 id="hourlyPay"
                 type="text"
-                placeholder="10,000"
+                placeholder="0"
                 {...register('hourlyPay', {
                   required: '시급을 입력해주세요.',
                   pattern: {
                     value: /^[0-9]*$/,
                     message: '숫자만 입력해주세요.',
+                  },
+                  validate: {
+                    minValue: (value) => {
+                      if (value < 10000) return '시급은 10,000원 이상이어야 합니다.';
+                    },
                   },
                 })}
               />
