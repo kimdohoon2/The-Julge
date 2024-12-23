@@ -43,6 +43,7 @@ body {
     padding: 1rem 1.25rem;
     color: #111322;
     outline: none;
+    height: 3.6rem;
   }
 
   .textarea {

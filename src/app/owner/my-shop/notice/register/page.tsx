@@ -7,6 +7,8 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useState } from 'react';
 import { PostNotice } from '@/app/types/Shop';
+import FormInput from '@/app/components/my-shop/register/FormInput';
+import Link from 'next/link';
 
 interface NoticeRegisterForm {
   hourlyPay: string;
@@ -65,62 +67,50 @@ export default function NoticeRegisterPage() {
       <div className="container h-[calc(100vh-8rem-6.8rem)]">
         <div className="flex items-center justify-between">
           <h3 className="h3">공고 등록</h3>
-          <div className="relative h-4 w-4">
-            <Image fill src="/my-shop/x.svg" alt="notice" sizes="(max-width: 640px) 16px" />
-          </div>
+          <Link href="/owner/my-shop">
+            <div className="relative h-4 w-4">
+              <Image fill src="/my-shop/x.svg" alt="notice" sizes="(max-width: 640px) 16px" />
+            </div>
+          </Link>
         </div>
         <form className="mt-8" onSubmit={handleSubmit(handleSubmitForm)}>
           <div className="grid grid-cols-3 gap-4">
-            <div className="relative">
-              <label htmlFor="hourlyPay">시급*</label>
-              <input
-                className="input"
-                value={hourlyPay}
-                onInput={(e) => formatHourlyPay(e.currentTarget.value)}
-                id="hourlyPay"
-                type="text"
-                placeholder="0"
-                {...register('hourlyPay', {
-                  required: '시급을 입력해주세요.',
-                })}
-              />
-              <span className="absolute right-4 top-[3rem] text-black">원</span>
-              {errors.hourlyPay && <span className="errorMessage">{errors.hourlyPay.message}</span>}
-            </div>
-            <div>
-              <label htmlFor="startsAt">시작일*</label>
-              <input
-                className="input"
-                id="startsAt"
-                type="datetime-local"
-                placeholder="시작일"
-                {...register('startsAt', { required: '시작일을 입력해주세요.' })}
-              />
-              {errors.startsAt && <span className="errorMessage">{errors.startsAt.message}</span>}
-            </div>
-            <div className="relative">
-              <label htmlFor="workhour">업무 시간*</label>
-              <input
-                className="input"
-                value={workhour}
-                onInput={(e) => formatWorkhour(e.currentTarget.value)}
-                id="workhour"
-                type="text"
-                placeholder="0"
-                {...register('workhour', {
-                  required: '업무 시간을 입력해주세요.',
-                })}
-              />
-              <span className="absolute right-4 top-[3rem]">시간</span>
-              {errors.workhour && <span className="errorMessage">{errors.workhour.message}</span>}
-            </div>
+            <FormInput
+              name="hourlyPay"
+              label="시급*"
+              placeholder="0"
+              validate={{ required: '시급을 입력해주세요.' }}
+              register={register}
+              errors={errors}
+              value={hourlyPay}
+              onInput={(e) => formatHourlyPay(e.currentTarget.value)}
+            />
+            <FormInput
+              name="startsAt"
+              label="시작일*"
+              type="date"
+              validate={{ required: '시작일을 입력해주세요.' }}
+              register={register}
+              errors={errors}
+            />
+            <FormInput
+              name="workhour"
+              label="업무 시간*"
+              placeholder="0"
+              validate={{ required: '업무 시간을 입력해주세요.' }}
+              register={register}
+              errors={errors}
+              value={workhour}
+              onInput={(e) => formatWorkhour(e.currentTarget.value)}
+            />
             <div className="col-span-3">
-              <label htmlFor="description">공고 설명</label>
-              <textarea
-                className="input textarea resize-none"
-                id="description"
+              <FormInput
+                name="description"
+                label="공고 설명"
+                type="textarea"
                 placeholder="공고 설명을 입력해주세요."
-                {...register('description')}
+                register={register}
+                errors={errors}
               />
             </div>
           </div>
