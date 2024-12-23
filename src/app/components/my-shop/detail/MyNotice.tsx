@@ -28,13 +28,9 @@ export default function MyNotice({ notice }: { notice: NoticeDetail }) {
             <span className="category">시급</span>
             <div className="flex items-center gap-3">
               <h4 className="text-2xl font-semibold text-black sm:text-[1.75rem]">
-                {`${notice.hourlyPay.toLocaleString()}원`}
+                {`${Number(notice.hourlyPay).toLocaleString()}원`}
               </h4>
-              <HigherAverageBadge
-                originalHourlyPay={notice.shop.item.originalHourlyPay}
-                hourlyPay={notice.hourlyPay}
-                closed={notice.closed}
-              />
+              <HigherAverageBadge hourlyPay={notice.hourlyPay} closed={notice.closed} />
             </div>
             <div className="my-2 flex flex-col gap-2">
               <Information
