@@ -24,7 +24,15 @@ const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 function SignupPage() {
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
+  const [isSignupComplete, setIsSignupComplete] = useState(false);
   const router = useRouter();
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    if (isSignupComplete) {
+      router.push('/login');
+    }
+  };
 
   const {
     register,
@@ -49,12 +57,8 @@ function SignupPage() {
 
       if (signupResponse.status === 201) {
         setModalMessage('가입이 완료되었습니다.');
+        setIsSignupComplete(true);
         setShowModal(true);
-
-        // 로그인 페이지로 이동
-        setTimeout(() => {
-          router.push('/login');
-        }, 2000);
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -68,9 +72,8 @@ function SignupPage() {
           return;
         }
       }
-
-      // 예상치 못한 에러 처리
       alert('회원가입 중 오류가 발생했습니다. 다시 시도해 주세요.');
+      setIsSignupComplete(false);
     }
   };
 
@@ -79,7 +82,7 @@ function SignupPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-white">
       {/* 모달 컴포넌트 */}
-      <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
+      <Modal isOpen={showModal} onClose={handleCloseModal}>
         {modalMessage}
       </Modal>
 

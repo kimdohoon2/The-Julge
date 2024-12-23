@@ -41,22 +41,12 @@ function LoginPage() {
         // 로그인 성공: accessToken 저장 및 페이지 이동
         const { accessToken } = response.data;
         localStorage.setItem('accessToken', accessToken);
-        alert('로그인 성공!');
         router.push('/');
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        // 서버 응답에 따라 에러 처리
-        if (error.response?.status === 404) {
-          alert('존재하지 않거나 비밀번호가 일치하지 않습니다.');
-        } else {
-          alert('알 수 없는 오류가 발생했습니다. 다시 시도해 주세요.');
-        }
-      } else {
-        // 네트워크 오류 등 기타 에러
-        alert('네트워크 오류가 발생했습니다. 다시 시도해 주세요.');
+        setShowModal(true);
       }
-      setShowModal(true);
     }
   };
 
