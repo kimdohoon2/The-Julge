@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { editShop, getShopDetails } from '@/app/api/register-api';
 import ShopCommonForm from '@/app/components/shop/shop-form';
+import Modal from '@/app/components/modal/modal';
 
 interface ShopFormData {
   name: string;
@@ -20,6 +21,9 @@ export default function ShopEditClient() {
   const { shopId } = useParams<{ shopId: string }>(); // URL에서 shopId를 가져옴
   const [isLoading, setIsLoading] = useState(true);
   const [shopDetails, setShopDetails] = useState<ShopFormData | null>(null); // 초기값을 null로 설정
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const [redirectPath, setRedirectPath] = useState('');
 
   useEffect(() => {
     console.log('Extracted Shop ID:', shopId); // shopId 로그 추가
@@ -55,8 +59,9 @@ export default function ShopEditClient() {
     try {
       const result = await editShop(shopId, formData);
       console.log('수정이 완료되었습니다.', result);
-      alert('수정이 완료되었습니다!');
-      router.push(`/owner/my-shop/announcement`); // 상세 페이지로 리다이렉트
+      setModalMessage('수정이 완료되었습니다!');
+      setRedirectPath(`/owner/my-shop`); // 상세 페이지로 리다이렉트
+      setModalOpen(true);
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.error('수정 실패 되었습니다.', error);
@@ -67,7 +72,12 @@ export default function ShopEditClient() {
       }
     }
   };
-
+  const handleConfirm = () => {
+    setModalOpen(false);
+    if (redirectPath) {
+      router.push(redirectPath);
+    }
+  };
   if (isLoading) {
     return <div>로딩 중...</div>;
   }
@@ -76,5 +86,12 @@ export default function ShopEditClient() {
     return <div>가게 정보를 불러오는 데 실패했습니다.</div>;
   }
 
-  return <ShopCommonForm mode="edit" onSubmit={handleEditSubmit} initialData={shopDetails} />;
+  return (
+    <>
+      <ShopCommonForm mode="edit" onSubmit={handleEditSubmit} initialData={shopDetails} />
+      <Modal isOpen={modalOpen} onClose={handleConfirm}>
+        {modalMessage}
+      </Modal>
+    </>
+  );
 }
