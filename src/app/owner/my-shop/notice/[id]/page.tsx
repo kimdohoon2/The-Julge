@@ -59,7 +59,7 @@ export default function NoticePage() {
   return (
     <>
       <div className="container">
-        <section className="mt-10 sm:mt-16">
+        <section>
           <span className="label">{content.shop.item.category}</span>
           <h3 className="h3">{content.shop.item.name}</h3>
           <MyNotice notice={content} />

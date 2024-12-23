@@ -1,7 +1,7 @@
 export default function NoticeRegisterPage() {
   return (
-    <div>
-      <h1>NoticeRegisterPage</h1>
+    <div className="container">
+      <h3 className="h3">공고 등록</h3>
     </div>
   );
 }

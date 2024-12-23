@@ -49,7 +49,7 @@ export default function MyShopPage() {
   return (
     <div className="container">
       <div>
-        <section className="mt-10 sm:mt-16">
+        <section>
           <h3 className="h3">내 가게</h3>
           {!shop && (
             <AddPost
