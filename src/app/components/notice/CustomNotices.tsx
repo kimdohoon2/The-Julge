@@ -39,7 +39,7 @@ interface ApiResponse {
 
 export default function CustomNotices() {
   const [notices, setNotices] = useState<NoticeItem[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const addNotice = useRecentNoticesStore((state) => state.addNotice);
 
   useEffect(() => {

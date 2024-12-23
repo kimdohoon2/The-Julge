@@ -32,7 +32,7 @@ interface NoticeDetail {
 
 export default function DetailNotice() {
   const [notice, setNotice] = useState<NoticeDetail | null>(null);
-  const [loading, setLoading] = useState<boolean>(true); // 로딩 상태 추가
+  const [loading, setLoading] = useState<boolean>(true);
 
   const params = useParams();
   const shopId = params.shopId as string;
