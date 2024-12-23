@@ -1,28 +1,55 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
-import { PostNotice } from '@/app/types/Shop';
 import { postShopNotice } from '@/app/api/api';
 import useAuthStore from '@/app/stores/authStore';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { useState } from 'react';
+import { PostNotice } from '@/app/types/Shop';
+
+interface NoticeRegisterForm {
+  hourlyPay: string;
+  startsAt: string;
+  workhour: string;
+  description: string;
+}
 
 export default function NoticeRegisterPage() {
   const { token, user } = useAuthStore();
   const shopId = user?.shop?.item.id;
   const router = useRouter();
+  const [hourlyPay, setHourlyPay] = useState<string>('');
+  const [workhour, setWorkhour] = useState<string>('');
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<PostNotice>({ defaultValues: { description: '' } });
+  } = useForm<NoticeRegisterForm>({ defaultValues: { description: '' } });
 
-  const handleSubmitForm = async (data: PostNotice) => {
+  const formatHourlyPay = (value: string) => {
+    setHourlyPay(value.replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+  };
+
+  const formatWorkhour = (value: string) => {
+    setWorkhour(value.replace(/\D/g, ''));
+  };
+
+  const handleSubmitForm = async (form: NoticeRegisterForm) => {
     if (!shopId || !token) return;
 
-    const date = new Date(data.startsAt);
-    data.startsAt = date.toISOString();
+    const date = new Date(form.startsAt);
+    form.startsAt = date.toISOString();
+
+    form.hourlyPay = form.hourlyPay.replace(/\D/g, '');
+
+    const data: PostNotice = {
+      hourlyPay: parseInt(form.hourlyPay),
+      startsAt: form.startsAt,
+      workhour: parseInt(form.workhour),
+      description: form.description,
+    };
 
     await postShopNotice(token, shopId, data);
     alert('공고가 등록되었습니다.');
@@ -48,20 +75,13 @@ export default function NoticeRegisterPage() {
               <label htmlFor="hourlyPay">시급*</label>
               <input
                 className="input"
+                value={hourlyPay}
+                onInput={(e) => formatHourlyPay(e.currentTarget.value)}
                 id="hourlyPay"
                 type="text"
                 placeholder="0"
                 {...register('hourlyPay', {
                   required: '시급을 입력해주세요.',
-                  pattern: {
-                    value: /^[0-9]*$/,
-                    message: '숫자만 입력해주세요.',
-                  },
-                  validate: {
-                    minValue: (value) => {
-                      if (value < 10000) return '시급은 10,000원 이상이어야 합니다.';
-                    },
-                  },
                 })}
               />
               <span className="absolute right-4 top-[3rem] text-black">원</span>
@@ -82,15 +102,13 @@ export default function NoticeRegisterPage() {
               <label htmlFor="workhour">업무 시간*</label>
               <input
                 className="input"
+                value={workhour}
+                onInput={(e) => formatWorkhour(e.currentTarget.value)}
                 id="workhour"
                 type="text"
                 placeholder="0"
                 {...register('workhour', {
                   required: '업무 시간을 입력해주세요.',
-                  pattern: {
-                    value: /^[0-9]*$/,
-                    message: '숫자만 입력해주세요.',
-                  },
                 })}
               />
               <span className="absolute right-4 top-[3rem]">시간</span>
