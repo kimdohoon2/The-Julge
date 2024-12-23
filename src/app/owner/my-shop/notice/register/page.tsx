@@ -5,6 +5,7 @@ import { PostNotice } from '@/app/types/Shop';
 import { postShopNotice } from '@/app/api/api';
 import useAuthStore from '@/app/stores/authStore';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 export default function NoticeRegisterPage() {
   const { token, user } = useAuthStore();
@@ -32,44 +33,78 @@ export default function NoticeRegisterPage() {
     return <div className="my-10 text-center">로그인이 필요합니다.</div>;
   }
 
-  if (errors.hourlyPay) {
-    alert(errors.hourlyPay.message);
-  }
-
   return (
     <>
-      <div className="container">
-        <h3 className="h3">공고 등록</h3>
+      <div className="container h-[calc(100vh-8rem-6.8rem)]">
+        <div className="flex items-center justify-between">
+          <h3 className="h3">공고 등록</h3>
+          <div className="relative h-4 w-4">
+            <Image fill src="/my-shop/x.svg" alt="notice" sizes="(max-width: 640px) 16px" />
+          </div>
+        </div>
         <form className="mt-8" onSubmit={handleSubmit(handleSubmitForm)}>
-          <div className="flex flex-col gap-4">
-            <label htmlFor="hourlyPay">시급*</label>
-            <input
-              id="hourlyPay"
-              type="text"
-              placeholder="시급을 입력해주세요."
-              {...register('hourlyPay', { required: '시급을 입력해주세요.' })}
-            />
-            <label htmlFor="startsAt">시작일*</label>
-            <input
-              id="startsAt"
-              type="datetime-local"
-              placeholder="시작일"
-              {...register('startsAt', { required: '시작일을 입력해주세요.' })}
-            />
-            <label htmlFor="workhour">업무 시간*</label>
-            <input
-              id="workhour"
-              type="text"
-              placeholder="업무 시간을 입력해주세요."
-              {...register('workhour')}
-            />
-            <label htmlFor="description">공고 설명</label>
-            <textarea
-              id="description"
-              placeholder="공고 설명을 입력해주세요."
-              {...register('description')}
-            />
-            <button type="submit">등록하기</button>
+          <div className="grid grid-cols-3 gap-4">
+            <div className="relative">
+              <label htmlFor="hourlyPay">시급*</label>
+              <input
+                className="input"
+                id="hourlyPay"
+                type="text"
+                placeholder="10,000"
+                {...register('hourlyPay', {
+                  required: '시급을 입력해주세요.',
+                  pattern: {
+                    value: /^[0-9]*$/,
+                    message: '숫자만 입력해주세요.',
+                  },
+                })}
+              />
+              <span className="absolute right-4 top-[3rem] text-black">원</span>
+              {errors.hourlyPay && <span className="errorMessage">{errors.hourlyPay.message}</span>}
+            </div>
+            <div>
+              <label htmlFor="startsAt">시작일*</label>
+              <input
+                className="input"
+                id="startsAt"
+                type="datetime-local"
+                placeholder="시작일"
+                {...register('startsAt', { required: '시작일을 입력해주세요.' })}
+              />
+              {errors.startsAt && <span className="errorMessage">{errors.startsAt.message}</span>}
+            </div>
+            <div className="relative">
+              <label htmlFor="workhour">업무 시간*</label>
+              <input
+                className="input"
+                id="workhour"
+                type="text"
+                placeholder="0"
+                {...register('workhour', {
+                  required: '업무 시간을 입력해주세요.',
+                  pattern: {
+                    value: /^[0-9]*$/,
+                    message: '숫자만 입력해주세요.',
+                  },
+                })}
+              />
+              <span className="absolute right-4 top-[3rem]">시간</span>
+              {errors.workhour && <span className="errorMessage">{errors.workhour.message}</span>}
+            </div>
+            <div className="col-span-3">
+              <label htmlFor="description">공고 설명</label>
+              <textarea
+                className="input textarea resize-none"
+                id="description"
+                placeholder="공고 설명을 입력해주세요."
+                {...register('description')}
+              />
+            </div>
+          </div>
+          <div className="mt-6 flex justify-center">
+            <button className="buttonVer1 w-full md:w-[21rem]" type="submit">
+              등록하기
+            </button>
           </div>
         </form>
       </div>
