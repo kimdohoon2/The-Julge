@@ -5,6 +5,7 @@ import Card from '../common/Card';
 import formatTimeRange from '@/app/utils/formatTimeRange';
 import { fetchNotices } from '@/app/api/noticeApi';
 import { useRecentNoticesStore } from '@/app/stores/useRecentNoticesStore';
+import LoadingSpinner from '../common/LoadingSpinner';
 
 interface ShopItem {
   id: string;
@@ -43,10 +44,12 @@ export default function AllNotices({
   filterOptions,
 }: AllNoticesProps) {
   const [notices, setNotices] = useState<NoticeItem[]>([]);
+  const [loading, setLoading] = useState(false);
   const addNotice = useRecentNoticesStore((state) => state.addNotice);
 
   useEffect(() => {
     const getNotices = async () => {
+      setLoading(true);
       try {
         const { items, count } = await fetchNotices(
           currentPage,
@@ -58,11 +61,21 @@ export default function AllNotices({
         setTotalItems(count);
       } catch (error) {
         console.error('Error fetching notices:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
     getNotices();
   }, [currentPage, itemsPerPage, setTotalItems, sortOption, filterOptions]);
+
+  if (loading) {
+    return (
+      <div className="flex h-60 items-center justify-center">
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
   return (
     <div className="grid grid-cols-2 gap-4 lg:grid-cols-3">
