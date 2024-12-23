@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Button from '../../common/Button';
-import LoadingSpinner from '../../common/LoadingSpinner'; // 로딩 스피너 컴포넌트
+import LoadingSpinner from '../../common/LoadingSpinner';
 import getDiscountClass from '@/app/utils/getDiscountClass';
 
 interface ShopItem {

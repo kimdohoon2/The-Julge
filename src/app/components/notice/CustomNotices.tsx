@@ -48,7 +48,7 @@ export default function CustomNotices() {
       try {
         const response = await axios.get<ApiResponse>(
           'https://bootcamp-api.codeit.kr/api/11-2/the-julge/notices?offset=0&limit=10'
-        ); // 맞춤공고는 현재 데이터를 10개 받아옵니다.
+        ); // 맞춤공고는 현재 데이터를 10개 받아오는데 후에 로직 변경 예정입니다.
         const formattedData = response.data.items.map((data) => ({
           ...data.item,
           shopId: data.item.shop.item.id,
