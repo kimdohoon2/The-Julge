@@ -2,7 +2,7 @@ name: Deploy
 
 on:
   push:
-    branches: [develop]
+    branches: [main]
 
 jobs:
   build:
@@ -16,7 +16,7 @@ jobs:
         run: sh ./build.sh
       - name: Pushes to another repository
         id: push_directory
-        uses: cpina/github-action-push-to-another-repository@develop
+        uses: cpina/github-action-push-to-another-repository@main
         env:
           API_TOKEN_GITHUB: ${{ secrets.MYTOKEN }}
         with:
@@ -25,6 +25,6 @@ jobs:
           destination-repository-name: 'The-Julge'
           user-email: ${{ secrets.EMAIL }}
           commit-message: ${{ github.event.commits[0].message }}
-          target-branch: develop
+          target-branch: main
       - name: Test get variable exported by push-to-another-repository
         run: echo $DESTINATION_CLONED_DIRECTORY
