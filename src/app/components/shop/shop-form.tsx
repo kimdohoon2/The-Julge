@@ -137,7 +137,7 @@ export default function ShopCommonForm({
       };
 
       // Alert로 제출된 데이터 확인
-      alert(`Form Data: ${JSON.stringify(formData, null, 2)}`);
+      // alert(`Form Data: ${JSON.stringify(formData, null, 2)}`);
 
       // 폼 데이터 서버로 전송 (onSubmit 사용)
       onSubmit(formData);
@@ -148,11 +148,11 @@ export default function ShopCommonForm({
   };
 
   return (
-    <section className="md:pb-15 w-full bg-gray-5 px-3 pb-20 pt-36 md:px-8 md:pt-32 xl:px-60">
+    <section className="w-full bg-gray-5 px-3 pb-20 pt-10 md:px-8 md:pb-[3.75rem] md:pt-[3.75rem] xl:px-60">
       <div className="mb-6 flex w-full items-center justify-between">
         <h3 className="flex-1 text-lg font-bold md:text-custom-xl">가게 정보</h3>
         <div className="h-auto w-full max-w-3.5 md:max-w-4">
-          <Link href="/shop">
+          <Link href={mode === 'create' ? '/owner/my-shop/' : '/owner/my-shop/announcement'}>
             <Image
               className="object-contain"
               src="/shop-icons/close-icon.png"
