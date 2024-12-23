@@ -26,7 +26,7 @@ export default function ShopRegisterPage() {
       console.log('가게 등록 성공:', result);
 
       setModalMessage('가게 등록이 완료되었습니다.');
-      setRedirectPath('/success-page');
+      setRedirectPath('/owner/my-shop');
       setModalOpen(true);
     } catch (error: unknown) {
       if (error instanceof Error) {
