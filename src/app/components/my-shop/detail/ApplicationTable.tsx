@@ -1,22 +1,13 @@
 import { NoticeApplication } from '@/app/types/Shop';
 import StatusIcon from '@/app/components/my-shop/detail/StatusIcon';
 
-interface NoticeApplicationItem {
-  count: number;
-  hasNext: boolean;
-  items: NoticeApplication[];
-  limit: number;
-  links: [];
-  offset: number;
-}
-
 export default function ApplicationTable({
   applications,
   token,
   shopId,
   noticeId,
 }: {
-  applications: NoticeApplicationItem;
+  applications: NoticeApplication[];
   token: string;
   shopId: string;
   noticeId: string;
@@ -33,7 +24,7 @@ export default function ApplicationTable({
           </tr>
         </thead>
         <tbody>
-          {applications.items.map((application) => (
+          {applications.map((application) => (
             <tr key={application.item.id} className="border-b py-5">
               <td className="td">{application.item.user.item.name || '비공개'}</td>
               <td className="td hidden sm:table-cell">

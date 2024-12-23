@@ -52,8 +52,8 @@ export default function NoticePage() {
     return <div className="my-10 text-center">로그인이 필요합니다.</div>;
   }
 
-  if (!content) {
-    return <div className="my-10 text-center">로딩 중...</div>;
+  if (!content || !applications) {
+    return <div className="my-10 text-center">접근 권한이 없습니다.</div>;
   }
 
   return (
@@ -66,10 +66,10 @@ export default function NoticePage() {
         </section>
         <section className="sm:my-30 my-20">
           <h3 className="h3">신청자 목록</h3>
-          {applications && (
+          {applications.items.length >= 1 ? (
             <div className="mt-8 w-full rounded-lg border">
               <ApplicationTable
-                applications={applications}
+                applications={applications.items}
                 token={token}
                 shopId={shopId}
                 noticeId={id}
@@ -81,8 +81,7 @@ export default function NoticePage() {
                 onChange={handlePageChange}
               />
             </div>
-          )}
-          {!applications && (
+          ) : (
             <AddPost
               content="신청자가 없습니다."
               buttonLink="/owner/my-shop"
