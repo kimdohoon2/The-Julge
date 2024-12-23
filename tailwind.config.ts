@@ -26,6 +26,7 @@ export default {
           white: '#FFFFFF',
         },
         red: {
+          50: '#EA3C12',
           40: '#FF4040',
           30: '#FF8D72',
           20: '#FFAF9B',
@@ -41,6 +42,9 @@ export default {
         },
         kakao: '#FEE500',
         orange: '#EA3C12',
+      },
+      fontSize: {
+        'custom-xl': '1.75rem', //28px
       },
     },
   },

@@ -38,9 +38,7 @@ export default function Posts() {
 
   return (
     <div>
-      <header>임시헤더입니다~~~~~~</header>
-
-      <div className="mt-6 bg-red-10">
+      <div className="bg-red-10">
         <div className={`sm:pt-14 ${container}`}>
           <h2 className="mb-5 text-xl font-bold text-gray-black sm:text-[28px]">맞춤 공고</h2>
           <CustomNotices />
