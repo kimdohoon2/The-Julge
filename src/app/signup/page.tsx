@@ -9,7 +9,7 @@ import Modal from '../components/modal/modal';
 import Button from '../components/common/Button';
 
 // **API Base URL 추가**
-const BASE_URL = 'https://bootcamp-api.codeit.kr/api/0-1/the-julge/users';
+const BASE_URL = 'https://bootcamp-api.codeit.kr/api/11-2/the-julge/users';
 
 // Form 데이터 타입 정의
 interface SignupFormInputs {
@@ -91,7 +91,7 @@ function SignupPage() {
             fill
             priority
             className="mx-auto cursor-pointer"
-            onClick={() => router.push('/posts')}
+            onClick={() => router.push('/')}
           />
         </div>
 

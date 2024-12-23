@@ -3,11 +3,13 @@
 import React, { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
+import axios from 'axios';
 import Image from 'next/image';
 import Modal from '../components/modal/modal';
 import Button from '../components/common/Button';
 
-// Form 데이터 타입 정의
+const BASE_URL = 'https://bootcamp-api.codeit.kr/api/11-2/the-julge/token';
+
 interface LoginFormInputs {
   email: string;
   password: string;
@@ -16,8 +18,8 @@ interface LoginFormInputs {
 const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 
 function LoginPage() {
-  const [showModal, setShowModal] = useState(false); // 모달 상태 관리
-  const router = useRouter(); // useRouter 선언
+  const [showModal, setShowModal] = useState(false);
+  const router = useRouter();
 
   const {
     register,
@@ -25,21 +27,36 @@ function LoginPage() {
     formState: { errors },
     trigger,
   } = useForm<LoginFormInputs>({
-    mode: 'onBlur', // 포커스 아웃 시 유효성 검사 실행
+    mode: 'onBlur',
   });
 
-  const onSubmit: SubmitHandler<LoginFormInputs> = (data) => {
+  const onSubmit: SubmitHandler<LoginFormInputs> = async (data) => {
     const { email, password } = data;
 
-    // Mock API 응답 처리
-    const loginSuccess = email === 'test@test.com' && password === 'password123';
+    try {
+      // 서버로 로그인 요청
+      const response = await axios.post(BASE_URL, { email: email, password: password });
 
-    if (loginSuccess) {
-      localStorage.setItem('accessToken', 'mockAccessToken123'); // 엑세스 토큰 저장
-      alert('로그인 성공!');
-      router.push('/posts'); // 공고 리스트 페이지로 이동
-    } else {
-      setShowModal(true); // 비밀번호 불일치 시 모달 표시
+      if (response.status === 200) {
+        // 로그인 성공: accessToken 저장 및 페이지 이동
+        const { accessToken } = response.data;
+        localStorage.setItem('accessToken', accessToken);
+        alert('로그인 성공!');
+        router.push('/');
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        // 서버 응답에 따라 에러 처리
+        if (error.response?.status === 404) {
+          alert('존재하지 않거나 비밀번호가 일치하지 않습니다.');
+        } else {
+          alert('알 수 없는 오류가 발생했습니다. 다시 시도해 주세요.');
+        }
+      } else {
+        // 네트워크 오류 등 기타 에러
+        alert('네트워크 오류가 발생했습니다. 다시 시도해 주세요.');
+      }
+      setShowModal(true);
     }
   };
 
@@ -58,7 +75,7 @@ function LoginPage() {
             fill
             priority
             className="mx-auto cursor-pointer"
-            onClick={() => router.push('/posts')}
+            onClick={() => router.push('/')}
           />
         </div>
 
