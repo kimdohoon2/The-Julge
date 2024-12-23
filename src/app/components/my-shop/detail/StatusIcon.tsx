@@ -1,5 +1,10 @@
+'use client';
+
 import ApprovalButton from '@/app/components/my-shop/detail/ApprovalButton';
 import { putNoticeApplication } from '@/app/api/api';
+import { useState } from 'react';
+import { AxiosError } from 'axios';
+import { useRouter } from 'next/navigation';
 
 export default function StatusIcon({
   status,
@@ -16,16 +21,37 @@ export default function StatusIcon({
   noticeId?: string;
   applicationId?: string;
 }) {
+  const [isPending, setIsPending] = useState(false);
+  const router = useRouter();
+
   const updateApplicationStatus = async (status: 'accepted' | 'rejected') => {
-    const response = await putNoticeApplication(
-      token as string,
-      shopId as string,
-      noticeId as string,
-      applicationId as string,
-      status
-    );
-    console.log(response);
+    if (!token || !shopId || !noticeId || !applicationId) return;
+
+    setIsPending(true);
+    console.log({
+      token: token,
+      shopId: shopId,
+      noticeId: noticeId,
+      applicationId: applicationId,
+      status: status,
+    });
+    try {
+      await putNoticeApplication(token, shopId, noticeId, applicationId, status);
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 400) {
+          alert('마감된 공고입니다.');
+          router.push(`/owner/my-shop`);
+        }
+      }
+    }
+
+    setIsPending(false);
   };
+
+  if (isPending) {
+    return <span>처리 중...</span>;
+  }
 
   const handleStatus = () => {
     switch (status) {

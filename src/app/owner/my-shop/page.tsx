@@ -25,6 +25,8 @@ export default function MyShopPage() {
   }, [shopId]);
 
   const fetchNotice = useCallback(async () => {
+    if (!shopId) return;
+
     const response = await getShopNotices(shopId as string);
     setNotice(response.items);
     console.log(response.items);
