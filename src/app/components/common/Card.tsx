@@ -38,7 +38,7 @@ const Card: React.FC<CardProps> = ({
         : 'text-red-40 sm:bg-red-20 sm:text-white';
 
   return (
-    <Link href={`/posts/${shopId}/${noticeId}`} onClick={onClick}>
+    <Link href={`/${shopId}/${noticeId}`} onClick={onClick}>
       <div className="w-44 rounded-xl border border-gray-20 bg-white p-4 sm:w-[312px]">
         <div className="relative h-20 w-full sm:h-40">
           <Image
