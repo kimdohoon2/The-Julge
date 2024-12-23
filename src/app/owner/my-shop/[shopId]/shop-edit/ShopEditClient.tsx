@@ -73,14 +73,8 @@ export default function ShopEditClient() {
   }
 
   if (!shopDetails) {
-    return <div>가게 정보를 불러오는 데 실패했습니다.</div>; // 에러 처리
+    return <div>가게 정보를 불러오는 데 실패했습니다.</div>;
   }
 
-  return (
-    <ShopCommonForm
-      mode="edit"
-      onSubmit={handleEditSubmit}
-      initialData={shopDetails} // 초기 데이터로 API에서 가져온 데이터 사용
-    />
-  );
+  return <ShopCommonForm mode="edit" onSubmit={handleEditSubmit} initialData={shopDetails} />;
 }
