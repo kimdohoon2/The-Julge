@@ -62,7 +62,7 @@ export default function NoticeCard({
           </div>
           <div className="flex flex-col justify-between pt-[0.6rem] sm:flex-row sm:items-center">
             <span className={`text-lg font-semibold ${color.text.black} sm:text-2xl`}>
-              {`${not.item.hourlyPay.toLocaleString()}원`}
+              {`${Number(not.item.hourlyPay).toLocaleString()}원`}
             </span>
             <HigherAverageBadge hourlyPay={not.item.hourlyPay} closed={closed} />
           </div>
