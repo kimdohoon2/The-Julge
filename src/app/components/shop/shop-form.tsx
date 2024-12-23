@@ -23,15 +23,7 @@ export default function ShopCommonForm({
   onSubmit,
 }: {
   mode?: 'create' | 'edit';
-  initialData?: {
-    name?: string;
-    category?: string;
-    address1?: string;
-    address2?: string;
-    originalHourlyPay?: number;
-    description?: string;
-    previewUrl?: string;
-  };
+  initialData?: ShopFormData;
   onSubmit: (formData: ShopFormData) => void;
 }) {
   const [file, setFile] = useState<File | null>(null); // 파일 상태
@@ -43,7 +35,7 @@ export default function ShopCommonForm({
     initialData?.originalHourlyPay || 0
   );
   const [description, setDescription] = useState(initialData?.description || '');
-  const [previewUrl, setPreviewUrl] = useState(initialData?.previewUrl || null);
+  const [previewUrl, setPreviewUrl] = useState(initialData?.imageUrl || null);
 
   const isFormValid =
     name.trim() !== '' &&
