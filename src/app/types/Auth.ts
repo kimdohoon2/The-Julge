@@ -29,8 +29,10 @@ export interface AuthStore {
   userId: string | null;
   type: 'employee' | 'employer' | null;
   token: string | null;
+  isInitialized: boolean;
   getMe: () => void;
   signup: (data: Auth) => Promise<AuthResponse>;
   login: (data: Auth) => Promise<AuthResponse>;
   logout: () => void;
+  initialize: () => void;
 }
