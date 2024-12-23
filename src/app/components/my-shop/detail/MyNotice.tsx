@@ -53,7 +53,7 @@ export default function MyNotice({ notice }: { notice: NoticeDetail }) {
             </p>
           </div>
           <Button className="h-12 w-full" variant="reverse">
-            <Link href="/owner/my-shop/register/edit">공고 편집하기</Link>
+            <Link href={`/owner/my-shop/notice/${notice.id}/edit`}>공고 편집하기</Link>
           </Button>
         </div>
       </div>
