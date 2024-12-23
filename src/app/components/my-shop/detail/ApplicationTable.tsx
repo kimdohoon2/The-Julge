@@ -1,5 +1,5 @@
 import { NoticeApplication } from '@/app/types/Shop';
-import StatusIcon from '@/app/components/my-shop/detail/StatusIcon';
+import StatusLabel from '@/app/components/my-shop/detail/StatusLabel';
 
 export default function ApplicationTable({
   applications,
@@ -34,7 +34,7 @@ export default function ApplicationTable({
                 {application.item.user.item.phone || '010-****-****'}
               </td>
               <td className="td pr-7">
-                <StatusIcon
+                <StatusLabel
                   initialstatus={application.item.status}
                   type="employer"
                   token={token}

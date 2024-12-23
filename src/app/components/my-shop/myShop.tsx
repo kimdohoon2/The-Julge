@@ -3,8 +3,12 @@ import Button from '@/app/components/common/Button';
 import { Shop } from '@/app/types/Shop';
 import Information from './Information';
 import Link from 'next/link';
+import useAuthStore from '@/app/stores/authStore';
 
 export default function MyShop({ shop }: { shop: Shop }) {
+  const { user } = useAuthStore();
+  const shopId = user?.shop?.item.id;
+
   return (
     <>
       <div className="flex w-full flex-col rounded-xl bg-red-10 p-6 md:h-[22.25rem] md:flex-row md:items-center md:gap-8">
@@ -37,7 +41,7 @@ export default function MyShop({ shop }: { shop: Shop }) {
           </div>
           <div className="flex gap-2">
             <Button className="h-12 w-[50%] md:w-[10.5rem]" variant="reverse">
-              <Link href="/owner/my-shop/register">편집하기</Link>
+              <Link href={`/owner/my-shop/${shopId}/shop-edit`}>편집하기</Link>
             </Button>
             <Button className="h-12 w-[50%] md:w-[10.5rem]" variant="primary">
               <Link href="/owner/my-shop/notice/register">공고 등록하기</Link>

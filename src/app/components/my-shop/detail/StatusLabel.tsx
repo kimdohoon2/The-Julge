@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 
-export default function StatusIcon({
+export default function StatusLabel({
   initialstatus,
   type,
   token,
