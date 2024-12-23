@@ -73,3 +73,10 @@ export interface NoticeApplication {
     };
   };
 }
+
+export interface PostNotice {
+  hourlyPay: number;
+  startsAt: string;
+  workhour: number;
+  description: string;
+}

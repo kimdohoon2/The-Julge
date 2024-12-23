@@ -24,7 +24,7 @@ export default function MyShop({ shop }: { shop: Shop }) {
         </div>
         <div className="flex w-full flex-col gap-8 pt-4 md:h-[100%] md:w-[38%] md:justify-between">
           <div className="flex flex-col gap-1 sm:gap-2">
-            <span className="label">{shop.category}</span>
+            <span className="category">{shop.category}</span>
             <h4 className="text-2xl font-semibold text-black sm:text-[1.75rem]">{shop.name}</h4>
             <div className="my-2">
               <Information

@@ -25,7 +25,7 @@ export default function MyNotice({ notice }: { notice: NoticeDetail }) {
         </div>
         <div className="flex w-full flex-col gap-8 pt-4 md:h-[100%] md:w-[38%] md:justify-between">
           <div className="flex flex-col gap-1 sm:gap-2">
-            <span className="label">{notice.shop.item.category}</span>
+            <span className="category">시급</span>
             <div className="flex items-center gap-3">
               <h4 className="text-2xl font-semibold text-black sm:text-[1.75rem]">
                 {`${notice.hourlyPay.toLocaleString()}원`}

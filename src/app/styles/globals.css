@@ -34,7 +34,7 @@ body {
     font-weight: 700;
   }
 
-  .label {
+  .category {
     font-weight: 700;
     color: #ea3c12;
   }
@@ -64,7 +64,7 @@ body {
       font-size: 1.25rem;
     }
 
-    .label {
+    .category {
       font-size: 0.875rem;
     }
   }

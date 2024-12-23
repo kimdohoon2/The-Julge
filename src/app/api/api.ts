@@ -16,14 +16,14 @@ const instance = axios.create({
 const postShopNotice = async (
   token: string,
   shopId: string,
-  noticeData: {
+  data: {
     hourlyPay: number;
     startsAt: string;
     workhour: number;
     description: string;
   }
 ) => {
-  const response = await instance.post(`/shops/${shopId}/notices`, noticeData, {
+  const response = await instance.post(`/shops/${shopId}/notices`, data, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
