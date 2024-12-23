@@ -73,7 +73,7 @@ export default function MyShopPage() {
             <div className="grid grid-cols-2 gap-4 xl:grid-cols-3">
               {notice.map((not) => (
                 <div key={not.item.id}>
-                  <NoticeCard not={not} shop={shop} notice={notice} closed={not.item.closed} />
+                  <NoticeCard not={not} shop={shop} closed={not.item.closed} />
                 </div>
               ))}
             </div>
