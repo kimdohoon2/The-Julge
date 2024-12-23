@@ -5,13 +5,11 @@ import { PostNotice } from '@/app/types/Shop';
 import { postShopNotice } from '@/app/api/api';
 import useAuthStore from '@/app/stores/authStore';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
 
 export default function NoticeRegisterPage() {
   const { token, user } = useAuthStore();
   const shopId = user?.shop?.item.id;
   const router = useRouter();
-  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const {
     register,
@@ -27,14 +25,8 @@ export default function NoticeRegisterPage() {
 
     await postShopNotice(token, shopId, data);
     alert('공고가 등록되었습니다.');
-    setIsSubmitted(true);
+    router.push('/owner/my-shop');
   };
-
-  useEffect(() => {
-    if (isSubmitted) {
-      router.push('/owner/my-shop');
-    }
-  }, [isSubmitted, router]);
 
   if (!shopId || !token) {
     return <div className="my-10 text-center">로그인이 필요합니다.</div>;
