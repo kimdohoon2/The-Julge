@@ -1,8 +1,6 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
-import { postShopNotice } from '@/app/api/api';
-import useAuthStore from '@/app/stores/authStore';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useState } from 'react';
@@ -17,9 +15,19 @@ interface NoticeRegisterForm {
   description: string;
 }
 
-export default function NoticeRegisterPage() {
-  const { token, user } = useAuthStore();
-  const shopId = user?.shop?.item.id;
+export default function NoticeRegisterPage({
+  mode,
+  token,
+  shopId,
+  noticeId,
+  api,
+}: {
+  mode: 'create' | 'edit';
+  token: string;
+  shopId: string;
+  noticeId: string;
+  api: (token: string, shopId: string, noticeId: string, data: PostNotice) => Promise<PostNotice>;
+}) {
   const router = useRouter();
   const [hourlyPay, setHourlyPay] = useState<string>('');
   const [workhour, setWorkhour] = useState<string>('');
@@ -52,20 +60,22 @@ export default function NoticeRegisterPage() {
       description: form.description,
     };
 
-    await postShopNotice(token, shopId, data);
-    alert('공고가 등록되었습니다.');
-    router.push('/owner/my-shop');
-  };
+    await api(token, shopId, noticeId, data);
 
-  if (!shopId || !token) {
-    return <div className="my-10 text-center">로그인이 필요합니다.</div>;
-  }
+    if (mode === 'create') {
+      alert('공고가 등록되었습니다.');
+      router.push('/owner/my-shop');
+    } else {
+      alert('공고가 수정되었습니다.');
+      router.push(`/owner/my-shop/notice/${noticeId}`);
+    }
+  };
 
   return (
     <>
       <div className="container h-[calc(100vh-8rem-6.8rem)]">
         <div className="flex items-center justify-between">
-          <h3 className="h3">공고 등록</h3>
+          <h3 className="h3">{mode === 'create' ? '공고 등록' : '공고 수정'}</h3>
           <Link href="/owner/my-shop">
             <div className="relative h-4 w-4">
               <Image fill src="/my-shop/x.svg" alt="notice" sizes="(max-width: 640px) 16px" />
@@ -115,7 +125,7 @@ export default function NoticeRegisterPage() {
           </div>
           <div className="mt-6 flex justify-center">
             <button className="buttonVer1 w-full md:w-[21rem]" type="submit">
-              등록하기
+              {mode === 'create' ? '등록하기' : '수정하기'}
             </button>
           </div>
         </form>

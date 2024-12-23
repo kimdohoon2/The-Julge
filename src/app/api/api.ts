@@ -128,6 +128,31 @@ const putNoticeApplication = async (
   return response.data;
 };
 
+/* 공고 수정 API */
+/** @param token 토큰 */
+/** @param shopId 가게 ID */
+/** @param noticeId 공고 ID */
+/** @param data 수정할 공고 데이터 */
+
+const putShopNotice = async (
+  token: string,
+  shopId: string,
+  noticeId: string,
+  data: {
+    hourlyPay: number;
+    startsAt: string;
+    workhour: number;
+    description: string;
+  }
+) => {
+  const response = await instance.put(`/shops/${shopId}/notices/${noticeId}`, data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+};
+
 export {
   instance,
   postShopNotice,
@@ -137,4 +162,5 @@ export {
   getNoticeDetail,
   getNoticeApplications,
   putNoticeApplication,
+  putShopNotice,
 };
