@@ -7,36 +7,33 @@ import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 
 export default function StatusIcon({
-  status,
+  initialstatus,
   type,
   token,
   shopId,
   noticeId,
   applicationId,
 }: {
-  status: 'pending' | 'accepted' | 'rejected' | 'canceled';
+  initialstatus: 'pending' | 'accepted' | 'rejected' | 'canceled';
   type: 'employer' | 'employee';
   token?: string;
   shopId?: string;
   noticeId?: string;
   applicationId?: string;
 }) {
+  const [status, setStatus] = useState<'pending' | 'accepted' | 'rejected' | 'canceled'>(
+    initialstatus
+  );
   const [isPending, setIsPending] = useState(false);
   const router = useRouter();
 
   const updateApplicationStatus = async (status: 'accepted' | 'rejected') => {
     if (!token || !shopId || !noticeId || !applicationId) return;
 
-    setIsPending(true);
-    console.log({
-      token: token,
-      shopId: shopId,
-      noticeId: noticeId,
-      applicationId: applicationId,
-      status: status,
-    });
     try {
+      setIsPending(true);
       await putNoticeApplication(token, shopId, noticeId, applicationId, status);
+      setStatus(status);
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
         if (error.response?.status === 400) {
@@ -44,13 +41,13 @@ export default function StatusIcon({
           router.push(`/owner/my-shop`);
         }
       }
+    } finally {
+      setIsPending(false);
     }
-
-    setIsPending(false);
   };
 
   if (isPending) {
-    return <span>처리 중...</span>;
+    return <span className="text-sm text-black">처리 중...</span>;
   }
 
   const handleStatus = () => {

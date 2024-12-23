@@ -35,7 +35,7 @@ export default function ApplicationTable({
               </td>
               <td className="td pr-7">
                 <StatusIcon
-                  status={application.item.status}
+                  initialstatus={application.item.status}
                   type="employer"
                   token={token}
                   shopId={shopId}
