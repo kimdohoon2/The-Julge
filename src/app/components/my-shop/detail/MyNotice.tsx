@@ -49,7 +49,9 @@ export default function MyNotice({ notice }: { notice: NoticeDetail }) {
               />
             </div>
             <p className="max-h-[23.75rem] w-[100%] text-sm text-black sm:text-base">
-              {notice.shop.item.description}
+              {notice.shop.item.description
+                ? notice.shop.item.description
+                : '등록된 설명이 없습니다.'}
             </p>
           </div>
           <Button className="h-12 w-full" variant="reverse">
@@ -59,7 +61,9 @@ export default function MyNotice({ notice }: { notice: NoticeDetail }) {
       </div>
       <div className="mt-6 w-full rounded-lg bg-gray-10 p-8">
         <h5 className="mb-3 font-semibold text-black">공고 설명</h5>
-        <p className="text-black">{notice.description}</p>
+        <p className="text-black">
+          {notice.description ? notice.description : '등록된 설명이 없습니다.'}
+        </p>
       </div>
     </>
   );

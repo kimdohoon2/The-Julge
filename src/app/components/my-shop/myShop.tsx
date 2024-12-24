@@ -36,7 +36,7 @@ export default function MyShop({ shop }: { shop: Shop }) {
               />
             </div>
             <p className="max-h-[23.75rem] w-[100%] text-sm text-black sm:text-base">
-              {shop.description}
+              {shop.description ? shop.description : '등록된 설명이 없습니다.'}
             </p>
           </div>
           <div className="flex gap-2">
