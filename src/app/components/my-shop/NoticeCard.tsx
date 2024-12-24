@@ -4,6 +4,7 @@ import formatTimeRange from '@/app/utils/formatTimeRange';
 import HigherAverageBadge from '@/app/components/my-shop/HigherAverageBadge';
 import Information from './Information';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface NoticeItem {
   item: Notice;
@@ -36,9 +37,8 @@ export default function NoticeCard({
             </div>
           </div>
         )}
-        {/* 리스폰스에 공고 이미지가 없습니다. */}
-        <div className="flex h-[10rem] items-center justify-center rounded-xl bg-gray-20">
-          <span>리스폰스에 이미지 없음</span>
+        <div className="relative flex h-[10rem] items-center justify-center overflow-hidden rounded-xl bg-gray-20">
+          <Image fill src={shop.imageUrl} alt="매장 이미지" sizes="(max-width: 640px) 100%" />
         </div>
         <div className="mt-5 flex h-[42%] flex-col justify-between">
           <div className="flex flex-col gap-2">
