@@ -7,12 +7,18 @@ import { useState } from 'react';
 import { PostNotice, PostNoticeResponse } from '@/app/types/Shop';
 import FormInput from '@/app/components/my-shop/register/FormInput';
 import Link from 'next/link';
+import Modal from '@/app/components/modal/modal';
 
 interface NoticeRegisterForm {
   hourlyPay: string;
   startsAt: string;
   workhour: string;
   description: string;
+}
+
+interface PostNoticeResponseItem {
+  item: PostNoticeResponse;
+  links: [];
 }
 
 export default function NoticeRegisterPage({
@@ -27,17 +33,19 @@ export default function NoticeRegisterPage({
   token: string;
   shopId: string;
   noticeId?: string;
-  createApi?: (token: string, shopId: string, data: PostNotice) => Promise<PostNoticeResponse>;
+  createApi?: (token: string, shopId: string, data: PostNotice) => Promise<PostNoticeResponseItem>;
   editApi?: (
     token: string,
     shopId: string,
     noticeId: string,
     data: PostNotice
-  ) => Promise<PostNoticeResponse>;
+  ) => Promise<PostNoticeResponseItem>;
 }) {
   const router = useRouter();
   const [hourlyPay, setHourlyPay] = useState<string>('');
   const [workhour, setWorkhour] = useState<string>('');
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [response, setResponse] = useState<PostNoticeResponseItem | null>(null);
 
   const {
     register,
@@ -69,19 +77,38 @@ export default function NoticeRegisterPage({
 
     if (mode === 'create') {
       const response = await createApi?.(token, shopId, data);
-      if (!response) return alert('공고 등록에 실패했습니다.');
-      alert('공고가 등록되었습니다.');
-      router.push(`/owner/my-shop/notice/${response.id}`);
+      if (!response) return;
+      setResponse(response);
+      setModalOpen(true);
     } else {
       const response = await editApi?.(token, shopId, noticeId as string, data);
-      if (!response) return alert('공고 수정에 실패했습니다.');
-      alert('공고가 수정되었습니다.');
+      if (!response) return;
+      setResponse(response);
+      setModalOpen(true);
+    }
+  };
+
+  const handleModalClose = () => {
+    setModalOpen(false);
+
+    if (mode === 'create' && response) {
+      router.push(`/owner/my-shop/notice/${response.item.id}`);
+    } else {
       router.push(`/owner/my-shop/notice/${noticeId}`);
     }
   };
 
   return (
     <>
+      {response ? (
+        <Modal isOpen={modalOpen} onClose={handleModalClose}>
+          {mode === 'create' ? '공고가 등록되었습니다.' : '공고가 수정되었습니다.'}
+        </Modal>
+      ) : (
+        <Modal isOpen={modalOpen} onClose={handleModalClose}>
+          {mode === 'create' ? '공고 등록에 실패했습니다.' : '공고 수정에 실패했습니다.'}
+        </Modal>
+      )}
       <div className="container h-[calc(100vh-8rem-6.8rem)]">
         <div className="flex items-start justify-between sm:items-center">
           <h3 className="h3">{mode === 'create' ? '공고 등록' : '공고 수정'}</h3>
