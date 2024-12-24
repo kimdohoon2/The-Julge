@@ -14,12 +14,14 @@ export default function NoticeRegisterEditPage() {
 
   return (
     <>
-      <NoticeRegisterForm
-        mode="create"
-        token={token}
-        shopId={shopId}
-        createApi={(token, shopId, data) => postShopNotice(token, shopId, data)}
-      />
+      <div className="container h-[100%] pb-20 sm:h-[calc(100vh-8rem-6.8rem)]">
+        <NoticeRegisterForm
+          mode="create"
+          token={token}
+          shopId={shopId}
+          createApi={(token, shopId, data) => postShopNotice(token, shopId, data)}
+        />
+      </div>
     </>
   );
 }

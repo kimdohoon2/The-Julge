@@ -109,63 +109,61 @@ export default function NoticeRegisterPage({
           {mode === 'create' ? '공고 등록에 실패했습니다.' : '공고 수정에 실패했습니다.'}
         </Modal>
       )}
-      <div className="container h-[calc(100vh-8rem-6.8rem)]">
-        <div className="flex items-start justify-between sm:items-center">
-          <h3 className="h3">{mode === 'create' ? '공고 등록' : '공고 수정'}</h3>
-          <Link href="/owner/my-shop">
-            <div className="relative top-1 h-4 w-4 sm:mb-8">
-              <Image fill src="/my-shop/x.svg" alt="notice" sizes="(max-width: 640px) 16px" />
-            </div>
-          </Link>
-        </div>
-        <form className="mt-8" onSubmit={handleSubmit(handleSubmitForm)}>
-          <div className="flex flex-col gap-4 sm:grid sm:grid-cols-2 md:grid-cols-3">
-            <FormInput
-              name="hourlyPay"
-              label="시급*"
-              placeholder="0"
-              validate={{ required: '시급을 입력해주세요.' }}
-              register={register}
-              errors={errors}
-              value={hourlyPay}
-              onInput={(e) => formatHourlyPay(e.currentTarget.value)}
-            />
-            <FormInput
-              name="startsAt"
-              label="시작일*"
-              type="date"
-              validate={{ required: '시작일을 입력해주세요.' }}
-              register={register}
-              errors={errors}
-            />
-            <FormInput
-              name="workhour"
-              label="업무 시간*"
-              placeholder="0"
-              validate={{ required: '업무 시간을 입력해주세요.' }}
-              register={register}
-              errors={errors}
-              value={workhour}
-              onInput={(e) => formatWorkhour(e.currentTarget.value)}
-            />
-            <div className="col-span-2 md:col-span-3">
-              <FormInput
-                name="description"
-                label="공고 설명"
-                type="textarea"
-                placeholder="공고 설명을 입력해주세요."
-                register={register}
-                errors={errors}
-              />
-            </div>
+      <div className="flex items-start justify-between sm:items-center">
+        <h3 className="h3">{mode === 'create' ? '공고 등록' : '공고 수정'}</h3>
+        <Link href="/owner/my-shop">
+          <div className="relative top-1 h-4 w-4 sm:mb-8">
+            <Image fill src="/my-shop/x.svg" alt="notice" sizes="(max-width: 640px) 16px" />
           </div>
-          <div className="mt-6 flex justify-center">
-            <button className="buttonVer1 w-full sm:w-[21rem]" type="submit">
-              {mode === 'create' ? '등록하기' : '수정하기'}
-            </button>
-          </div>
-        </form>
+        </Link>
       </div>
+      <form className="mt-8" onSubmit={handleSubmit(handleSubmitForm)}>
+        <div className="flex flex-col gap-4 sm:grid sm:grid-cols-2 md:grid-cols-3">
+          <FormInput
+            name="hourlyPay"
+            label="시급*"
+            placeholder="0"
+            validate={{ required: '시급을 입력해주세요.' }}
+            register={register}
+            errors={errors}
+            value={hourlyPay}
+            onInput={(e) => formatHourlyPay(e.currentTarget.value)}
+          />
+          <FormInput
+            name="startsAt"
+            label="시작일*"
+            type="date"
+            validate={{ required: '시작일을 입력해주세요.' }}
+            register={register}
+            errors={errors}
+          />
+          <FormInput
+            name="workhour"
+            label="업무 시간*"
+            placeholder="0"
+            validate={{ required: '업무 시간을 입력해주세요.' }}
+            register={register}
+            errors={errors}
+            value={workhour}
+            onInput={(e) => formatWorkhour(e.currentTarget.value)}
+          />
+          <div className="col-span-2 md:col-span-3">
+            <FormInput
+              name="description"
+              label="공고 설명"
+              type="textarea"
+              placeholder="공고 설명을 입력해주세요."
+              register={register}
+              errors={errors}
+            />
+          </div>
+        </div>
+        <div className="mt-6 flex justify-center">
+          <button className="buttonVer1 w-full sm:w-[21rem]" type="submit">
+            {mode === 'create' ? '등록하기' : '수정하기'}
+          </button>
+        </div>
+      </form>
     </>
   );
 }

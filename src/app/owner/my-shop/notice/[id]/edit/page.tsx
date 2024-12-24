@@ -16,13 +16,15 @@ export default function NoticeRegisterEditPage() {
 
   return (
     <>
-      <NoticeRegisterForm
-        mode="edit"
-        token={token}
-        shopId={shopId}
-        noticeId={id as string}
-        editApi={(token, shopId, noticeId, data) => putShopNotice(token, shopId, noticeId, data)}
-      />
+      <div className="container h-[100%] pb-20 sm:h-[calc(100vh-8rem-6.8rem)]">
+        <NoticeRegisterForm
+          mode="edit"
+          token={token}
+          shopId={shopId}
+          noticeId={id as string}
+          editApi={(token, shopId, noticeId, data) => putShopNotice(token, shopId, noticeId, data)}
+        />
+      </div>
     </>
   );
 }
