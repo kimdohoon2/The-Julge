@@ -80,3 +80,16 @@ export interface PostNotice {
   workhour: number;
   description: string;
 }
+
+export interface PostNoticeResponse {
+  id: string;
+  hourlyPay: number;
+  startsAt: string;
+  workhour: number;
+  description: string;
+  closed: boolean;
+  shop: {
+    item: Shop;
+    href: string;
+  };
+}

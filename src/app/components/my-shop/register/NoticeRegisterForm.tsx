@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useState } from 'react';
-import { PostNotice } from '@/app/types/Shop';
+import { PostNotice, PostNoticeResponse } from '@/app/types/Shop';
 import FormInput from '@/app/components/my-shop/register/FormInput';
 import Link from 'next/link';
 
@@ -27,13 +27,13 @@ export default function NoticeRegisterPage({
   token: string;
   shopId: string;
   noticeId?: string;
-  createApi?: (token: string, shopId: string, data: PostNotice) => Promise<PostNotice>;
+  createApi?: (token: string, shopId: string, data: PostNotice) => Promise<PostNoticeResponse>;
   editApi?: (
     token: string,
     shopId: string,
     noticeId: string,
     data: PostNotice
-  ) => Promise<PostNotice>;
+  ) => Promise<PostNoticeResponse>;
 }) {
   const router = useRouter();
   const [hourlyPay, setHourlyPay] = useState<string>('');
@@ -68,11 +68,13 @@ export default function NoticeRegisterPage({
     };
 
     if (mode === 'create') {
-      await createApi?.(token, shopId, data);
+      const response = await createApi?.(token, shopId, data);
+      if (!response) return alert('공고 등록에 실패했습니다.');
       alert('공고가 등록되었습니다.');
-      router.push('/owner/my-shop');
+      router.push(`/owner/my-shop/notice/${response.id}`);
     } else {
-      await editApi?.(token, shopId, noticeId as string, data);
+      const response = await editApi?.(token, shopId, noticeId as string, data);
+      if (!response) return alert('공고 수정에 실패했습니다.');
       alert('공고가 수정되었습니다.');
       router.push(`/owner/my-shop/notice/${noticeId}`);
     }
@@ -81,16 +83,16 @@ export default function NoticeRegisterPage({
   return (
     <>
       <div className="container h-[calc(100vh-8rem-6.8rem)]">
-        <div className="flex items-center justify-between">
+        <div className="flex items-start justify-between sm:items-center">
           <h3 className="h3">{mode === 'create' ? '공고 등록' : '공고 수정'}</h3>
           <Link href="/owner/my-shop">
-            <div className="relative h-4 w-4">
+            <div className="relative top-1 h-4 w-4 sm:mb-8">
               <Image fill src="/my-shop/x.svg" alt="notice" sizes="(max-width: 640px) 16px" />
             </div>
           </Link>
         </div>
         <form className="mt-8" onSubmit={handleSubmit(handleSubmitForm)}>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="flex flex-col gap-4 sm:grid sm:grid-cols-2 md:grid-cols-3">
             <FormInput
               name="hourlyPay"
               label="시급*"
@@ -119,7 +121,7 @@ export default function NoticeRegisterPage({
               value={workhour}
               onInput={(e) => formatWorkhour(e.currentTarget.value)}
             />
-            <div className="col-span-3">
+            <div className="col-span-2 md:col-span-3">
               <FormInput
                 name="description"
                 label="공고 설명"
@@ -131,7 +133,7 @@ export default function NoticeRegisterPage({
             </div>
           </div>
           <div className="mt-6 flex justify-center">
-            <button className="buttonVer1 w-full md:w-[21rem]" type="submit">
+            <button className="buttonVer1 w-full sm:w-[21rem]" type="submit">
               {mode === 'create' ? '등록하기' : '수정하기'}
             </button>
           </div>
