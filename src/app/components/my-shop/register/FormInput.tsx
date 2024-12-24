@@ -28,6 +28,11 @@ export default function FormInput({
   value?: string;
   onInput?: (e: React.FormEvent<HTMLInputElement>) => void;
 }) {
+  const types = {
+    text: 'text',
+    date: 'datetime-local',
+  };
+
   const spanContent = {
     hourlyPay: '원',
     workhour: '시간',
@@ -43,28 +48,17 @@ export default function FormInput({
     <>
       <div className="relative">
         <label htmlFor={name}>{label}</label>
-        {type === 'text' && (
+        {type !== 'textarea' ? (
           <input
             className="input"
             value={value}
             onInput={handleInput}
             id={name}
             placeholder={placeholder}
+            type={types[type]}
             {...register(name, validate ? { ...validate } : {})}
           />
-        )}
-        {type === 'date' && (
-          <input
-            className="input"
-            value={value}
-            onInput={handleInput}
-            id={name}
-            placeholder={placeholder}
-            type="datetime-local"
-            {...register(name, validate ? { ...validate } : {})}
-          />
-        )}
-        {type === 'textarea' && (
+        ) : (
           <textarea
             className="input textarea resize-none"
             value={value}
