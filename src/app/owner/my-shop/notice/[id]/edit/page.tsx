@@ -21,7 +21,7 @@ export default function NoticeRegisterEditPage() {
         token={token}
         shopId={shopId}
         noticeId={id as string}
-        api={(token, shopId, noticeId, data) => putShopNotice(token, shopId, noticeId, data)}
+        editApi={(token, shopId, noticeId, data) => putShopNotice(token, shopId, noticeId, data)}
       />
     </>
   );

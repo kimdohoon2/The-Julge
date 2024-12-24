@@ -20,13 +20,20 @@ export default function NoticeRegisterPage({
   token,
   shopId,
   noticeId,
-  api,
+  createApi,
+  editApi,
 }: {
   mode: 'create' | 'edit';
   token: string;
   shopId: string;
-  noticeId: string;
-  api: (token: string, shopId: string, noticeId: string, data: PostNotice) => Promise<PostNotice>;
+  noticeId?: string;
+  createApi?: (token: string, shopId: string, data: PostNotice) => Promise<PostNotice>;
+  editApi?: (
+    token: string,
+    shopId: string,
+    noticeId: string,
+    data: PostNotice
+  ) => Promise<PostNotice>;
 }) {
   const router = useRouter();
   const [hourlyPay, setHourlyPay] = useState<string>('');
@@ -60,12 +67,12 @@ export default function NoticeRegisterPage({
       description: form.description,
     };
 
-    await api(token, shopId, noticeId, data);
-
     if (mode === 'create') {
+      await createApi?.(token, shopId, data);
       alert('공고가 등록되었습니다.');
       router.push('/owner/my-shop');
     } else {
+      await editApi?.(token, shopId, noticeId as string, data);
       alert('공고가 수정되었습니다.');
       router.push(`/owner/my-shop/notice/${noticeId}`);
     }
