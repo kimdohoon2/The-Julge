@@ -1,22 +1,85 @@
-import Link from 'next/link';
+'use client';
+
+import AddPost from '@/app/components/my-shop/AddPost';
+import useAuthStore from '@/app/stores/authStore';
+import { getMyShop, getShopNotices } from '@/app/api/api';
+import { useEffect, useCallback, useState } from 'react';
+import { Shop, Notice } from '@/app/types/Shop';
+import MyShop from '@/app/components/my-shop/myShop';
+import NoticeCard from '@/app/components/my-shop/NoticeCard';
+
+interface NoticeItem {
+  item: Notice;
+  links: [];
+}
 
 export default function MyShopPage() {
+  const { user, type } = useAuthStore();
+  const shopId = user?.shop?.item.id;
+  const [shop, setShop] = useState<Shop | null>(null);
+  const [notice, setNotice] = useState<NoticeItem[] | null>(null);
+
+  const fetchShop = useCallback(async () => {
+    const response = await getMyShop(shopId as string);
+    setShop(response.item);
+  }, [shopId]);
+
+  const fetchNotice = useCallback(async () => {
+    if (!shopId) return;
+
+    const response = await getShopNotices(shopId as string);
+    setNotice(response.items);
+  }, [shopId]);
+
+  useEffect(() => {
+    if (!shopId) return;
+
+    fetchShop();
+    fetchNotice();
+  }, [fetchShop, fetchNotice, shopId]);
+
+  if (!user) {
+    return <div className="my-10 text-center">로그인이 필요합니다.</div>;
+  }
+
+  if (type === 'employee') {
+    return <div className="my-10 text-center">접근 권한이 없습니다.</div>;
+  }
+
   return (
-    <section className="h-[90vh] w-full px-3 pt-36 md:h-screen md:px-8 md:pt-32 xl:px-60">
-      <h3 className="mb-4 text-lg font-bold md:mb-6 md:text-[1.75rem]">내 가게</h3>
-      <div className="w-full rounded-lg border border-gray-20">
-        <div className="flex flex-col items-center gap-4 px-6 py-16 md:gap-6">
-          <p className="text-sm font-normal text-gray-black md:text-base">
-            내 가게를 소개하고 공고도 등록해 보세요.
-          </p>
-          <Link
-            className="flex h-[2.3125rem] w-full max-w-[6.75rem] items-center justify-center rounded-md bg-orange md:h-[2.9375rem] md:max-w-[21.625rem]"
-            href="my-shop/register"
-          >
-            <span className="text-sm text-gray-white md:text-base">가게 등록하기</span>
-          </Link>
-        </div>
+    <div className="container">
+      <div>
+        <section>
+          <h3 className="h3">내 가게</h3>
+          {!shop && (
+            <AddPost
+              content="가게를 등록해 보세요."
+              buttonLink="/owner/my-shop/register"
+              buttonText="가게 등록하기"
+            />
+          )}
+          {shop && <MyShop shop={shop} />}
+        </section>
+        <section className="sm:my-30 my-20">
+          <h3 className="h3">내가 등록한 공고</h3>
+          {!notice && (
+            <AddPost
+              content="공고를 등록해 보세요."
+              buttonLink="/owner/my-shop/notice/register"
+              buttonText="공고 등록하기"
+            />
+          )}
+          {notice && shop && (
+            <div className="grid grid-cols-2 gap-4 xl:grid-cols-3">
+              {notice.map((not) => (
+                <div key={not.item.id}>
+                  <NoticeCard not={not} shop={shop} closed={not.item.closed} />
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
       </div>
-    </section>
+    </div>
   );
 }
